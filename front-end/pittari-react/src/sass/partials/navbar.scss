@@ -1,0 +1,26 @@
+.navbar-brand img {
+    width: 3em;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    font-weight: 400;
+
+    &.active {
+        text-decoration: underline;
+        font-weight: 600;
+    }
+
+    &:hover {
+        color: rgb(230, 228, 228) !important;
+    }
+}
+
+// pulsante impara 
+.impara {
+    &:hover {
+        background-color: rgb(233, 231, 231);
+        color: black !important;
+        font-weight: 600;
+    }
+}
