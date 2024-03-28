@@ -7,6 +7,7 @@ import HomepageF from './pages/forum/HomepageF'
 import HomepageA from './pages/articles/HomepageA'
 import NavbarComp from './components/NavbarComp'
 import FooterComp from './components/FooterComp'
+import CreateArticles from './pages/articles/create/CreateArticles'
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/games" element={<HomepageG />}></Route>
           <Route path="/forum" element={<HomepageF />}></Route>
           <Route path="/articles" element={<HomepageA />}></Route>
+          <Route path="/articles/create" element={<CreateArticles />}></Route>
           <Route path="*" element={<NotFoundpage />}></Route>
         </Routes>
       <FooterComp />

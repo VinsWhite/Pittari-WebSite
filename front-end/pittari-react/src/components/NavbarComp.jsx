@@ -3,13 +3,13 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';  
-import logo from '../assets/img/placeholderIcon.avif'
+import logo from '../assets/img/logo.jpg'
 
 export default function NavbarComp() {
   return (
     <Navbar expand="lg" className="bg-primary">
       <Container fluid>
-        <NavLink to="/" className="navbar-brand text-dark"><img src={logo} className='rounded-circle' alt="logo pittari" /></NavLink>
+        <NavLink to="/" className="navbar-brand text-dark"><img src={logo} className='rounded-circle p-1' alt="logo pittari" /></NavLink>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -17,7 +17,7 @@ export default function NavbarComp() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <NavLink exact to="/" className="nav-link text-light" activeclassname="active">Home</NavLink>
+            <NavLink to="/" className="nav-link text-light" activeclassname="active">Home</NavLink>
           </Nav>
 
           <Nav className="d-flex">
