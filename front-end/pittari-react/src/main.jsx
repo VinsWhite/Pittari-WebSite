@@ -1,11 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux'; // non dimentichiamo il provider Redux
+import App from './App.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../src/sass/style.scss'
+import '../src/sass/style.scss';
+import store from './state/store/store.js';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    {/* provider Redux per avvolgere l'applicazione */}
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
-)
+);

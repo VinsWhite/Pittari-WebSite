@@ -12,8 +12,15 @@ export default function HeroComp() {
         <Card.Body>
             <Card.Text>
                 <Row>
-                    <Col> <img src={welcome} className='welcome' alt="" /> </Col>
-                    <Col></Col>
+                    <Col xs={12} md={5}> <img src={welcome} className='welcome' alt="immagine di welcome" /></Col>
+                    <Col xs={12} md={7} className='d-flex align-items-center text-start'>
+                      <div>
+                        <h2 className='fw-semibold text-primary fw-bold'>Impara il giapponese con Pittari! 🍣</h2>
+                        <h5>Pensi che il <span className='fw-semibold'>giapponese</span> sia una lingua difficile?</h5>
+                        <h5>Hai bisogno di imparare nuove parole <span className='fw-semibold'> 新しい単語 </span>?</h5>
+                        <h5>Sei nel posto giusto!</h5>
+                      </div>
+                    </Col>
                 </Row>
             </Card.Text>
         </Card.Body>

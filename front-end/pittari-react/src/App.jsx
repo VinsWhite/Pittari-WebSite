@@ -6,6 +6,7 @@ import HomepageG from './pages/games/HomepageG'
 import HomepageF from './pages/forum/HomepageF'
 import HomepageA from './pages/articles/HomepageA'
 import NavbarComp from './components/NavbarComp'
+import FooterComp from './components/FooterComp'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/articles" element={<HomepageA />}></Route>
           <Route path="*" element={<NotFoundpage />}></Route>
         </Routes>
+      <FooterComp />
       </BrowserRouter>
   )
 }

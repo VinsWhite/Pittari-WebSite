@@ -1,13 +1,35 @@
+@import 'variables';
+
 .bg-primary {
-    background-color: #e11d3e !important;
+    background-color: $primary !important;
+}
+
+.bg-primary-darker {
+    background-color: $primary-darker;
 }
 
 .bg-secondary {
-    background-color: #fdd563 !important;
+    background-color: $secondary !important;
+}
+
+.bg-primary-emphasis {
+    background-color: $primary-emphasis;
+}
+
+.text-secondary {
+    color: $secondary !important;
+}
+
+.text-primary{
+    color: $primary !important;
 }
 
 .text-yellow {
-    color: rgb(236, 236, 141) !important;
+    color: $yellow !important;
+}
+
+.btn-secondary {
+    background-color: $secondary !important;
 }
 
 .card-body {
