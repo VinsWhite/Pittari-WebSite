@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { useState } from 'react';
-import DividerComp from '../../../components/articles/DividerComp';
+/* import DividerComp from '../../../components/articles/DividerComp'; */
 import HeadingArtComp from '../HeadingArtComp';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';  
@@ -22,7 +22,8 @@ export default function CreateArticles() {
   return (
     <>
       <HeadingArtComp />
-      <Container fluid className='py-5 bg-secondary'>
+      <Container fluid className='py-5 bg-primary'>
+        <div className='container my-5 bg-secondary p-5 rounded-4 shadow'>
 
       <NavLink to="/articles" className="text-primary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
 
@@ -58,8 +59,10 @@ export default function CreateArticles() {
           </Form.Group>
           <Button className='btn btn-warning' type="submit">Crea articolo!</Button>
         </Form>
+
+        </div>
       </Container>
-      <DividerComp />
+     {/*  <DividerComp /> */}
     </>
   );
 }

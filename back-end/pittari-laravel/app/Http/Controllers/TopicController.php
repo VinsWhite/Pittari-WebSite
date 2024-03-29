@@ -38,7 +38,8 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        //
+        $topics = $topic->load('posts.user', 'user');
+        return response()->json($topics);
     }
 
     /**

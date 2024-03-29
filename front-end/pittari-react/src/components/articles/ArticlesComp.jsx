@@ -45,10 +45,11 @@ export default function ArticlesComp() {
     // filtraggio
     const filtered = articles.filter(article =>
       article.title.toLowerCase().includes(searchTerm) || // Cerca sia per titolo che descrizione
-      article.description.toLowerCase().includes(searchTerm)
+      article.description.toLowerCase().includes(searchTerm) ||
+      article.topic.toLowerCase().includes(searchTerm) 
     );
 
-    setFilteredArticles(filtered); // Aggiorna lo stato degli articoli filtrati
+    setFilteredArticles(filtered); 
   };
 
   return (
@@ -65,13 +66,13 @@ export default function ArticlesComp() {
               placeholder="Cerca..." 
               aria-label="Search"
               value={searchInput}
-              onChange={handleSearch} // Aggiungi l'evento onChange per gestire la ricerca
+              onChange={handleSearch} // evento onChange per gestire la ricerca
             />
         </div>
         <Row className="text-light">
           {filteredArticles.map(article => (
             <Col key={article.id} md={4}>
-              <NavLink to={`/article/${article.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <NavLink to={`/article/${article.id}`} className="nav-link-custom">
                 <div className="article d-flex flex-column align-items-center p-3 shadow rounded-3">
                   {article.image ? (
                     <img src={`http://localhost:8000${article.image}`} alt="articolo immagine" />
@@ -80,6 +81,7 @@ export default function ArticlesComp() {
                   )}
                   <h2 className='mt-3'>{article.title}</h2>
                   <p>{truncateDescription(article.description, 150)}</p> {/* Taglia la descrizione a 150 caratteri */}
+                  <p>{article.topic}</p>
                 </div>
               </NavLink>
             </Col>

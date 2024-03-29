@@ -22,6 +22,7 @@ Route::get('/', function () {
 
 Route::get('/articles', [ArticleController::class, 'index']);
 Route::get('/topics', [TopicController::class, 'index']);
+Route::get('/topics/{topic}', [TopicController::class, 'show']);
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
 require __DIR__.'/auth.php';

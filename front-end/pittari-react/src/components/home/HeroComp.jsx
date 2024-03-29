@@ -10,7 +10,6 @@ export default function HeroComp() {
     <Container fluid className='containter-fluid'>
         <Card className="card bg-secondary">
         <Card.Body>
-            <Card.Text>
                 <Row>
                     <Col xs={12} md={5}> <img src={welcome} className='welcome' alt="immagine di welcome" /></Col>
                     <Col xs={12} md={7} className='d-flex align-items-center text-start'>
@@ -22,7 +21,6 @@ export default function HeroComp() {
                       </div>
                     </Col>
                 </Row>
-            </Card.Text>
         </Card.Body>
         </Card>
     </Container>
