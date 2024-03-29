@@ -1,8 +1,25 @@
 @import 'variables';
 
-.article img {
-    width: 18em;
-    border-radius: 3em;
+.article {
+
+    cursor: pointer;
+
+    &:hover {
+        background-color: $primary-emphasis-2;
+    }
+
+    img {
+        width: 18em;
+        border-radius: 3em;
+    }
+    
+}
+
+.detailArticle {
+    img {
+        width: 30em;
+        border-radius: 1em;
+    }
 }
 
 .textarea {

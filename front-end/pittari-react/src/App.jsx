@@ -8,6 +8,8 @@ import HomepageA from './pages/articles/HomepageA'
 import NavbarComp from './components/NavbarComp'
 import FooterComp from './components/FooterComp'
 import CreateArticles from './pages/articles/create/CreateArticles'
+import DetailArticle from './pages/articles/DetailArticle'
+import Registration from './pages/auth/Registration'
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
           <Route path="/forum" element={<HomepageF />}></Route>
           <Route path="/articles" element={<HomepageA />}></Route>
           <Route path="/articles/create" element={<CreateArticles />}></Route>
+          <Route path="/article/:id" element={<DetailArticle />}></Route>
+          <Route path="/register" element={<Registration />}></Route>
           <Route path="*" element={<NotFoundpage />}></Route>
         </Routes>
       <FooterComp />

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\TopicController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,5 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/articles', [ArticleController::class, 'index']);
+Route::get('/topics', [TopicController::class, 'index']);
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
 require __DIR__.'/auth.php';

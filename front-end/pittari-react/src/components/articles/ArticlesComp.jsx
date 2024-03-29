@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setArticles } from '../../state/slice/articlesSlice';
 import axios from '../../api/axios';
@@ -11,6 +11,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 export default function ArticlesComp() {
   const articles = useSelector(state => state.articles);
+  const [searchInput, setSearchInput] = useState(''); // stato locale per la ricerca
+  const [filteredArticles, setFilteredArticles] = useState([]); // stato locale per gli articoli che sono stati filtrati 
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,6 +20,7 @@ export default function ArticlesComp() {
       try {
         const response = await axios.get('/articles');
         dispatch(setArticles(response.data)); // Aggiorna lo stato degli articoli con i dati ottenuti dalla chiamata
+        setFilteredArticles(response.data); // settiamo gli articoli filtrati
       } catch (error) {
         console.error('Errore durante il recupero degli articoli:', error);
       }
@@ -34,6 +37,20 @@ export default function ArticlesComp() {
     return description;
   };
 
+  // ricerca degli articoli 
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value.toLowerCase(); // tutto minuscolo
+    setSearchInput(searchTerm); 
+
+    // filtraggio
+    const filtered = articles.filter(article =>
+      article.title.toLowerCase().includes(searchTerm) || // Cerca sia per titolo che descrizione
+      article.description.toLowerCase().includes(searchTerm)
+    );
+
+    setFilteredArticles(filtered); // Aggiorna lo stato degli articoli filtrati
+  };
+
   return (
     <div className='p-5 bg-primary-darker'>
       <Container>
@@ -42,20 +59,29 @@ export default function ArticlesComp() {
 
         <div className='d-flex align-items-center justify-content-center'>
             <Search className='me-2 text-light fs-4' />
-            <input className="form-control w-50 my-4" type="search" placeholder="Cerca..." aria-label="Search" />
+            <input 
+              className="form-control w-50 my-4" 
+              type="search" 
+              placeholder="Cerca..." 
+              aria-label="Search"
+              value={searchInput}
+              onChange={handleSearch} // Aggiungi l'evento onChange per gestire la ricerca
+            />
         </div>
         <Row className="text-light">
-          {articles.map(article => (
+          {filteredArticles.map(article => (
             <Col key={article.id} md={4}>
-              <div className="article d-flex flex-column align-items-center p-3 shadow">
-                {article.image ? (
-                  <img src={`http://localhost:8000${article.image}`} alt="articolo immagine" />
-                ) : (
-                  <img src={defaultImage} alt="Immagine predefinita" />
-                )}
-                <h2 className='mt-3'>{article.title}</h2>
-                <p>{truncateDescription(article.description, 150)}</p> {/* Taglia la descrizione a 150 caratteri */}
-              </div>
+              <NavLink to={`/article/${article.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div className="article d-flex flex-column align-items-center p-3 shadow rounded-3">
+                  {article.image ? (
+                    <img src={`http://localhost:8000${article.image}`} alt="articolo immagine" />
+                  ) : (
+                    <img src={defaultImage} alt="Immagine predefinita" />
+                  )}
+                  <h2 className='mt-3'>{article.title}</h2>
+                  <p>{truncateDescription(article.description, 150)}</p> {/* Taglia la descrizione a 150 caratteri */}
+                </div>
+              </NavLink>
             </Col>
           ))}
         </Row>

@@ -1,0 +1,12 @@
+.forumImage {
+    width: 20em;
+    border-radius: 2em;
+}
+
+.forum {
+    cursor: pointer;
+
+    &:hover {
+        background-color: $primary-emphasis-2;
+    }
+}
