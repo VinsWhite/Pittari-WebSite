@@ -25,4 +25,6 @@ Route::get('/topics', [TopicController::class, 'index']);
 Route::get('/topics/{topic}', [TopicController::class, 'show']);
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 
+
+
 require __DIR__.'/auth.php';

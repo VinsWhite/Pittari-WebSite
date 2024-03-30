@@ -5,19 +5,44 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import axios from '../../api/axios';
 
 export default function Registration() {
     const [validated, setValidated] = useState(false);
+    const [name, setName] = useState("");
+    const [surname, setSurname] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState(""); // campo FONDAMENTALE, mi ha fatto sbagliare un sacco
+    const [error, setError] = useState("");
 
-    const handleSubmit = (event) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
+    // problema da risolvere: mi rimanda alla rotta dashboard
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        // verifica che le password corrispondono
+        if (password !== confirmPassword) {
+            setError("Le password non corrispondono");
+            return;
         }
-
-        setValidated(true);
-    };
+    
+        try {
+          await axios.get("/sanctum/csrf-cookie");
+          const response = await axios.post("/register", {
+            name: name,
+            surname: surname,
+            email: email,
+            password: password,
+            password_confirmation: confirmPassword,
+            role: "user"
+        });
+        
+          console.log(response.data); // risposta del backend
+        } catch (error) {
+          setError(error.response.data.message); 
+        }
+      }
 
     return (
         <>
@@ -27,25 +52,29 @@ export default function Registration() {
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
                         <Row className="mb-3">
                             <Form.Group as={Col} controlId="validationCustom01">
-                                <Form.Label>Name</Form.Label>
+                                <Form.Label>Nome</Form.Label>
                                 <Form.Control
                                     required
                                     type="text"
-                                    placeholder="Enter your name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder="Inserisci il tuo nome"
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Please provide a valid name.
+                                    Per favore inserisci un nome valido.
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} controlId="validationCustom02">
-                                <Form.Label>Surname</Form.Label>
+                                <Form.Label>Cognome</Form.Label>
                                 <Form.Control
                                     required
                                     type="text"
-                                    placeholder="Enter your surname"
+                                    value={surname}
+                                    onChange={(e) => setSurname(e.target.value)}
+                                    placeholder="Inserisci il tuo cognome"
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Please provide a valid surname.
+                                    Inserisci un cognome valido.
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Row>
@@ -55,12 +84,14 @@ export default function Registration() {
                                 <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                                 <Form.Control
                                     type="email"
-                                    placeholder="Enter your email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Inserisci la tua email"
                                     aria-describedby="inputGroupPrepend"
                                     required
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Please provide a valid email.
+                                    Per favore inserisci un email valida
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
@@ -68,16 +99,31 @@ export default function Registration() {
                             <Form.Label>Password</Form.Label>
                             <Form.Control
                                 type="password"
-                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Inserisci la tua password"
                                 required
                             />
                             <Form.Control.Feedback type="invalid">
-                                Please provide a valid password.
+                                Per favore inserisci la tua password
                             </Form.Control.Feedback>
                         </Form.Group>
-                        {/* Aggiungi un campo nascosto per il ruolo fisso 'user' */}
-                        <input type="hidden" name="role" value="user" />
+                        {/* Aggiungi il campo per la conferma della password */}
+                        <Form.Group className="mb-3" controlId="validationCustomConfirmPassword">
+                            <Form.Label>Conferma Password</Form.Label>
+                            <Form.Control
+                                type="password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                placeholder="Conferma la tua password"
+                                required
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                Le password non corrispondono
+                            </Form.Control.Feedback>
+                        </Form.Group>
                         <Button variant='warning' type="submit">Registrati</Button>
+                        {error && <div className="text-danger mt-2">{error}</div>}
                     </Form>
                 </Container>
             </div>
