@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import { Container } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import usersSlice from '../../state/slice/usersSlice';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from '../../api/axios';
+import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Registration() {
     const [validated, setValidated] = useState(false);
@@ -15,8 +19,8 @@ export default function Registration() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState(""); // campo FONDAMENTALE, mi ha fatto sbagliare un sacco
     const [error, setError] = useState("");
-
-    // problema da risolvere: mi rimanda alla rotta dashboard
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -38,6 +42,7 @@ export default function Registration() {
             role: "user"
         });
         
+          navigate('/login');
           console.log(response.data); // risposta del backend
         } catch (error) {
           setError(error.response.data.message); 
@@ -108,7 +113,7 @@ export default function Registration() {
                                 Per favore inserisci la tua password
                             </Form.Control.Feedback>
                         </Form.Group>
-                        {/* Aggiungi il campo per la conferma della password */}
+                        {/* campo per la conferma della password */}
                         <Form.Group className="mb-3" controlId="validationCustomConfirmPassword">
                             <Form.Label>Conferma Password</Form.Label>
                             <Form.Control
@@ -125,6 +130,9 @@ export default function Registration() {
                         <Button variant='warning' type="submit">Registrati</Button>
                         {error && <div className="text-danger mt-2">{error}</div>}
                     </Form>
+                    <div className='text-end'>
+                        <NavLink to='/login' className='text-dark'>Ti sei già registrato?</NavLink>
+                    </div>
                 </Container>
             </div>
         </>

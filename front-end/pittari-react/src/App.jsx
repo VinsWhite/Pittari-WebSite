@@ -11,6 +11,7 @@ import CreateArticles from './pages/articles/create/CreateArticles'
 import DetailArticle from './pages/articles/DetailArticle'
 import Registration from './pages/auth/Registration'
 import DetailTopic from './pages/forum/DetailTopic'
+import Login from './pages/auth/Login'
 
 function App() {
 
@@ -31,6 +32,8 @@ function App() {
           <Route path="/article/:id" element={<DetailArticle />}></Route>
           {/* AUTH */}
           <Route path="/register" element={<Registration />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          {/* NOT FOUND PAGE */ }
           <Route path="*" element={<NotFoundpage />}></Route>
         </Routes>
       <FooterComp />
