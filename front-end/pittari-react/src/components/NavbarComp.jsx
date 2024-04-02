@@ -14,17 +14,19 @@ export default function NavbarComp() {
 
   const handleLogout = async () => {
     try {
+      console.log("Token JWT:", localStorage.getItem('token'));
       await axios.post("/logout"); 
-      localStorage.removeItem('token'); // rimuovo il token dal localstorage
-      dispatch(logoutUser()); // dispatch per redux
+      localStorage.removeItem('token'); 
+      dispatch(logoutUser()); 
     } catch (error) {
       console.error("Errore durante il logout:", error);
     }
   };
+  
 
 
   return (
-    <Navbar expand="lg" className="bg-primary">
+    <Navbar expand="lg" className="bg-primary border-bottom-2 border-primary position-sticky z-3 top-0 w-100">
       <Container fluid>
         <NavLink to="/" className="navbar-brand text-dark"><img src={logo} className='rounded-circle p-1' alt="logo pittari" /></NavLink>
         <Navbar.Toggle aria-controls="navbarScroll" />

@@ -25,11 +25,11 @@ export default function Login() {
                 password: password,
             });
 
-            const { userData, authToken } = response.data;
-    
-            localStorage.setItem('token', response.data.token);
-            dispatch(loginUserSuccess({ user: userData, token: authToken }));
-            console.log(response.data); // risposta del backend
+            const authToken = response.data.token;
+
+            localStorage.setItem('token', authToken);
+            dispatch(loginUserSuccess({ user: response.data.userData, token: authToken }));
+            console.log(response.data); 
             navigate('/');
         } catch (error) {
             if (error.response) {

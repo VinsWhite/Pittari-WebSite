@@ -67,7 +67,7 @@ export default function DetailTopic() {
             <Container fluid className='bg-primary-darker p-5'>
                 <Container>
                 <NavLink to="/forum" className="text-secondary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
-                <NavLink to={`/forum/topics/${topic.id}/create`} className="create_posts text-dark bg-secondary fs-5 fw-semibold text-decoration-none position-fixed bottom-0 end-0 m-3 fs-3 p-2 d-flex align-items-center rounded-circle "><Plus /> </NavLink>
+                <NavLink to={`/forum/topics/${topic.id}/create`} className="create_posts text-dark bg-secondary border-2 border border-primary fs-5 fw-semibold text-decoration-none position-fixed bottom-0 end-0 m-3 fs-3 p-2 d-flex align-items-center rounded-circle "><Plus /> </NavLink>
                 <h2 className='text-center text-light fw-semibold text-decoration-underline'>Benvenuto in {topic.title}</h2>
                 <div className='d-flex align-items-center justify-content-center'>
                     <Search className='me-2 text-light fs-4' />
