@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { useState } from 'react';
 /* import DividerComp from '../../../components/articles/DividerComp'; */
-import HeadingArtComp from '../HeadingArtComp';
+import HeadingArtComp from '../../../components/articles/HeadingArtComp';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';  
 

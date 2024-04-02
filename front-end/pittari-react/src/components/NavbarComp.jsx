@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../state/slice/usersSlice'; 
 import axios from '../api/axios';
 import logo from '../assets/img/logo.jpg';
@@ -22,6 +22,7 @@ export default function NavbarComp() {
     }
   };
 
+
   return (
     <Navbar expand="lg" className="bg-primary">
       <Container fluid>
@@ -34,6 +35,14 @@ export default function NavbarComp() {
             navbarScroll
           >
             <NavLink to="/" className="nav-link text-light" activeclassname="active">Home</NavLink>
+            {/* Mostra il pulsante di logout solo se l'utente è loggato */}
+            {isLoggedIn ? (
+              <button onClick={handleLogout} className="nav-link text-light ms-3">
+                Logout
+              </button>
+            ) : (
+              <NavLink to="/login" className="nav-link text-light ms-3" activeclassname="active">Login</NavLink>
+            )}
           </Nav>
 
           <Nav className="d-flex">
@@ -42,12 +51,6 @@ export default function NavbarComp() {
             <NavLink to="/contacts" className="nav-link text-light ms-3" activeclassname="active">Contatti</NavLink>
             <NavLink to="/learn" className="nav-link text-yellow ms-3 border border-2 border-warning rounded-5 px-4 impara" activeclassname="active">Impara</NavLink>
             
-            {/* Mostra il pulsante di logout solo se l'utente è loggato */}
-            {isLoggedIn && (
-              <button onClick={handleLogout} className="nav-link text-light ms-3 border border-2 border-danger rounded-5 px-4">
-                Logout
-              </button>
-            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

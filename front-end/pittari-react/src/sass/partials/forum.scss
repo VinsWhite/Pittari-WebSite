@@ -10,3 +10,26 @@
         background-color: $primary-emphasis-2;
     }
 }
+
+.post {
+    cursor: pointer;
+
+    &:hover {
+       background-color: $post_hover !important; 
+    }
+}
+
+.post_replies {
+    &:hover {
+        background-color: $post_replies_hover;
+    }
+}
+
+.create_posts {
+    transition: transform 0.3s ease; /* se il mouse si sposta, diminuisce nuovamente lentamente la sua grandezza */
+    
+    &:hover {
+        background-color: $secondary-emphasis !important;
+        transform: scale(1.1); /* ingrandisce il pulsante sull'hover */
+    }
+}

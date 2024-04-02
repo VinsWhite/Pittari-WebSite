@@ -29,7 +29,13 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $post = new Post();
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->user_id = $request->user_id;
+        $post->topic_id = $request->topic_id;
+        // salvo il nuovo post nel database
+        $post->save();
     }
 
     /**

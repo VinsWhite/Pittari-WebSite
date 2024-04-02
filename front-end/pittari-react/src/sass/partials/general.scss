@@ -16,6 +16,14 @@
     background-color: $primary-emphasis;
 }
 
+.bg-secondary-emphasis {
+    background-color: $secondary-emphasis;
+}
+
+.bg-replies {
+    background-color: rgb(234, 230, 230);
+}
+
 .text-secondary {
     color: $secondary !important;
 }
@@ -26,6 +34,15 @@
 
 .text-yellow {
     color: $yellow !important;
+}
+
+.btn-primary {
+    background-color: $primary !important;
+    border: 0;
+
+    &:hover {
+        background-color: $primary-emphasis !important;
+    }
 }
 
 .btn-secondary {
