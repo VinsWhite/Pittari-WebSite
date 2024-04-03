@@ -11,7 +11,7 @@ class StorePost_replyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StorePost_replyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'context' => 'required|string',
+            'post_id' => 'required|exists:topics,id',
         ];
     }
 }

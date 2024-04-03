@@ -38,15 +38,19 @@
   @keyframes fadeInOut {
     0% {
       opacity: 0;
+      color: black;
     }
     40% {
       opacity: 1;
+      color: black;
     }
     60% {
       opacity: 1;
+      color: red;
     }
     100% {
       opacity: 0;
+      color: red;
     }
   }
   

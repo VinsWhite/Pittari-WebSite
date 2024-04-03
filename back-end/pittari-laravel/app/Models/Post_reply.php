@@ -9,6 +9,7 @@ class Post_reply extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['context', 'post_id'];
     public function user()
     {
         return $this->belongsTo(User::class);

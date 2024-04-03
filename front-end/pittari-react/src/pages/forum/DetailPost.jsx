@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Form } from 'react-bootstrap';
 import DividerComp from '../../components/forum/DividerComp';
 import axios from '../../api/axios';
 import { ArrowLeft, Person, ChatLeft, Share, PersonBadge } from 'react-bootstrap-icons';
+import caricamento from '../../assets/img/hashi.jpg'
 
 export default function DetailPost() {
     const { topicId, postId } = useParams();
     const [post, setPost] = useState(null);
+    const [validated, setValidated] = useState(false);
+    const [newReply, setNewReply] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -21,6 +25,19 @@ export default function DetailPost() {
 
         fetchPost();
     }, [postId]);
+
+    if (!post) {
+        return <>
+            <Container fluid className='bg-primary-darker p-5'>
+                <NavLink className="text-secondary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
+                <div className='d-flex flex-column justify-content-center align-items-center'>
+                    <img src={caricamento} className='loadingImage loading rounded-circle my-4' alt="caricamento" />
+                    <h4 className='text-center text-light fw-semibold loading'>Caricamento...</h4>
+                </div>
+            </Container>
+            <DividerComp />
+        </>;
+    }
 
 
     // funzione per visualizzare la data in maniera leggibile
@@ -66,6 +83,49 @@ export default function DetailPost() {
                 .catch(error => console.error('Errore durante la copia del link del post:', error));
         };
 
+        const handleReplyChange = (event) => {
+            setNewReply(event.target.value);
+        };
+
+
+        const handleSubmit = async (event) => { 
+            event.preventDefault();
+            const form = event.currentTarget;
+        
+            if (form.checkValidity() === false) {
+              event.stopPropagation();
+              return;
+            }
+        
+            try {
+              await axios.get("/sanctum/csrf-cookie");
+        
+              const response = await axios.post('/reply', {
+                context: form.context.value,
+                post_id: postId,
+              }, {
+                headers: {
+                  'X-XSRF-TOKEN': getCookieValue('XSRF-TOKEN')
+                }
+              });
+              
+                window.location.href = `/forum/topics/${topicId}/${postId}`;
+
+                form.reset();
+                setLoading(false);
+
+            } catch (error) {
+              console.error('Errore durante la creazione dell\'argomento:', error);
+              if (error.response) {
+                console.error('Dettagli dell\'errore:', error.response.data);
+              }
+            }
+          };
+    
+          function getCookieValue(name) {
+            const cookie = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+            return cookie ? cookie.pop() : '';
+          }
 
     return (
         <>
@@ -73,7 +133,7 @@ export default function DetailPost() {
                 <Container>
                     <NavLink to={`/forum/topics/${topicId}`} className="text-secondary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
                     {post && (
-                        <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary-emphasis my-4' key={post.id}>
+                        <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary-emphasis my-4 caricamentoCorpo' key={post.id}>
                             <div>
                                 <div className='d-flex justify-content-between'>
                                     <p className='fw-semibold'><Person /> {post.user.name} <span className='text-primary ms-3 border border-primary py-1 px-3 rounded-5'>autore</span></p>
@@ -85,11 +145,15 @@ export default function DetailPost() {
                                     <p className='post_replies d-inline py-1 px-2 bg-replies rounded-2'><ChatLeft /> {post.post_replies.length} risposte</p>
                                     <p className='ms-3 post_replies d-inline py-1 px-2 bg-replies rounded-2' onClick={copyPostLink}><Share /></p>
                                 </div>
-
-                                <div className='d-flex align-items-center mt-2'>
-                                    <textarea className='rounded-3' placeholder='Rispondi...' name='context'/>
-                                    <Button variant='primary' className='ms-3 rounded-5'> Pubblica </Button>
-                                </div>
+                                
+                                <Form noValidate validated={validated} onSubmit={(event) => handleSubmit(event)}>
+                                    <div className='d-flex align-items-center mt-2'>
+                                        <textarea className='rounded-3' placeholder='Rispondi...' name='context' value={newReply} onChange={handleReplyChange}/>
+                                        <Button variant='primary' type='submit' className='ms-3 rounded-5'>
+                                            {loading ? <Spinner animation="border" variant="light" size="sm" /> : 'Pubblica'}
+                                        </Button>
+                                    </div>
+                                </Form>
                                 
                                     {post.post_replies && post.post_replies.length === 0 && (
                                         <div className='text-center text-dark mt-4'>Non ci sono risposte al momento.</div>

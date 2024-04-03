@@ -28,7 +28,7 @@ export default function HeroComp() {
                     <Col xs={12} md={7} className='d-flex align-items-center text-start px-4'>
                       <div>
                         <h5>Pensi che il <span className='animatedText'><span className='fw-semibold'>{isJapanese ? 'giapponese' : '日本語'}</span></span> sia una lingua difficile?</h5>
-                        <h5>Hai bisogno di imparare nuove parole <span className='fw-semibold'> 新しい単語 </span>?</h5>
+                        <h5 className='animatedText'>Hai bisogno di imparare <span className='fw-semibold'><span className='fw-semibold'>{isJapanese ? 'nuove parole' : '新しい単語'}</span></span>?</h5>
                         <h5>Sei nel posto giusto!</h5>
                       </div>
                     </Col>

@@ -35,7 +35,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->title;
         $post->context = $request->context;
-        $post->user_id = $user->id;;
+        $post->user_id = $user->id;
         $post->topic_id = $request->topic_id;
         // salvo il nuovo post nel database
         $post->save();

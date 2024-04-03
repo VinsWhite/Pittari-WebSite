@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../state/slice/usersSlice'; 
 import axios from '../api/axios';
 import logo from '../assets/img/logo.jpg';

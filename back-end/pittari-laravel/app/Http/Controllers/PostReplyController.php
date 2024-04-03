@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post_reply;
 use App\Http\Requests\StorePost_replyRequest;
 use App\Http\Requests\UpdatePost_replyRequest;
+use Illuminate\Support\Facades\Auth;
 
 class PostReplyController extends Controller
 {
@@ -29,7 +30,14 @@ class PostReplyController extends Controller
      */
     public function store(StorePost_replyRequest $request)
     {
-        //
+        $user = Auth::user();
+        
+        $reply = new Post_reply();
+        $reply ->context = $request->context;
+        $reply ->post_id = $request->post_id;
+        $reply->user()->associate($user);
+
+        $reply->save();
     }
 
     /**

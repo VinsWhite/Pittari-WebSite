@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Container, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
+import { Container, Button, Col, Form, Row } from 'react-bootstrap';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import { NavLink, useParams } from 'react-router-dom';  
 import HeadingTopComp from '../../../components/forum/HeadingTopComp';
-import { useSelector } from 'react-redux';
 import axios from '../../../api/axios';
 
 export default function CreateTopic() {
@@ -32,7 +31,7 @@ export default function CreateTopic() {
         }
       });
 
-      window.location.href = '/forum';
+      window.location.href = `/forum/topics/${id}`;
     } catch (error) {
       console.error('Errore durante la creazione dell\'argomento:', error);
       if (error.response) {
@@ -52,7 +51,7 @@ export default function CreateTopic() {
       <Container fluid className='py-5 bg-primary shadow'>
         <div className='container my-5 bg-secondary p-5 rounded-4 shadow'>
 
-          <NavLink to="/forum" className="text-primary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
+          <NavLink to={`/forum/topics/${id}`}  className="text-primary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
 
           <Form noValidate validated={validated} onSubmit={(event) => handleSubmit(event)}>
             <Row className="mb-3">

@@ -7,6 +7,7 @@ import DividerComp from '../../components/forum/DividerComp';
 import { Person, Search, ArrowLeft, ChatLeft, Plus } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import caricamento from '../../assets/img/fuji.jpg'
 
 export default function DetailTopic() {
     const { id } = useParams();
@@ -33,6 +34,13 @@ export default function DetailTopic() {
                 const response = await axios.get(`/topics/${id}`);
                 setTopic(response.data);
                 setFilteredPosts(response.data.posts);
+
+                // con questa funzione ho simulato un ritardo per provare il caricamento
+                /* setTimeout(async () => {
+                    const response = await axios.get(`/topics/${id}`);
+                    setTopic(response.data);
+                    setFilteredPosts(response.data.posts);
+                }, 30000); */
                 /* console.log(response.data); */
             } catch (error) {
                 console.error('Errore durante il recupero del topic:', error);
@@ -59,7 +67,16 @@ export default function DetailTopic() {
     
 
     if (!topic) {
-        return <><div className='bg-primary-darker text-light'>Caricamento...</div> <DividerComp /></>;
+        return <>
+            <Container fluid className='bg-primary-darker p-5'>
+                <NavLink className="text-secondary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
+                <div className='d-flex flex-column justify-content-center align-items-center'>
+                    <img src={caricamento} className='loadingImage loading rounded-circle my-4' alt="caricamento" />
+                    <h4 className='text-center text-light fw-semibold loading'>Caricamento...</h4>
+                </div>
+            </Container>
+            <DividerComp />
+        </>;
     }
 
     // funzione per visualizzare la data in maniera leggibile
@@ -121,10 +138,11 @@ export default function DetailTopic() {
                     onChange={handleSearch}
                     />
                 </div>
+                    <div className='d-flex flex-column-reverse'>
                     {topic.posts.length > 0 ? (
                         filteredPosts.map(post => (
-                            <NavLink to={`/forum/topics/${topic.id}/${post.id}`} className="text-dark text-decoration-none" key={post.id}>
-                                <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary-emphasis my-4 post'>
+                            <NavLink to={`/forum/topics/${topic.id}/${post.id}`} className="text-dark text-decoration-none caricamentoCorpo" key={post.id}>
+                                <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary-emphasis my-2 post'>
                                     <div>
                                         <div className='d-flex justify-content-between'>
                                             <p className='fw-semibold'><Person /> {post.user.name}</p>
@@ -139,6 +157,7 @@ export default function DetailTopic() {
                     ) : (
                         <div className='text-center text-secondary mt-4'>Non ci sono post... sii il primo a pubblicarne uno! 嬉しそう</div>
                     )}
+                    </div>
                 </Container>
             </Container>
             <DividerComp />

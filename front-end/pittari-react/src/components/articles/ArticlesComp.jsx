@@ -6,6 +6,7 @@ import { Search } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';  
 
 import defaultImage from '../../assets/img/defaultImage.jpg'; // Immagine di default in caso l'articolo non abbia un'immagine
+import caricamento from '../../assets/img/paperNews.jpg';
 
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -28,6 +29,19 @@ export default function ArticlesComp() {
 
     fetchArticles();
   }, [dispatch]); 
+
+  if (!articles) {
+    return <>
+        <Container fluid className='bg-primary-darker p-5'>
+            <NavLink className="text-secondary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
+            <div className='d-flex flex-column justify-content-center align-items-center'>
+                <img src={caricamento} className='loadingImage loading rounded-circle my-4' alt="caricamento" />
+                <h4 className='text-center text-light fw-semibold loading'>Caricamento...</h4>
+            </div>
+        </Container>
+        <DividerComp />
+    </>;
+}
 
   // Funzione per tagliare la descrizione e aggiungere "..." se è troppo lunga
   const truncateDescription = (description, maxLength) => {
