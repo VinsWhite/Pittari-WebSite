@@ -62,6 +62,47 @@ export default function DetailTopic() {
         return <><div className='bg-primary-darker text-light'>Caricamento...</div> <DividerComp /></>;
     }
 
+    // funzione per visualizzare la data in maniera leggibile
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const now = new Date();
+
+    
+        // differenza in millisecondi tra la data attuale e quella del post
+        const diffInMilliseconds = now - date;
+    
+        // tempo trascorso
+        const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+        const diffInHours = Math.floor(diffInMilliseconds / (1000 * 60 * 60));
+        const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+    
+        // se la data è stata meno di un giorno fa 
+        if (diffInMinutes < 1440) { // 1440 minuti = 1 giorno
+            if (diffInMinutes < 60) {
+                // Meno di un'ora fa
+                return `${diffInMinutes} min fa`;
+            } else {
+                // Tra 1 ora e meno di 2 ore fa
+                if (diffInMinutes < 120) {
+                    return `1 ora fa`;
+                } else {
+                    // Oltre 1 ora fa
+                    return `${diffInHours} ore fa`;
+                }
+            }
+        } else if (diffInDays < 7) {
+            // meno di una settimana
+            return `${diffInDays} giorni fa `;
+        } else {
+            // oltre una settimana, data completa
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            return date.toLocaleDateString('it-IT', options);
+        }
+    };
+    
+      
+
+
     return (
         <>
             <Container fluid className='bg-primary-darker p-5'>
@@ -82,16 +123,18 @@ export default function DetailTopic() {
                 </div>
                     {topic.posts.length > 0 ? (
                         filteredPosts.map(post => (
-                            <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary-emphasis my-4 post' key={post.id}>
-                                <div>
-                                    <div className='d-flex justify-content-between'>
-                                        <p className='fw-semibold'><Person /> {post.user.name}</p>
-                                        <p>{post.created_at}</p>
+                            <NavLink to={`/forum/topics/${topic.id}/${post.id}`} className="text-dark text-decoration-none" key={post.id}>
+                                <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary-emphasis my-4 post'>
+                                    <div>
+                                        <div className='d-flex justify-content-between'>
+                                            <p className='fw-semibold'><Person /> {post.user.name}</p>
+                                            <p>{formatDate(post.created_at)}</p>
+                                        </div>
+                                        <h4>{post.title}</h4>
+                                        <p className='post_replies d-inline py-1 px-2 bg-replies rounded-2'><ChatLeft /> {post.post_replies.length} risposte</p>
                                     </div>
-                                    <h4>{post.title}</h4>
-                                    <p className='post_replies d-inline py-1 px-2 bg-replies rounded-2'><ChatLeft /> {post.post_replies.length} risposte</p>
                                 </div>
-                            </div>
+                            </NavLink>
                         ))
                     ) : (
                         <div className='text-center text-secondary mt-4'>Non ci sono post... sii il primo a pubblicarne uno! 嬉しそう</div>

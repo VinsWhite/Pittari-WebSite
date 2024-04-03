@@ -4,6 +4,7 @@ const initialState = {
   user: null,
   token: localStorage.getItem('token') || null,
   error: null,
+  userId: null, // Aggiungi userId qui
 };
 
 export const usersSlice = createSlice({

@@ -23,8 +23,7 @@ class StorePostRequest extends FormRequest
     {
         return [
             'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'user_id' => 'required|exists:users,id', 
+            'context' => 'required|string',
             'topic_id' => 'required|exists:topics,id',
         ];
     }

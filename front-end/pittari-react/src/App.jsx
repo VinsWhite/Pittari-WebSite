@@ -13,6 +13,7 @@ import Registration from './pages/auth/Registration'
 import DetailTopic from './pages/forum/DetailTopic'
 import Login from './pages/auth/Login'
 import CreateTopic from './pages/forum/create/CreateTopic'
+import DetailPost from './pages/forum/DetailPost'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/forum" element={<HomepageF />}></Route>
           <Route path="/forum/topics/:id" element={<DetailTopic />}></Route>
           <Route path="/forum/topics/:id/create" element={<CreateTopic />}></Route>
+          <Route path="/forum/topics/:topicId/:postId" element={<DetailPost />}></Route>
           {/* ARTICLE */}
           <Route path="/articles" element={<HomepageA />}></Route>
           <Route path="/articles/create" element={<CreateArticles />}></Route>
