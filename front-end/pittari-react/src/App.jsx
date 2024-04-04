@@ -14,6 +14,7 @@ import DetailTopic from './pages/forum/DetailTopic'
 import Login from './pages/auth/Login'
 import CreateTopic from './pages/forum/create/CreateTopic'
 import DetailPost from './pages/forum/DetailPost'
+import Profile from './pages/profile/Profile'
 
 function App() {
 
@@ -24,7 +25,9 @@ function App() {
           <Route path="/" element={<Homepage />}></Route>
           <Route path="/contacts" element={<Contacts />}></Route>
           {/* GAMES */}
-          <Route path="/games" element={<HomepageG />}></Route>
+          <Route path="/learn" element={<HomepageG />}></Route>
+          {/* PROFILE */}
+          <Route path="/profile" element={<Profile />}></Route>
           {/* FORUM */}
           <Route path="/forum" element={<HomepageF />}></Route>
           <Route path="/forum/topics/:id" element={<DetailTopic />}></Route>

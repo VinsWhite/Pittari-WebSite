@@ -14,6 +14,7 @@ export default function ArticlesComp() {
   const articles = useSelector(state => state.articles);
   const [searchInput, setSearchInput] = useState(''); // stato locale per la ricerca
   const [filteredArticles, setFilteredArticles] = useState([]); // stato locale per gli articoli che sono stati filtrati 
+  const [loading, setLoading] = useState(true); // stato locale per il caricamento
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,26 +23,37 @@ export default function ArticlesComp() {
         const response = await axios.get('/articles');
         dispatch(setArticles(response.data)); // Aggiorna lo stato degli articoli con i dati ottenuti dalla chiamata
         setFilteredArticles(response.data); // settiamo gli articoli filtrati
+        setLoading(false); 
       } catch (error) {
         console.error('Errore durante il recupero degli articoli:', error);
+        setLoading(false); 
       }
     };
 
     fetchArticles();
   }, [dispatch]); 
 
-  if (!articles) {
-    return <>
+  if (loading) {
+    return (
+      <>
         <Container fluid className='bg-primary-darker p-5'>
-            <NavLink className="text-secondary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
-            <div className='d-flex flex-column justify-content-center align-items-center'>
-                <img src={caricamento} className='loadingImage loading rounded-circle my-4' alt="caricamento" />
-                <h4 className='text-center text-light fw-semibold loading'>Caricamento...</h4>
-            </div>
+          <div className='d-flex align-items-center justify-content-center'>
+              <Search className='me-2 text-light fs-4' />
+              <input 
+                className="form-control w-50 my-4" 
+                type="search" 
+                placeholder="Cerca..." 
+                aria-label="Search"
+              />
+          </div>
+          <div className='d-flex flex-column justify-content-center align-items-center'>
+            <img src={caricamento} className='loadingImage loading rounded-circle my-4' alt="caricamento" />
+            <h4 className='text-center text-light fw-semibold loading'>Caricamento...</h4>
+          </div>
         </Container>
-        <DividerComp />
-    </>;
-}
+      </>
+    );
+  }
 
   // Funzione per tagliare la descrizione e aggiungere "..." se è troppo lunga
   const truncateDescription = (description, maxLength) => {
@@ -58,7 +70,7 @@ export default function ArticlesComp() {
 
     // filtraggio
     const filtered = articles.filter(article =>
-      article.title.toLowerCase().includes(searchTerm) || // Cerca sia per titolo che descrizione
+      article.title.toLowerCase().includes(searchTerm) || // Cerca sia per titolo che descrizione che topic
       article.description.toLowerCase().includes(searchTerm) ||
       article.topic.toLowerCase().includes(searchTerm) 
     );

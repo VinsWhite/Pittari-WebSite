@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Dropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../state/slice/usersSlice'; 
 import axios from '../api/axios';
 import logo from '../assets/img/logo.jpg';
+import { Person } from 'react-bootstrap-icons';
 
 export default function NavbarComp() {
   const isLoggedIn = useSelector(state => state.users.token !== null); 
@@ -52,15 +54,26 @@ export default function NavbarComp() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <NavLink to="/" className="nav-link text-light" activeclassname="active">Home</NavLink>
-            {/* Mostra il pulsante di logout solo se l'utente è loggato */}
-            {isLoggedIn ? (
-              <button onClick={handleLogout} className="nav-link text-light ms-3">
-                Logout
-              </button>
-            ) : (
-              <NavLink to="/login" className="nav-link text-light ms-3" activeclassname="active">Login</NavLink>
-            )}
+            <div className='d-flex align-items-center'>
+              <NavLink to="/" className="nav-link text-light" activeclassname="active">Home</NavLink>
+              {/* Mostra il pulsante di logout solo se l'utente è loggato */}
+              {isLoggedIn ? (
+                <>
+                  <Dropdown className='nav-link'>
+                    <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                      <Person />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <NavLink className='dropdown-item' to='/profile'>Profile</NavLink>
+                      <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </>
+              ) : (
+                <NavLink to="/login" className="nav-link text-light ms-3" activeclassname="active">Login</NavLink>
+              )}
+            </div>
           </Nav>
 
           <Nav className="d-flex">

@@ -65,3 +65,17 @@
     text-decoration: none;
     color: inherit;
 }
+
+video {
+    width: 20em;
+    border-radius: 2em;
+}
+
+.dropdown-item {
+    background-color: $primary;
+    color: $secondary;
+}
+
+.dropdown-menu {
+    background-color: $primary;
+}
