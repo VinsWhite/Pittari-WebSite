@@ -23,7 +23,7 @@ class StorePost_replyRequest extends FormRequest
     {
         return [
             'context' => 'required|string',
-            'post_id' => 'required|exists:topics,id',
+            'post_id' => 'required|exists:posts,id',
         ];
     }
 }

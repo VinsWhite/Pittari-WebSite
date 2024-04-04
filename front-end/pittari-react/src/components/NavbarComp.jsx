@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -12,6 +12,24 @@ export default function NavbarComp() {
   const isLoggedIn = useSelector(state => state.users.token !== null); 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const interceptor = axios.interceptors.response.use(
+      response => response,
+      error => {
+        if (error.response.status === 401) {
+          // quando si riceve questo errore, esegue il logout automaticamente 
+          dispatch(logoutUser()); 
+          localStorage.removeItem('token');
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axios.interceptors.response.eject(interceptor);
+    };
+  }, [dispatch]);
+
   const handleLogout = async () => {
     try {
       console.log("Token JWT:", localStorage.getItem('token'));
@@ -22,8 +40,6 @@ export default function NavbarComp() {
       console.error("Errore durante il logout:", error);
     }
   };
-  
-
 
   return (
     <Navbar expand="lg" className="bg-primary border-bottom-2 border-primary position-sticky z-3 top-0 w-100">

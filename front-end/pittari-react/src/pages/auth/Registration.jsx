@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import usersSlice from '../../state/slice/usersSlice';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';

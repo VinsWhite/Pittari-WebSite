@@ -4,10 +4,11 @@ import { useState } from 'react';
 /* import DividerComp from '../../../components/articles/DividerComp'; */
 import HeadingArtComp from '../../../components/articles/HeadingArtComp';
 import { ArrowLeft } from 'react-bootstrap-icons';
-import { NavLink } from 'react-router-dom';  
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateArticles() {
   const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -25,7 +26,7 @@ export default function CreateArticles() {
       <Container fluid className='py-5 bg-primary'>
         <div className='container my-5 bg-secondary p-5 rounded-4 shadow'>
 
-      <NavLink to="/articles" className="text-primary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
+        <button onClick={() => navigate(-1)} className="text-dark fs-5 fw-semibold text-decoration-none bg-transparent border-0"><ArrowLeft /> Indietro</button>
 
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
           <Row className="mb-3">

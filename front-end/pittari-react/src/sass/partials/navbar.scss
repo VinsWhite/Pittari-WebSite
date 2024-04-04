@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 .navbar-brand img {
     width: 4em;
 }
@@ -5,9 +7,11 @@
 .nav-link {
     font-size: 1.1rem;
     font-weight: 400;
+    transition: background-color 0.5s;
 
     &.active {
-        text-decoration: underline;
+        background-color: $primary-emphasis;
+        border-radius: 2em;
         font-weight: 600;
     }
 
