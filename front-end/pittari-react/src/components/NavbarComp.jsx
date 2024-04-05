@@ -9,10 +9,12 @@ import { logoutUser } from '../state/slice/usersSlice';
 import axios from '../api/axios';
 import logo from '../assets/img/logo.jpg';
 import { Person } from 'react-bootstrap-icons';
+import { useNavigate } from 'react-router-dom';
 
 export default function NavbarComp() {
   const isLoggedIn = useSelector(state => state.users.token !== null); 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interceptor = axios.interceptors.response.use(
@@ -38,6 +40,7 @@ export default function NavbarComp() {
       await axios.post("/logout"); 
       localStorage.removeItem('token'); 
       dispatch(logoutUser()); 
+      navigate('/');
     } catch (error) {
       console.error("Errore durante il logout:", error);
     }

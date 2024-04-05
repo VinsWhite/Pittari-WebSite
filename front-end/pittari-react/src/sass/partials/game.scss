@@ -1,0 +1,38 @@
+@import './variables.scss';
+
+.lastGame {
+
+    cursor: pointer;
+
+    &:hover {
+        background-color: $primary;
+    }
+
+    .btn {
+        &:hover {
+            background-color: white !important;
+            font-weight: 600;
+        }
+    }
+
+    img {
+        width: 40%;
+        border-radius: 2em;
+    }
+}
+
+.allGames {
+    
+    color: white;
+    cursor: pointer;
+
+    .oneGame {
+        &:hover {
+            background-color: $primary-emphasis-2 !important;
+        }
+    }
+
+    img {
+        width: 20%;
+    }
+}
