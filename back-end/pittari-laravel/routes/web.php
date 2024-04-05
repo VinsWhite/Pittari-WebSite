@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\FruitController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostReplyController;
@@ -32,6 +33,7 @@ Route::post('/post', [PostController::class, 'store']);
 Route::get('/post/{post}', [PostController::class, 'show']);
 Route::post('/reply', [PostReplyController::class, 'store']);
 Route::get('/allGames', [GameController::class, 'index']);
+Route::get('/fruits', [FruitController::class, 'index']);
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
