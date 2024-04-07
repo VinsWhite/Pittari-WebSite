@@ -8,7 +8,7 @@ export default function Section2Comp() {
   return (
     <>
         <div className='bg-primary-emphasis p-5'>
-            <h2 className='text-secondary fw-semibold text-center text-uppercase'>Leggi articoli <span className='fw-bold border bg-white rounded-5 text-primary p-1'>interessanti</span> 😲</h2>
+            <h2 className='text-secondary fw-semibold text-center text-uppercase lh-base'>Leggi articoli <span className='fw-bold border bg-white rounded-5 text-primary p-1'>interessanti</span> 😲</h2>
             <Row className='mt-3 text-light'>
                 <Col className='d-flex justify-content-center align-items-center flex-column'>
                 <img className="welcome" src={articleHomepage} alt="immagine di una ragazza che legge il giornale" />

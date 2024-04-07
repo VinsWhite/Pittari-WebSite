@@ -4,6 +4,7 @@ import { kanjiApi } from '../api/kanji';
 
 export default function GeneralDividerComp() {
   const [randomKanji, setRandomKanji] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,8 +20,10 @@ export default function GeneralDividerComp() {
         const shuffledKanjiData = shuffleArray(kanjiData);
         const randomKanjiData = shuffledKanjiData.slice(0, 12);
         setRandomKanji(randomKanjiData);
+        setError(null); 
       } catch (error) {
         console.error(error);
+        setError(error); 
       }
     };
 
@@ -39,6 +42,14 @@ export default function GeneralDividerComp() {
     }
     return array;
   };
+
+  if (error) {
+    return (
+      <div className='bg-primary-emphasis p-5 text-light fs-3 text-center'>
+        <p>漢字が大好きです！</p>
+      </div>
+    );
+  }
 
   return (
     <div className='bg-primary-emphasis p-5 text-light fs-3'>

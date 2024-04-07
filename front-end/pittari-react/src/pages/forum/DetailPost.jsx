@@ -15,6 +15,13 @@ export default function DetailPost() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    const scrollToTop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth' 
+        });
+      };
+
     useEffect(() => {
         const fetchPost = async () => {
             try {
@@ -25,6 +32,7 @@ export default function DetailPost() {
             }
         };
 
+        scrollToTop();
         fetchPost();
     }, [postId]);
 

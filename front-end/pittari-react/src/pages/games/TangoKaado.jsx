@@ -25,7 +25,6 @@ export default function TangoKaado() {
   }, []);
 
   useEffect(() => {
-    // Avvia l'audio quando il componente è montato
     const audioElement = document.getElementById('audio');
     if (audioElement) {
       audioElement.play();
@@ -34,12 +33,12 @@ export default function TangoKaado() {
 
   const goToNextCard = () => {
     setCurrentCardIndex((prevIndex) => (prevIndex === fruits.length - 1 ? 0 : prevIndex + 1));
-    setAudioKey(prevKey => prevKey + 1); // Aggiorna la chiave per forzare il ri-render dell'elemento audio
+    setAudioKey(prevKey => prevKey + 1); 
   };
 
   const goToPreviousCard = () => {
     setCurrentCardIndex((prevIndex) => (prevIndex === 0 ? fruits.length - 1 : prevIndex - 1));
-    setAudioKey(prevKey => prevKey + 1); // Aggiorna la chiave per forzare il ri-render dell'elemento audio
+    setAudioKey(prevKey => prevKey + 1); 
   };
 
   return (

@@ -26,6 +26,7 @@ Route::get('/', function () {
 });
 
 Route::get('/articles', [ArticleController::class, 'index']);
+Route::get('/articles/{article}', [ArticleController::class, 'show']);
 Route::get('/topics', [TopicController::class, 'index'])->middleware('auth');
 Route::get('/topics/{topic}', [TopicController::class, 'show'])->middleware('auth');
 Route::get('/allPosts', [PostController::class, 'index']);

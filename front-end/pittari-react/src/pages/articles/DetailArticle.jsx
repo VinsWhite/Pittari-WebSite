@@ -30,10 +30,10 @@ export default function DetailArticle() {
             <NavLink to="/articles" className="text-secondary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
                 <h2 className='my-3 text-center fw-semibold'>{article.title}</h2>
                 <Row>
-                    <Col>
+                    <Col sm={12} lg={6} className='text-center pb-lg-3'>
                         <img src={article.image ? `http://localhost:8000${article.image}` : defaultImage} alt="Immagine articolo" />
                     </Col>
-                    <Col>
+                    <Col sm={12} lg={6}>
                         <p>{article.description}</p>
                     </Col>
                 </Row>

@@ -17,6 +17,13 @@ export default function DetailTopic() {
     const isAuthenticated = useSelector(state => state.users.token !== null); // Leggi lo stato dell'autenticazione da Redux
     const navigate = useNavigate();
 
+    const scrollToTop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth' 
+        });
+      };
+
     useEffect(() => {
         const fetchTopic = async () => {
             try {
@@ -28,6 +35,7 @@ export default function DetailTopic() {
             }
         };
 
+        scrollToTop();
         fetchTopic();
     }, [id]);
 

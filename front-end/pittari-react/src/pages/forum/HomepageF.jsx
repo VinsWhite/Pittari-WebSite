@@ -11,6 +11,13 @@ export default function HomepageF() {
   const navigate = useNavigate();
   const isLoggedIn = useSelector(state => state.users.token !== null); 
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' 
+    });
+  };
+
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/login');
@@ -20,6 +27,10 @@ export default function HomepageF() {
   if (!isLoggedIn) {
     return null; 
   }
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
   return (
     <>

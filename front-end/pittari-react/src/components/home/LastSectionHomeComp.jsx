@@ -39,7 +39,6 @@ export default function LastSectionHomeComp() {
 
   const randomIndex = Math.floor(Math.random() * kanjiData.examples.length);
   const randomExample = kanjiData.examples[randomIndex];
-  const randomExampleAudio = kanjiData.examples[randomIndex].audio.mp3;
 
   return (
     <>
