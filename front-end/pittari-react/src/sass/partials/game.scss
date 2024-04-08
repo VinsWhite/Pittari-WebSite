@@ -1,5 +1,6 @@
 @import './variables.scss';
 
+// Sezione LastGame
 .lastGame {
 
     cursor: pointer;
@@ -17,10 +18,11 @@
 
     img {
         width: 40%;
-        border-radius: 2em;
+        border-radius: 1em;
     }
 }
 
+// Sezione tutti i giochi
 .allGames {
     
     color: white;
@@ -37,7 +39,7 @@
     }
 }
 
-//flashcards
+// Sezione gioco 1 flashcards
 
 .flashcard {
     img {
@@ -51,4 +53,15 @@
         }
     }
     
+}
+
+// Sezione gioco 2 quiz game
+
+.quiz {
+    li {
+        list-style: none;
+        border: 0.1em solid rgb(143, 141, 141);
+        padding: 0.5em;
+        margin-top: 0.2em;
+    }
 }

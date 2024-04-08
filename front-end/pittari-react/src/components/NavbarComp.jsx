@@ -20,23 +20,21 @@ export default function NavbarComp() {
     const interceptor = axios.interceptors.response.use(
       response => response,
       error => {
-        if (error.response.status === 401) {
+        if (error.response && error.response.status === 401) {
           // quando si riceve questo errore, esegue il logout automaticamente 
-          dispatch(logoutUser()); 
-          localStorage.removeItem('token');
+          handleLogout(); 
         }
         return Promise.reject(error);
       }
     );
-
+  
     return () => {
       axios.interceptors.response.eject(interceptor);
     };
-  }, [dispatch]);
+  }, []);
 
   const handleLogout = async () => {
     try {
-      console.log("Token JWT:", localStorage.getItem('token'));
       await axios.post("/logout"); 
       localStorage.removeItem('token'); 
       dispatch(logoutUser()); 

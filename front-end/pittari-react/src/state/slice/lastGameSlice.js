@@ -2,13 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const lastGameSlice = createSlice({
   name: 'lastGame',
-  initialState: {
-    lastGame: null,
-    serialize: false,
-  },
+  initialState: null,
   reducers: {
     setLastGame: (state, action) => {
-      state.lastGame = action.payload;
+      return action.payload; 
     }
   }
 });

@@ -17,6 +17,7 @@ import DetailPost from './pages/forum/DetailPost'
 import Profile from './pages/profile/Profile'
 import TangoKaado from './pages/games/TangoKaado'
 import WaadoGeemu from './pages/games/WaadoGeemu'
+import KuizuGeemu from './pages/games/KuizuGeemu'
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/learn" element={<HomepageG />}></Route>
           <Route path="/learn/単語カード" element={<TangoKaado />}></Route>
           <Route path="/learn/ワードゲーム" element={<WaadoGeemu />}></Route>
+          <Route path="/learn/クイズゲーム" element={<KuizuGeemu />}></Route>
           {/* PROFILE */}
           <Route path="/profile" element={<Profile />}></Route>
           {/* FORUM */}

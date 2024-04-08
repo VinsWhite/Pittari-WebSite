@@ -1,33 +1,33 @@
-import React from 'react'
-import { Container, Button, Row, Col } from 'react-bootstrap'
-import placeholder from '../../assets/img/hashi.jpg'
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import placeholder from '../../assets/img/hashi.jpg';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 export default function LastGameComp() {
+  const lastGame = useSelector((state) => state.lastGame);
+
   return (
-    <>
-        <div className='bg-primary-darker text-light p-5'>
-            <Container>
-                <div className='lastGame bg-primary-emphasis p-4 rounded-4 shadow'>
-                    <h5 className='opacity-75'>Cosa stai studiando</h5>
-                    <h2>Titolo gioco</h2>
+    <div className='bg-primary-darker p-5'>
+       <NavLink to={lastGame && lastGame.name ? `/learn/${lastGame.name}` : '/learn'} className='text-decoration-none text-light'>
 
-                    <Row>
-                        <Col>
-                            <img src={placeholder} alt="ultimo gioco" /> 
-                        </Col>
-                        <Col>
-                            <p>Argomento</p>
-                            <p>Difficoltà</p>
-                        </Col>
-                    </Row>
+        <Container>
+          <div className='lastGame bg-primary-emphasis p-4 rounded-4 shadow'>
+            <h5 className='opacity-75'>Cosa stai studiando</h5>
 
-                    <div className='mt-3'>
-                        <Button variant='secondary' className='text-dark'>INIZIA</Button>
-                    </div>
+            <Row>
+              <Col sm={12} md={6} className='d-flex align-items-center justify-content-center d-md-block'>
+                <img src={lastGame ? `http://localhost:8000${lastGame.image}` : placeholder} alt="Ultimo gioco" />
+              </Col>
+              <Col sm={12} md={6} className='d-flex flex-column justify-content-center align-items-center pt-4 pt-md-0'>
+                <h2>{lastGame ? lastGame.name : 'Non hai ancora avviato nessun gioco'}</h2>
+                <p>{lastGame ? lastGame.typology : ''}</p>
+              </Col>
+            </Row>
 
-                </div>
-            </Container>
-        </div>
-    </>
-  )
+          </div>
+        </Container>
+      </NavLink>
+    </div>
+  );
 }

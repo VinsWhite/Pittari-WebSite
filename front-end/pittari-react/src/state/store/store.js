@@ -13,9 +13,9 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  articles: articlesReducer, // slice degli articoli
-  topics: topicsReducer, // slice dei topics
-  users: usersReducer, //slice degli users
+  articles: articlesReducer,
+  topics: topicsReducer,
+  users: usersReducer,
   lastGame: persistReducer(persistConfig, lastGameReducer),
 });
 
@@ -24,5 +24,12 @@ const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+console.log('Stato iniziale:', store.getState());
+
+persistor.subscribe(() => {
+  console.log('Stato persistito:', store.getState());
+  console.log(store.getState().lastGame.id);
+});
 
 export default store;
