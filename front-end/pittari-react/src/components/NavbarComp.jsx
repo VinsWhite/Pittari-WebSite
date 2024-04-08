@@ -65,7 +65,7 @@ export default function NavbarComp() {
                       <Person />
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
+                    <Dropdown.Menu className='dropdown-menu'>
                       <NavLink className='dropdown-item' to='/profile'>Profile</NavLink>
                       <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                     </Dropdown.Menu>

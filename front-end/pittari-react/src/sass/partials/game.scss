@@ -58,10 +58,15 @@
 // Sezione gioco 2 quiz game
 
 .quiz {
+
+    ul {
+        padding-left: 0;
+    }
+    
     li {
         list-style: none;
-        border: 0.1em solid rgb(143, 141, 141);
-        padding: 0.5em;
+        border: 0.1em solid rgb(174, 171, 171);
+        padding: 0.3em;
         margin-top: 0.2em;
     }
 }

@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fruits', function (Blueprint $table) {
+        Schema::create('pronouns', function (Blueprint $table) {
             $table->id();
             $table->string('japanese_name');
-            $table->string('furigana')->nullable();
+            $table->text('furigana')->nullable();
             $table->string('audio');
             $table->string('image')->nullable();
             $table->string('italian_translation');

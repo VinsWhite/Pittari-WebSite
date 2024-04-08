@@ -42,7 +42,7 @@ export default function AllGames() {
                   games.map((game) => (
                     <Col key={game.id} xs={12} lg={6}>
                       <NavLink to={`/learn/${game.name}`} className="nav-link-custom" onClick={() => handleStartGame(game)}>
-                        <div className='oneGame bg-primary d-flex p-3 align-items-center justify-content-between shadow mt-2'>
+                        <div className='oneGame bg-primary d-flex p-3 align-items-center justify-content-between shadow mt-4'>
                           <img className='rounded-2' src={`http://localhost:8000${game.image}`} alt={game.name} />
                           <h3>{game.name}</h3>
                           <div className='text-center bg-primary-darker p-2 rounded-4'>
