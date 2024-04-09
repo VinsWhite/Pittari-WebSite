@@ -17,6 +17,7 @@
 
 .animatedTitle {
     animation: slideInFromBottom 1.5s ease-in-out forwards;
+    text-shadow: 2px 2px 4px #000;
 }
   
 @keyframes slideInFromBottom {

@@ -91,3 +91,17 @@ video {
 .dropdown-menu {
     background-color: $primary;
 }
+
+.loadingImage {
+    width: 10em;
+}
+
+.loading {
+    transition: transform 0.2s ease;
+    animation: scaleAnimation 1.5s infinite alternate; /* Definisci un'animazione che si ripeta continuamente */
+
+    @keyframes scaleAnimation {
+        0% { transform: scale(1); opacity: 0.7;  } /* Stato iniziale */
+        100% { transform: scale(1.1); opacity: 1; } /* Stato finale */
+    }
+}

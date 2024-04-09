@@ -6,6 +6,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import DividerComp from '../../components/articles/DividerComp';
 import { NavLink } from 'react-router-dom';
 import { ArrowLeft } from 'react-bootstrap-icons';
+import axios from '../../api/axios'; // Importa axios per effettuare la chiamata AJAX
 
 export default function DetailArticle() {
     const { id } = useParams();
@@ -13,12 +14,13 @@ export default function DetailArticle() {
     const [article, setArticle] = useState(null);
 
     useEffect(() => {
-        const article = articles.find(article => article.id === parseInt(id));
-        if (article) {
-            setArticle(article);
-        }
+        axios.get(`/articles/${id}`).then(response => {
+            setArticle(response.data);
+            console.log(response.data)
+        }).catch(error => {
+            console.error('Errore durante il recupero dell\'articolo:', error);
+        });
     }, [articles, id]);
-
 
     if (!article) {
         return <div>Articolo non trovato</div>;

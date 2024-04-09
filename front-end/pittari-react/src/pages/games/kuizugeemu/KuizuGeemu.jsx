@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
-import axios from '../../api/axios';
-import stock from '../../assets/functions/stock';
+import axios from '../../../api/axios';
+import stock from '../../../assets/functions/stock';
 
 export default function KuizuGeemu() {
     const navigate = useNavigate();
@@ -48,6 +48,7 @@ export default function KuizuGeemu() {
             do {
                 const randomIndex = Math.floor(Math.random() * selectedData.length);
                 selectedElement = selectedData[randomIndex];
+                console.log('domanda')
             } while (usedQuestions.includes(selectedElement.id) && usedQuestions.length < selectedData.length);
 
             const questionText = `Cosa significa "${selectedElement.japanese_name}"?`;
@@ -115,7 +116,8 @@ export default function KuizuGeemu() {
     };
 
     const handleEndQuestion = () => {
-        navigate('/learn/クイズゲーム/answers', { state: { howManyCorrected, maxQuestions } });
+        const allowed = true;
+        navigate('/learn/クイズゲーム/answers', { state: { howManyCorrected, maxQuestions, allowed } });
     }    
 
     return (

@@ -17,8 +17,8 @@ import DetailPost from './pages/forum/DetailPost'
 import Profile from './pages/profile/Profile'
 import TangoKaado from './pages/games/TangoKaado'
 import WaadoGeemu from './pages/games/WaadoGeemu'
-import KuizuGeemu from './pages/games/KuizuGeemu'
-import AnswerPage from './components/games/kuizugeemu/AnswerPage'
+import KuizuGeemu from './pages/games/kuizugeemu/KuizuGeemu'
+import AnswerPage from './pages/games/kuizugeemu/AnswerPage'
 
 function App() {
 

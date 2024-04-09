@@ -10,7 +10,14 @@ const stock = () => {
         '桜の季節は、春の花が咲く月です',
         '「日本語でパラパラ」significa essere fluenti in giapponese',
         'お母さんが使ったお弁当がうまい！！',
-        '東京は世界でほぼ最も人口が多い都市です'
+        '東京は世界でほぼ最も人口が多い都市です',
+        '一日に鏡で何回を見りますか？',
+        'この世界は難しいです、、、',
+        '一、に、三、ありがとう',
+        '「鏡」 significa "specchio"',
+        '東京にとても楽しみ',
+        '「キーボード」significa tastiera e proviene dalla parola inglese keyboard',
+        '「こういうサイトが必要です」と思いますか？" '
     ];
 
     const randomIndex = Math.floor(Math.random() * phrases.length);

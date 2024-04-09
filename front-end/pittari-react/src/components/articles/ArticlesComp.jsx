@@ -4,6 +4,7 @@ import { setArticles } from '../../state/slice/articlesSlice';
 import axios from '../../api/axios';
 import { Search } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';  
+import stock from '../../assets/functions/stock';
 
 import defaultImage from '../../assets/img/defaultImage.jpg'; // Immagine di default in caso l'articolo non abbia un'immagine
 import caricamento from '../../assets/img/paperNews.jpg';
@@ -15,6 +16,7 @@ export default function ArticlesComp() {
   const [searchInput, setSearchInput] = useState(''); // stato locale per la ricerca
   const [filteredArticles, setFilteredArticles] = useState([]); // stato locale per gli articoli che sono stati filtrati 
   const [loading, setLoading] = useState(true); // stato locale per il caricamento
+  const [stockPhrase, setStockPhrase] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,6 +35,10 @@ export default function ArticlesComp() {
     fetchArticles();
   }, [dispatch]); 
 
+  useEffect(() => {
+    setStockPhrase(stock());
+  }, []);
+
   if (loading) {
     return (
       <>
@@ -48,7 +54,7 @@ export default function ArticlesComp() {
           </div>
           <div className='d-flex flex-column justify-content-center align-items-center'>
             <img src={caricamento} className='loadingImage loading rounded-circle my-4' alt="caricamento" />
-            <h4 className='text-center text-light fw-semibold loading'>Caricamento...</h4>
+            <p className='text-light opacity-75'>{stockPhrase}</p>
           </div>
         </Container>
       </>

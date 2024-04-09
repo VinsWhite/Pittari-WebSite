@@ -6,6 +6,7 @@ import { setTopics } from '../../state/slice/topicsSlice';
 import { NavLink } from 'react-router-dom';
 import { Person, ChatLeft } from 'react-bootstrap-icons';
 import formatDate from '../../assets/functions/formatDate';
+import stock from '../../assets/functions/stock';
 
 import caricamento from '../../assets/img/fuji.jpg';
 
@@ -13,6 +14,7 @@ export default function TopicsComp() {
     const topics = useSelector(state => state.topics);
     const [posts, setPosts] = useState([]);
     const [visiblePosts, setVisiblePosts] = useState(10); // Numero di post visibili inizialmente
+    const [stockPhrase, setStockPhrase] = useState('');
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -42,6 +44,10 @@ export default function TopicsComp() {
         fetchPosts();
     }, []);
 
+    useEffect(() => {
+        setStockPhrase(stock());
+    }, []);
+
     const loadMorePosts = () => {
         setVisiblePosts(prevVisiblePosts => prevVisiblePosts + 10);
     };
@@ -51,7 +57,7 @@ export default function TopicsComp() {
             <Container fluid className='bg-primary-darker p-5'>
                 <div className='d-flex flex-column justify-content-center align-items-center'>
                     <img src={caricamento} className='loadingImage loading rounded-circle my-4' alt="caricamento" />
-                    <h4 className='text-center text-light fw-semibold loading'>Caricamento...</h4>
+                    <p className='text-light opacity-75'>{stockPhrase}</p>
                 </div>
             </Container>
         );

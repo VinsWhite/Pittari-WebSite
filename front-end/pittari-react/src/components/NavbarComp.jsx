@@ -45,7 +45,7 @@ export default function NavbarComp() {
   };
 
   return (
-    <Navbar expand="lg" className="bg-primary border-bottom-2 border-primary position-sticky z-3 top-0 w-100">
+    <Navbar expand="lg" className="bg-primary position-sticky z-3 top-0 w-100">
       <Container fluid>
         <NavLink to="/" className="navbar-brand text-dark"><img src={logo} className='rounded-circle p-1' alt="logo pittari" /></NavLink>
         <Navbar.Toggle aria-controls="navbarScroll" />
