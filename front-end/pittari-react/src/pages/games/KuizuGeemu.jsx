@@ -10,8 +10,13 @@ export default function KuizuGeemu() {
     const [question, setQuestion] = useState('');
     const [answers, setAnswers] = useState([]);
     const [usedQuestions, setUsedQuestions] = useState([]);
+    const [correctAnswer, setCorrectAnswer] = useState('');
+    const [userAnswer, setUserAnswer] = useState('');
     const [questionsCount, setQuestionsCount] = useState(0);
-    const maxQuestions = 10;
+    const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null); // stato per memorizzare l'indice della risposta selezionata
+    const maxQuestions = 10; 
+    const [answerSelected, setAnswerSelected] = useState(false);
+    const [howManyCorrected, setHowManyCorrected] = useState(0); // stato per memorizzare tutte le risposte corrette
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -47,6 +52,7 @@ export default function KuizuGeemu() {
 
             const questionText = `Cosa significa "${selectedElement.japanese_name}"?`;
             const correctAnswer = selectedElement.italian_translation;
+            setCorrectAnswer(correctAnswer);
 
             const allTranslations = selectedData.map(item => item.italian_translation);
             const randomTranslations = getRandomTranslations(allTranslations, correctAnswer);
@@ -59,6 +65,9 @@ export default function KuizuGeemu() {
             // aggiorniamo le domande utilizzate e il conteggio
             setUsedQuestions([...usedQuestions, selectedElement.id]);
             setQuestionsCount(questionsCount + 1);
+
+            // resetta lo stato di domanda risposta
+            setAnswerSelected(false);
         }
     };
 
@@ -82,17 +91,36 @@ export default function KuizuGeemu() {
         return array;
     };
 
+    const handleAnswer = (selectedAnswer, index) => { 
+        if (!answerSelected) {
+            if (selectedAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
+                /* console.log('Risposta corretta!'); */
+                setHowManyCorrected(howManyCorrected + 1);
+                /* console.log(howManyCorrected); */
+            } else {
+                /* console.log('Risposta sbagliata!'); */
+            }
+            setUserAnswer(selectedAnswer);
+            setSelectedAnswerIndex(index); 
+            setAnswerSelected(true);
+        }
+    }
+    
+    
+
     const handleNextQuestion = () => {
+        setUserAnswer('');
+        setSelectedAnswerIndex(null);
         generateQuestion(data);
     };
 
     const handleEndQuestion = () => {
-        navigate('/learn');
-    }
+        navigate('/learn/クイズゲーム/answers', { state: { howManyCorrected, maxQuestions } });
+    }    
 
     return (
         <Container fluid className='bg-primary-darker p-5 d-flex justify-content-center'>
-            <div className='p-5 bg-secondary rounded-4 quiz'>
+            <div className='p-5 bg-secondary rounded-4 quiz shadow'>
                 {loading ? (
                     <>
                         <div className='text-center'>
@@ -107,7 +135,11 @@ export default function KuizuGeemu() {
                         <h2>{question}</h2>
                         <ul>
                             {answers.map((answer, index) => (
-                                <li key={index}>{answer}</li>
+                                <li key={index} 
+                                    onClick={() => handleAnswer(answer, index)} 
+                                    className={(selectedAnswerIndex !== null && selectedAnswerIndex === index) ? (userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase() ? 'correct' : 'wrong') : ''}> 
+                                    {answer}
+                                </li>
                             ))}
                         </ul>
 

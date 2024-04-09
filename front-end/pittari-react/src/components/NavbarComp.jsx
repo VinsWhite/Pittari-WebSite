@@ -7,7 +7,7 @@ import { Dropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../state/slice/usersSlice'; 
 import axios from '../api/axios';
-import logo from '../assets/img/logo.jpg';
+import logo from '../assets/img/logoP.jpg';
 import { Person } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ export default function NavbarComp() {
     const interceptor = axios.interceptors.response.use(
       response => response,
       error => {
-        if (error.response && error.response.status === 401) {
+        if (error.response && error.response.status === 401 && isLoggedIn) {
           // quando si riceve questo errore, esegue il logout automaticamente 
           handleLogout(); 
         }

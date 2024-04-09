@@ -66,7 +66,33 @@
     li {
         list-style: none;
         border: 0.1em solid rgb(174, 171, 171);
-        padding: 0.3em;
+        border-radius: 2em;
+        padding: 0.8em;
         margin-top: 0.2em;
+
+        &:hover {
+            background-color: rgb(220, 214, 214);
+        }
     }
+
+    .correct {
+        background-color: #36d44e;
+        border: 0.1em solid rgb(6, 192, 6);
+        color: white; 
+
+        &:hover {
+            background-color: #31c146;
+        }
+    }
+    
+    .wrong {
+        background-color: rgb(247, 65, 65);
+        border: 0.1em solid rgb(253, 37, 37);
+        color: white; 
+
+        &:hover {
+            background-color: rgb(244, 46, 46);
+        }
+    }
+    
 }
