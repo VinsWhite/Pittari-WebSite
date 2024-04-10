@@ -9,7 +9,7 @@ export default function HomepageG() {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth' 
+      behavior: 'instant' 
     });
   };
 

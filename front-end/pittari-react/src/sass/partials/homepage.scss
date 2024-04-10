@@ -16,6 +16,7 @@
 }
 
 .animatedTitle {
+    user-select: none;
     animation: slideInFromBottom 1.5s ease-in-out forwards;
     text-shadow: 2px 2px 4px #000;
 }
@@ -29,6 +30,10 @@
       opacity: 1;
       transform: translateY(0);
     }
+}
+
+h5 {
+    user-select: none;
 }
 
 .animatedText span {
@@ -61,7 +66,13 @@
   }
   
   .kanji-item {
+    cursor: pointer;
     animation: slide 5s linear infinite;
+  
+    &:hover {
+      animation-play-state: paused;
+      animation: scaleAndFade 0.7s forwards;
+    }
   }
   
   @keyframes slide {
@@ -72,7 +83,49 @@
       transform: translateX(-100%);
     }
     100% {
-        transform: translateX(0%);
+      transform: translateX(0%);
     }
+  }
+  
+  @keyframes scaleAndFade {
+    from {
+      transform: scale(1);
+      opacity: 1;
+      color: white;
+    }
+    to {
+      transform: scale(1.2);
+      opacity: 1;
+      color: rgb(28, 28, 28);
+    }
+  }
+  
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn 1.5s ease-in-out;
+  }
+  
+  @keyframes animationFromBottom {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(20%);
+    }
+  }
+  
+  .animationFromBottom {
+    opacity: 0;
+    animation: animationFromBottom 1.5s ease-in-out forwards;
   }
   

@@ -7,6 +7,10 @@ import { NavLink } from 'react-router-dom';
 export default function LastGameComp() {
   const lastGame = useSelector((state) => state.lastGame);
 
+  if (!lastGame || typeof lastGame !== 'object' || !lastGame.name || !lastGame.image) {
+    return null;
+  }
+
   return (
     <div className='bg-primary-darker p-5'>
        <NavLink to={lastGame && lastGame.name ? `/learn/${lastGame.name}` : '/learn'} className='text-decoration-none text-light'>

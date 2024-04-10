@@ -6,12 +6,24 @@ import { Container, Row, Col } from 'react-bootstrap';
 import DividerComp from '../../components/articles/DividerComp';
 import { NavLink } from 'react-router-dom';
 import { ArrowLeft } from 'react-bootstrap-icons';
-import axios from '../../api/axios'; // Importa axios per effettuare la chiamata AJAX
+import axios from '../../api/axios';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 export default function DetailArticle() {
     const { id } = useParams();
     const articles = useSelector(state => state.articles);
     const [article, setArticle] = useState(null);
+
+    const scrollToTop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'instant' 
+        });
+      };
+    
+      useEffect(() => {
+        scrollToTop();
+      });
 
     useEffect(() => {
         axios.get(`/articles/${id}`).then(response => {
@@ -23,7 +35,26 @@ export default function DetailArticle() {
     }, [articles, id]);
 
     if (!article) {
-        return <div>Articolo non trovato</div>;
+        return (
+            <div className='detailArticle bg-primary-darker py-5 text-light'>
+                <Container className='pb-5'>
+                <NavLink to="/articles" className="text-secondary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
+                    <SkeletonTheme baseColor='#c4c2c2' hightlightColor='#f5f5f5'>
+                        <h2 className='my-3 text-center fw-semibold'><Skeleton /></h2>
+                        <Row>
+                            <Col sm={12} lg={6} className='text-center pb-lg-3'>
+                                <Skeleton className='rounded-4' style={{ width: '80%', height: '20em'}}/>
+
+                            </Col>
+                            <Col sm={12} lg={6}>
+                                <p><Skeleton count={2}/></p>
+                            </Col>
+                        </Row>
+                    </SkeletonTheme>
+                </Container>
+                <DividerComp />
+            </div>
+        );
     }
 
     return (

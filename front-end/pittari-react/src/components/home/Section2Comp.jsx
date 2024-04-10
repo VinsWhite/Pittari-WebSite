@@ -14,7 +14,7 @@ export default function Section2Comp() {
                 <Col className='d-flex justify-content-center align-items-center flex-column'>
                 <img className="welcome" src={articleHomepage} alt="immagine di una ragazza che legge il giornale" />
                 </Col>
-                <Col className='d-flex flex-column justify-content-center position-relative'>
+                <Col className='d-flex flex-column justify-content-center position-relative jump'>
                     <Paperclip className='fs-1 position-absolute bottom-50 end-100'/>
                     <h4>Articoli di ogni genere!</h4>
                     <p>Immergiti in viaggi culturali attraverso i nostri articoli che esplorano le diverse tradizioni del Giappone e offrono approfondimenti sulla lingua e sulla letteratura.</p>

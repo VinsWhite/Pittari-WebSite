@@ -19,6 +19,7 @@ import TangoKaado from './pages/games/TangoKaado'
 import WaadoGeemu from './pages/games/WaadoGeemu'
 import KuizuGeemu from './pages/games/kuizugeemu/KuizuGeemu'
 import AnswerPage from './pages/games/kuizugeemu/AnswerPage'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 
 function App() {
 
@@ -50,6 +51,8 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           {/* NOT FOUND PAGE */ }
           <Route path="*" element={<NotFoundpage />}></Route>
+          {/* PRIVACY POLICY */ }
+          <Route path="/privacy-policy" element={<PrivacyPolicy />}></Route>
         </Routes>
       <FooterComp />
       </BrowserRouter>
