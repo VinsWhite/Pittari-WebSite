@@ -3,6 +3,7 @@
 use App\Http\Controllers\AllArguments;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\FruitController;
 use App\Http\Controllers\GameController;
@@ -41,6 +42,7 @@ Route::get('/pronouns', [PronounsController::class, 'index']);
 Route::get('/allArguments', [AllArguments::class, 'index']);
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/passwordReset', [PasswordResetLinkController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 
 Route::get('/dashboard', function(){

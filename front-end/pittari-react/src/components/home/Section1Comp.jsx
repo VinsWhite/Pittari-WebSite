@@ -27,7 +27,7 @@ export default function Section1Comp() {
       <div className='bg-primary p-5'>
         <h2 className='text-secondary fw-semibold text-center text-uppercase'>Totalmente gratuito!</h2>
         <Row className='mt-3 text-light'>
-          <Col className='d-flex justify-content-center flex-column'>
+          <Col className='d-flex justify-content-center flex-column' sm={12} lg={6}>
 
             <h2 ref={ref} className={`text-primary my-4 text-center border border-light bg-light rounded-4 p-2 ${isVisible ? 'animationFromBottom' : 'opacity-0'}`}>Immergiti nel mondo di Pittari! </h2>
             <div className={`d-flex align-items-center flex-column flex-md-row text-center ${isVisible ? 'animationFromBottom' : 'opacity-0'}`}>
@@ -50,7 +50,7 @@ export default function Section1Comp() {
               </div>
             </div>
           </Col>
-          <Col className='d-flex justify-content-center align-items-center'>
+          <Col className='d-flex justify-content-center align-items-center' sm={12} lg={6}>
             <img src={speak} alt="immagine di due persone che parlano" className={`welcome ${isVisible ? 'animationFromBottom' : 'opacity-0'}`} />
           </Col>
         </Row>

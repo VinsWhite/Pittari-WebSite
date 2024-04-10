@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -16,37 +15,75 @@ export default function Registration() {
     const [surname, setSurname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState(""); // campo FONDAMENTALE, mi ha fatto sbagliare un sacco
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    async function handleSubmit(e) {
+    const validateName = (value) => {
+        if (value.length > 40) {
+            return "Il nome non può superare i 40 caratteri";
+        }
+        return "";
+    };
+
+    const validateSurname = (value) => {
+        if (value.length > 40) {
+            return "Il cognome non può superare i 40 caratteri";
+        }
+        return "";
+    };
+
+    const validateEmail = (value) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            return "Per favore inserisci un'email valida";
+        }
+        return "";
+    };
+
+    const validatePassword = (value) => {
+        if (value.length < 6) {
+            return "La password deve contenere almeno 6 caratteri";
+        }
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/;
+        if (!passwordRegex.test(value)) {
+            return "La password deve contenere almeno un carattere speciale e un numero";
+        }
+        return "";
+    };
+
+    const validateConfirmPassword = (value) => {
+        if (value !== password) {
+            return "Le password non corrispondono";
+        }
+        return "";
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // verifica che le password corrispondono
+        // verifica che le password corrispondano
         if (password !== confirmPassword) {
             setError("Le password non corrispondono");
             return;
         }
-    
+
         try {
-          await axios.get("/sanctum/csrf-cookie");
-          const response = await axios.post("/register", {
-            name: name,
-            surname: surname,
-            email: email,
-            password: password,
-            password_confirmation: confirmPassword,
-            role: "user"
-        });
-        
-          navigate('/login');
-          console.log(response.data); // risposta del backend
+            await axios.get("/sanctum/csrf-cookie");
+            const response = await axios.post("/register", {
+                name: name,
+                surname: surname,
+                email: email,
+                password: password,
+                password_confirmation: confirmPassword,
+                role: "user"
+            });
+            navigate('/login');
+            console.log(response.data); // risposta del backend
         } catch (error) {
-          setError(error.response.data.message); 
+            setError(error.response.data.message);
         }
-      }
+    };
 
     return (
         <>
@@ -63,9 +100,10 @@ export default function Registration() {
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="Inserisci il tuo nome"
+                                    isInvalid={validateName(name)}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Per favore inserisci un nome valido.
+                                    {validateName(name)}
                                 </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group as={Col} controlId="validationCustom02">
@@ -76,9 +114,10 @@ export default function Registration() {
                                     value={surname}
                                     onChange={(e) => setSurname(e.target.value)}
                                     placeholder="Inserisci il tuo cognome"
+                                    isInvalid={validateSurname(surname)}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Inserisci un cognome valido.
+                                    {validateSurname(surname)}
                                 </Form.Control.Feedback>
                             </Form.Group>
                         </Row>
@@ -93,9 +132,10 @@ export default function Registration() {
                                     placeholder="Inserisci la tua email"
                                     aria-describedby="inputGroupPrepend"
                                     required
+                                    isInvalid={validateEmail(email)}
                                 />
                                 <Form.Control.Feedback type="invalid">
-                                    Per favore inserisci un email valida
+                                    {validateEmail(email)}
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
@@ -107,12 +147,12 @@ export default function Registration() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Inserisci la tua password"
                                 required
+                                isInvalid={validatePassword(password)}
                             />
                             <Form.Control.Feedback type="invalid">
-                                Per favore inserisci la tua password
+                                {validatePassword(password)}
                             </Form.Control.Feedback>
                         </Form.Group>
-                        {/* campo per la conferma della password */}
                         <Form.Group className="mb-3" controlId="validationCustomConfirmPassword">
                             <Form.Label>Conferma Password</Form.Label>
                             <Form.Control
@@ -121,9 +161,10 @@ export default function Registration() {
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 placeholder="Conferma la tua password"
                                 required
+                                isInvalid={validateConfirmPassword(confirmPassword)}
                             />
                             <Form.Control.Feedback type="invalid">
-                                Le password non corrispondono
+                                {validateConfirmPassword(confirmPassword)}
                             </Form.Control.Feedback>
                         </Form.Group>
                         <Button variant='warning' type="submit">Registrati</Button>

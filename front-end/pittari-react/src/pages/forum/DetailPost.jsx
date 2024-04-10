@@ -6,6 +6,7 @@ import axios from '../../api/axios';
 import { ArrowLeft, Person, ChatLeft, Share, PersonBadge } from 'react-bootstrap-icons';
 import caricamento from '../../assets/img/hashi.jpg'
 import formatDate from '../../assets/functions/formatDate';
+import stock from '../../assets/functions/stock';
 
 export default function DetailPost() {
     const { topicId, postId } = useParams();
@@ -14,6 +15,7 @@ export default function DetailPost() {
     const [newReply, setNewReply] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [stockPhrase, setStockPhrase] = useState('');
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -36,13 +38,17 @@ export default function DetailPost() {
         fetchPost();
     }, [postId]);
 
+    useEffect(() => {
+        setStockPhrase(stock());
+    }, []);
+
     if (!post) {
         return <>
             <Container fluid className='bg-primary-darker p-5'>
                 <NavLink className="text-secondary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
                 <div className='d-flex flex-column justify-content-center align-items-center'>
                     <img src={caricamento} className='loadingImage loading rounded-circle my-4' alt="caricamento" />
-                    <h4 className='text-center text-light fw-semibold loading'>Caricamento...</h4>
+                    <p className='text-light opacity-75'>{stockPhrase}</p>
                 </div>
             </Container>
             <DividerComp />

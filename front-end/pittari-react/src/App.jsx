@@ -20,11 +20,17 @@ import WaadoGeemu from './pages/games/WaadoGeemu'
 import KuizuGeemu from './pages/games/kuizugeemu/KuizuGeemu'
 import AnswerPage from './pages/games/kuizugeemu/AnswerPage'
 import PrivacyPolicy from './pages/PrivacyPolicy'
+import PasswordReset from './pages/auth/PasswordReset'
+import ToTop from './pages/ToTop'
+import { Container } from 'react-bootstrap'
 
 function App() {
 
   return (
       <BrowserRouter>
+      <Container fluid className='position-fixed bottom-0 end-0 z-1 p-4'>
+        <ToTop />
+      </Container>
       <NavbarComp />
         <Routes>
           <Route path="/" element={<Homepage />}></Route>
@@ -49,6 +55,7 @@ function App() {
           {/* AUTH */}
           <Route path="/register" element={<Registration />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/password-reset" element={<PasswordReset />}></Route>
           {/* NOT FOUND PAGE */ }
           <Route path="*" element={<NotFoundpage />}></Route>
           {/* PRIVACY POLICY */ }

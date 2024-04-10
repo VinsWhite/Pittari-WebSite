@@ -7,6 +7,7 @@ import DividerComp from '../../components/forum/DividerComp';
 import { Person, Search, ArrowLeft, ChatLeft, Plus } from 'react-bootstrap-icons';
 import caricamento from '../../assets/img/fuji.jpg'
 import formatDate from '../../assets/functions/formatDate';
+import stock from '../../assets/functions/stock';
 
 export default function DetailTopic() {
     const { id } = useParams();
@@ -16,6 +17,7 @@ export default function DetailTopic() {
     const postsPerPage = 5; // Numero di post per pagina
     const isAuthenticated = useSelector(state => state.users.token !== null); // Leggi lo stato dell'autenticazione da Redux
     const navigate = useNavigate();
+    const [stockPhrase, setStockPhrase] = useState('');
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -44,6 +46,10 @@ export default function DetailTopic() {
         setSearchInput(searchTerm); 
     };
 
+    useEffect(() => {
+        setStockPhrase(stock());
+    }, []);
+
     const indexOfLastPost = currentPage * postsPerPage;
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = topic ? topic.posts.slice(indexOfFirstPost, indexOfLastPost) : [];
@@ -56,7 +62,7 @@ export default function DetailTopic() {
             <button onClick={() => navigate(-1)} className="text-secondary fs-5 fw-semibold text-decoration-none bg-transparent border-0"><ArrowLeft /> Indietro</button>
                 <div className='d-flex flex-column justify-content-center align-items-center'>
                     <img src={caricamento} className='loadingImage loading rounded-circle my-4' alt="caricamento" />
-                    <h4 className='text-center text-light fw-semibold loading'>Caricamento...</h4>
+                    <p className='text-light opacity-75'>{stockPhrase}</p>
                 </div>
             </Container>
             <DividerComp />

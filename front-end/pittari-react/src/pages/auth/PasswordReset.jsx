@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Form, Row, Col, InputGroup, Button } from 'react-bootstrap';
+import React from 'react'
+import { Container, Form, Row, Col, InputGroup, Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -7,7 +7,7 @@ import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { loginUserSuccess } from '../../state/slice/usersSlice';
 
-export default function Login() {
+export default function PasswordReset() {
     const [validated, setValidated] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -20,24 +20,13 @@ export default function Login() {
     
         try {
             await axios.get("/sanctum/csrf-cookie");
-            const response = await axios.post("/login", {
+            const response = await axios.post("/passwordReset", {
                 email: email,
-                password: password,
             });
-
-            const authToken = response.data.token;
-
-            localStorage.setItem('token', authToken);
-            dispatch(loginUserSuccess({ user: response.data.userData, token: authToken }));
+            navigate('/login');
             console.log(response.data); 
-            navigate('/');
         } catch (error) {
-            if (error.response && error.response.status === 422) {
-                setError("Email o password sbagliate");
-            } else {
-                setError("Si è verificato un errore durante il login. Riprova più tardi.");
-            }
-            console.error(error);
+            setError(error.response.data.message);
         }
     }
     
@@ -46,7 +35,7 @@ export default function Login() {
         <>
             <div className='bg-primary-emphasis m-0 p-5'>
                 <Container className='my-5 bg-secondary p-5 rounded-4 shadow'>
-                    <h2>Accedi!</h2>
+                    <h2>Resetta password!</h2>
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="validationCustomEmail">
                             <Form.Label>Email</Form.Label>
@@ -65,28 +54,14 @@ export default function Login() {
                                 </Form.Control.Feedback>
                             </InputGroup>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="validationCustomPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Inserisci la tua password"
-                                required
-                            />
-                            <Form.Control.Feedback type="invalid">
-                                Per favore inserisci la tua password
-                            </Form.Control.Feedback>
-                        </Form.Group>
-                        <Button variant='warning' type="submit">Accedi</Button>
+                        <Button variant='warning' type="submit">Invia</Button>
                         {error && <div className="text-danger mt-2">{error}</div>}
                     </Form>
-                    <div className='text-end d-flex flex-column mt-5'>
-                        <NavLink to='/password-reset' className='text-dark'>Hai dimenticato la password?</NavLink>
-                        <NavLink to='/register' className='text-dark'>Non sei ancora registrato?</NavLink>
+                    <div className='text-end'>
+                    <button onClick={() => navigate(-1)} className="text-dark fw-semibold text-decoration-underline bg-transparent border-0">Torna indietro</button>
                     </div>
                 </Container>
             </div>
         </>
-  );
+  )
 }
