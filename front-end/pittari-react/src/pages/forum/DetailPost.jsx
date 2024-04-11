@@ -112,7 +112,7 @@ export default function DetailPost() {
                 <Container>
                     <button onClick={() => navigate(-1)} className="text-secondary fs-5 fw-semibold text-decoration-none bg-transparent border-0"><ArrowLeft /> Indietro</button>
                     {post && (
-                        <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary-emphasis my-4 caricamentoCorpo' key={post.id}>
+                        <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary my-4 caricamentoCorpo' key={post.id}>
                             <div>
                                 <div className='d-flex justify-content-between'>
                                     <p className='fw-semibold'><Person /> {post.user.name} <span className='text-primary ms-3 border border-primary py-1 px-3 rounded-5'>autore</span></p>
@@ -120,7 +120,7 @@ export default function DetailPost() {
                                 </div>
                                 <h4>{post.title}</h4>
                                 <p>{post.context}</p>
-                                <div className='d-flex align-items-center border-bottom border-1 '>
+                                <div className='d-flex align-items-center border-bottom border-dark border-1 '>
                                     <p className='post_replies d-inline py-1 px-2 bg-replies rounded-2'><ChatLeft /> {post.post_replies.length} risposte</p>
                                     <p className='ms-3 post_replies d-inline py-1 px-2 bg-replies rounded-2' onClick={copyPostLink}><Share /></p>
                                 </div>

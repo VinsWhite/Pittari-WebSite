@@ -108,9 +108,9 @@ video {
 
 .jump {
     transition: transform 2s ease;
-    animation: scaleAnimation 1.5s infinite alternate;
+    animation: scale 1.5s infinite alternate;
 
-    @keyframes scaleAnimation {
+    @keyframes scale {
         0% { transform: scale(1); }
         100% { transform: scale(1.02); }
     }

@@ -30,16 +30,18 @@ Route::get('/', function () {
 
 Route::get('/articles', [ArticleController::class, 'index']);
 Route::get('/articles/{article}', [ArticleController::class, 'show']);
+Route::post('/articles', [ArticleController::class, 'store']);
+
 Route::get('/topics', [TopicController::class, 'index'])->middleware('auth');
 Route::get('/topics/{topic}', [TopicController::class, 'show'])->middleware('auth');
-Route::get('/allPosts', [PostController::class, 'index']);
-Route::post('/post', [PostController::class, 'store']);
-Route::get('/post/{post}', [PostController::class, 'show']);
-Route::post('/reply', [PostReplyController::class, 'store']);
-Route::get('/allGames', [GameController::class, 'index']);
-Route::get('/fruits', [FruitController::class, 'index']);
-Route::get('/pronouns', [PronounsController::class, 'index']);
-Route::get('/allArguments', [AllArguments::class, 'index']);
+Route::get('/allPosts', [PostController::class, 'index'])->middleware('auth');
+Route::post('/post', [PostController::class, 'store'])->middleware('auth');
+Route::get('/post/{post}', [PostController::class, 'show'])->middleware('auth');
+Route::post('/reply', [PostReplyController::class, 'store'])->middleware('auth');
+Route::get('/allGames', [GameController::class, 'index'])->middleware('auth');
+Route::get('/fruits', [FruitController::class, 'index'])->middleware('auth');
+Route::get('/pronouns', [PronounsController::class, 'index'])->middleware('auth');
+Route::get('/allArguments', [AllArguments::class, 'index'])->middleware('auth');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/passwordReset', [PasswordResetLinkController::class, 'store']);

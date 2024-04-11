@@ -108,7 +108,7 @@ export default function ArticlesComp() {
           {filteredArticles.map(article => (
             <Col key={article.id} md={4}>
               <NavLink to={`/article/${article.id}`} className="nav-link-custom">
-                <div className="article d-flex flex-column align-items-center p-3 shadow rounded-3">
+                <div className="article d-flex flex-column align-items-center p-3 shadow rounded-3 mt-3">
                   {article.image ? (
                     <img src={`http://localhost:8000${article.image}`} alt="articolo immagine" />
                   ) : (

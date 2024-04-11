@@ -20,6 +20,7 @@ export const usersSlice = createSlice({
       state.error = null;
       localStorage.setItem('token', action.payload.token);
       localStorage.setItem('role', action.payload.role);
+      localStorage.setItem('name', action.payload.user);
     },
     loginUserFailure: (state, action) => {
       state.error = action.payload;

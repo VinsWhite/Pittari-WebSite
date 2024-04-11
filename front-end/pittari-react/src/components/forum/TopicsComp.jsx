@@ -71,7 +71,7 @@ export default function TopicsComp() {
                         <h2 className='fw-bold'>Post recenti</h2>
                         {posts.slice(0, visiblePosts).map(post => (
                             <NavLink to={`/forum/topics/${post.topic_id}/${post.id}`} className="text-dark text-decoration-none caricamentoCorpo" key={post.id}>
-                                <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary-emphasis my-2 post'>
+                                <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary my-2 post'>
                                     <div>
                                         <div className='d-flex justify-content-between'>
                                             <p className='fw-semibold'><Person /> {post.user && post.user.name}</p>

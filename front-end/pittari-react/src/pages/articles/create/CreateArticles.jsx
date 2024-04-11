@@ -5,65 +5,133 @@ import { useState } from 'react';
 import HeadingArtComp from '../../../components/articles/HeadingArtComp';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
+import axios from '../../../api/axios';
 
 export default function CreateArticles() {
   const [validated, setValidated] = useState(false);
+  const [title, setTitle] = useState("");
+  const [topic, setTopic] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      const form = e.currentTarget;
 
-    setValidated(true);
+      if (form.checkValidity() === false) {
+          e.stopPropagation();
+          setValidated(true);
+          return;
+      }
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("topic", topic);
+      formData.append("description", description);
+      formData.append("image", image);
+
+      try {
+          await axios.get("/sanctum/csrf-cookie");
+          const response = await axios.post("/articles", formData);
+          console.log(response.data); 
+          navigate('/'); 
+      } catch (error) {
+          setError(error.response.data.message);
+      }
   };
 
+  const validateTitle = (value) => {
+    if (value.trim() === "") {
+      return "Il titolo non può essere vuoto";
+    }
+    if (value.length <= 20) {
+      return "Il titolo deve essere più lungo di 20 caratteri";
+    }
+    return "";
+  }
+  
+  const validateDescription = (value) => {
+    if (value.trim() === "") {
+      return "La descrizione non può essere vuota";
+    }
+    if (value.length <= 150) {
+      return "La descrizione deve essere più lunga di 150 caratteri";
+    }
+    return "";
+  }
+
   return (
-    <>
+      <>
       <HeadingArtComp />
-      <Container fluid className='py-5 bg-primary'>
-        <div className='container my-5 bg-secondary p-5 rounded-4 shadow'>
-
-        <button onClick={() => navigate(-1)} className="text-dark fs-5 fw-semibold text-decoration-none bg-transparent border-0"><ArrowLeft /> Indietro</button>
-
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          <Row className="mb-3">
-            <Form.Group as={Col} md="4" controlId="validationCustom01">
-              <Form.Label>Titolo <span className='text-primary'>*</span></Form.Label>
-              <Form.Control required type="text" placeholder="Aggiungi un titolo..." />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustom02">
-              <Form.Label>Topic <span className='text-primary'>*</span></Form.Label>
-              <Form.Control required type="text" placeholder="Inserisci un argomento..." />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} md="4" controlId="validationCustomFile">
-              <Form.Label>Carica un'immagine</Form.Label>
-              <Form.Control type="file" accept="image/*" required />
-              <Form.Control.Feedback type="invalid">
-                Please choose an image.
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} xs="12" controlId="validationCustom03">
-              <Form.Label>Descrizione <span className='text-primary'>*</span></Form.Label>
-              <Form.Control as="textarea" className='textarea' rows={3} placeholder="Inserisci una descrizione..." required />
-              <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Form.Group className="mb-3">
-            <Form.Check required label="Accetto i termini e le condizioni" feedback="You must agree before submitting." feedbackType="invalid" />
-          </Form.Group>
-          <Button className='btn btn-warning' type="submit">Crea articolo!</Button>
-        </Form>
-
-        </div>
-      </Container>
-     {/*  <DividerComp /> */}
-    </>
+        <Container className='my-5 bg-secondary p-5 rounded-4 shadow'>
+          <p className=' position-fixed bottom-0 end-0 m-3 p-2 bg-warning fw-semibold rounded-4 shadow'>AREA RISERVATA</p>
+            <h2>Crea articolo</h2>
+            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <Form.Group as={Row} className="mb-3" controlId="title">
+                    <Form.Label column sm="2">Titolo <span className='text-primary'>*</span></Form.Label>
+                    <Col sm="10">
+                        <Form.Control
+                            type="text"
+                            placeholder="Inserisci un titolo"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {validateTitle(title)}
+                        </Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-3" controlId="topic">
+                    <Form.Label column sm="2">Topic <span className='text-primary'>*</span></Form.Label>
+                    <Col sm="10">
+                        <Form.Control
+                            type="text"
+                            placeholder="Inserisci un topic come 'cultura'"
+                            value={topic}
+                            onChange={(e) => setTopic(e.target.value)}
+                            required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            Per favore inserisci un topic.
+                        </Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-3" controlId="description">
+                    <Form.Label column sm="2">Descrizione <span className='text-primary'>*</span></Form.Label>
+                    <Col sm="10">
+                        <Form.Control
+                            as="textarea"
+                            rows={3}
+                            placeholder="Inserisci il corpo dell'articolo"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            required
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {validateDescription(description)}
+                        </Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-3" controlId="image">
+                    <Form.Label column sm="2">Immagine</Form.Label>
+                    <Col sm="10">
+                        <Form.Control
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => setImage(e.target.files[0])}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                            Scegli un immagine
+                        </Form.Control.Feedback>
+                    </Col>
+                </Form.Group>
+                <Button variant="warning" type="submit">Invia</Button>
+                {error && <div className="text-danger mt-2">{error}</div>}
+            </Form>
+        </Container>
+      </>
   );
 }

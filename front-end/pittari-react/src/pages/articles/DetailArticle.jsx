@@ -39,7 +39,7 @@ export default function DetailArticle() {
             <div className='detailArticle bg-primary-darker py-5 text-light'>
                 <Container className='pb-5'>
                 <NavLink to="/articles" className="text-secondary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
-                    <SkeletonTheme baseColor='#c4c2c2' hightlightColor='#f5f5f5'>
+                    <SkeletonTheme baseColor='#eb4034' hightlightColor='#f5f5f5'>
                         <h2 className='my-3 text-center fw-semibold'><Skeleton /></h2>
                         <Row>
                             <Col sm={12} lg={6} className='text-center pb-lg-3'>
