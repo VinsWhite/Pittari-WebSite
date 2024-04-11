@@ -5,8 +5,12 @@ import Section1Comp from '../components/home/Section1Comp'
 import Section2Comp from '../components/home/Section2Comp'
 import LastSectionHomeComp from '../components/home/LastSectionHomeComp'
 import { useEffect } from 'react'
+import { useState } from 'react'
+import CookieConsent from './CookieConsent'
 
 export default function Homepage() {
+
+  const [showModal, setShowModal] = useState(false);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -17,6 +21,9 @@ export default function Homepage() {
 
   useEffect(() => {
     scrollToTop();
+    if (!localStorage.getItem('cookieAccepted')) {
+      setShowModal(true);
+    }
   },[]);
 
   return (
@@ -27,6 +34,7 @@ export default function Homepage() {
       <Section2Comp />
       <LastSectionHomeComp />
       <GeneralDividerComp />
+      {!localStorage.getItem('cookieAccepted') && <CookieConsent showModal={showModal} setShowModal={setShowModal} />}
     </>
   )
 }

@@ -23,9 +23,9 @@ export default function GeneralDividerComp() {
         const randomKanjiData = shuffledKanjiData.slice(0, 12);
         setRandomKanji(randomKanjiData);
         setError(null); 
-        console.log(response.data)
+        /* console.log(response.data) */
       } catch (error) {
-        console.error(error);
+        /* console.error(error); */
         setError(error); 
       }
     };

@@ -21,7 +21,7 @@ export default function FooterComp() {
             </Col>
             <Col sm={12} md={4} className='d-flex flex-column mt-4 mt-md-0'>
                 <h3 className='fw-semibold text-secondary'>Informazioni</h3>
-                <NavLink to='/privacy-policy' className='nav-link text-light text-decoration-none' activeclassname='none'>Privacy Policy</NavLink>
+                <NavLink to='/privacy-policy' className='text-light text-decoration-none'>Privacy Policy</NavLink>
                 <a href='#' className='text-light text-decoration-none'>Placeholder</a>
                 <a href='#' className='text-light text-decoration-none'>Placeholder</a>
             </Col>

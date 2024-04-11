@@ -3,8 +3,12 @@ import HeadingComp from '../../components/articles/HeadingComp'
 import ArticlesComp from '../../components/articles/ArticlesComp'
 import DividerComp from '../../components/articles/DividerComp'
 import { useEffect } from 'react'
+import CookieConsent from '../CookieConsent'
+import { useState } from 'react'
 
 export default function HomepageA() {
+
+  const [showModal, setShowModal] = useState(false);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -15,6 +19,9 @@ export default function HomepageA() {
 
   useEffect(() => {
     scrollToTop();
+    if (!localStorage.getItem('cookieAccepted')) {
+      setShowModal(true);
+    }
   });
 
   return (
@@ -22,6 +29,7 @@ export default function HomepageA() {
       <HeadingComp />
       <ArticlesComp />
       <DividerComp />
+      {!localStorage.getItem('cookieAccepted') && <CookieConsent showModal={showModal} setShowModal={setShowModal} />}
     </>
   )
 }

@@ -28,8 +28,10 @@ export default function Login() {
             const authToken = response.data.token;
 
             localStorage.setItem('token', authToken);
-            dispatch(loginUserSuccess({ user: response.data.userData, token: authToken }));
+            dispatch(loginUserSuccess({ user: response.data.userData.name, token: authToken, role: response.data.userData.role }));
             console.log(response.data); 
+            console.log(response.data.userData.role)
+            console.log(response.data.userData.name)
             navigate('/');
         } catch (error) {
             if (error.response && error.response.status === 422) {

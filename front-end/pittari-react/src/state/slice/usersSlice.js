@@ -4,7 +4,8 @@ const initialState = {
   user: null,
   token: localStorage.getItem('token') || null,
   error: null,
-  userId: null, // Aggiungi userId qui
+  userId: null, 
+  role: null,
 };
 
 export const usersSlice = createSlice({
@@ -15,8 +16,10 @@ export const usersSlice = createSlice({
       state.user = action.payload.user;
       state.token = action.payload.token;
       state.userId = action.payload.id;
+      state.role = action.payload.role;
       state.error = null;
       localStorage.setItem('token', action.payload.token);
+      localStorage.setItem('role', action.payload.role);
     },
     loginUserFailure: (state, action) => {
       state.error = action.payload;
@@ -25,6 +28,7 @@ export const usersSlice = createSlice({
       state.user = null;
       state.token = null;
       state.userId = null;
+      state.role = null;
       state.error = null;
       localStorage.removeItem('token');
     },

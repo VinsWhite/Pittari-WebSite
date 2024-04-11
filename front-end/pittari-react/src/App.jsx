@@ -23,8 +23,11 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import PasswordReset from './pages/auth/PasswordReset'
 import ToTop from './pages/ToTop'
 import { Container } from 'react-bootstrap'
+import CookieConsent from './pages/CookieConsent'
+import { useState } from 'react'
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
 
   return (
       <BrowserRouter>
@@ -32,6 +35,7 @@ function App() {
         <ToTop />
       </Container>
       <NavbarComp />
+      {!localStorage.getItem('cookieAccepted') && window.location.pathname !== "/privacy-policy" && <CookieConsent showModal={showModal} setShowModal={setShowModal} />}
         <Routes>
           <Route path="/" element={<Homepage />}></Route>
           <Route path="/contacts" element={<Contacts />}></Route>

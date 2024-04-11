@@ -28,9 +28,9 @@ export default function DetailArticle() {
     useEffect(() => {
         axios.get(`/articles/${id}`).then(response => {
             setArticle(response.data);
-            console.log(response.data)
+            /* console.log(response.data) */
         }).catch(error => {
-            console.error('Errore durante il recupero dell\'articolo:', error);
+            /* console.error('Errore durante il recupero dell\'articolo:', error); */
         });
     }, [articles, id]);
 

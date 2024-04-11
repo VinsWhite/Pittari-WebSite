@@ -12,10 +12,10 @@ export default function LastSectionHomeComp() {
         const response = await axios.get('https://kanjialive-api.p.rapidapi.com/api/public/kanji/話', {
           headers: kanjiApi.headers,
         });
-        console.log(response.data)
+        /* console.log(response.data) */
         setKanjiData(response.data);
       } catch (error) {
-        console.error('Errore durante il recupero delle informazioni del kanji:', error);
+        /* console.error('Errore durante il recupero delle informazioni del kanji:', error); */
       }
     };
 

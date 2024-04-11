@@ -4,12 +4,14 @@ import TopicsComp from '../../components/forum/TopicsComp'
 import DividerComp from '../../components/forum/DividerComp'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import CookieConsent from '../CookieConsent'
 
 export default function HomepageF() {
 
   const navigate = useNavigate();
   const isLoggedIn = useSelector(state => state.users.token !== null); 
+  const [showModal, setShowModal] = useState(false);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -30,6 +32,9 @@ export default function HomepageF() {
 
   useEffect(() => {
     scrollToTop();
+    if (!localStorage.getItem('cookieAccepted')) {
+      setShowModal(true);
+    }
   }, []);
 
   return (
@@ -37,6 +42,7 @@ export default function HomepageF() {
       <HeadingComp />
       <TopicsComp />
       <DividerComp />
+      {!localStorage.getItem('cookieAccepted') && <CookieConsent showModal={showModal} setShowModal={setShowModal} />}
     </>
   )
 }

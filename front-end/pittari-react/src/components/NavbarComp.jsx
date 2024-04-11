@@ -37,6 +37,7 @@ export default function NavbarComp() {
     try {
       await axios.post("/logout"); 
       localStorage.removeItem('token'); 
+      localStorage.removeItem('cookieAccepted');
       dispatch(logoutUser()); 
       navigate('/');
     } catch (error) {

@@ -25,11 +25,11 @@ const store = configureStore({
 
 export const persistor = persistStore(store);
 
-console.log('Stato iniziale:', store.getState());
+/* console.log('Stato iniziale:', store.getState()); */
 
 persistor.subscribe(() => {
-  console.log('Stato persistito:', store.getState());
-  console.log(store.getState().lastGame.id);
+  /* console.log('Stato persistito:', store.getState());
+  console.log(store.getState().lastGame.id); */
 });
 
 export default store;

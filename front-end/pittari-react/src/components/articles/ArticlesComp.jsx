@@ -18,6 +18,7 @@ export default function ArticlesComp() {
   const [loading, setLoading] = useState(true); // stato locale per il caricamento
   const [stockPhrase, setStockPhrase] = useState('');
   const dispatch = useDispatch();
+  const userRole = localStorage.getItem('role');
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -27,7 +28,7 @@ export default function ArticlesComp() {
         setFilteredArticles(response.data); // settiamo gli articoli filtrati
         setLoading(false); 
       } catch (error) {
-        console.error('Errore durante il recupero degli articoli:', error);
+        /* console.error('Errore durante il recupero degli articoli:', error); */
         setLoading(false); 
       }
     };
@@ -88,7 +89,9 @@ export default function ArticlesComp() {
     <div className='p-5 bg-primary-darker'>
       <Container>
 
-        <NavLink to="/articles/create" className="btn btn-warning text-dark fw-semibold">Aggiungi articolo</NavLink>
+        {userRole === 'admin' && ( // Mostra il pulsante solo se il ruolo dell'utente è "admin"
+          <NavLink to="/articles/create" className="btn btn-warning text-dark fw-semibold">Aggiungi articolo</NavLink>
+        )}
 
         <div className='d-flex align-items-center justify-content-center'>
             <Search className='me-2 text-light fs-4' />
