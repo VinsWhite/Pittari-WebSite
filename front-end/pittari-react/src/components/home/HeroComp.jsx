@@ -6,6 +6,8 @@ import welcome from '../../assets/img/welcome.png'
 import Container from 'react-bootstrap/esm/Container';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import Lottie from 'lottie-react';
+import animationWelcome from '../../assets/animations/welcomeAnimation.json'
 
 export default function HeroComp() {
   const [isJapanese, setIsJapanese] = useState(true);
@@ -24,7 +26,7 @@ export default function HeroComp() {
         <h2 className='animatedTitle fw-semibold text-secondary fs-1 fw-bold mt-3 border bg-primary-emphasis mx-5 p-2 rounded-5 text-uppercase shadow'>Impara il giapponese con Pittari!</h2>
         <Card.Body>
                 <Row>
-                    <Col xs={12} md={5}> <img src={welcome} className='welcome' alt="immagine di welcome" /></Col>
+                    <Col xs={12} md={5}> <Lottie className='welcome' animationData={animationWelcome} /></Col>
                     <Col xs={12} md={7} className='d-flex align-items-center text-start py-3 px-4'>
                       <div>
                         <h5>Pensi che il <span className='animatedText'><span className='fw-semibold'>{isJapanese ? 'giapponese' : '日本語'}</span></span> sia una lingua difficile?</h5>

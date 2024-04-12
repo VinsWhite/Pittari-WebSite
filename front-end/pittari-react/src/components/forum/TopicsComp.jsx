@@ -18,30 +18,42 @@ export default function TopicsComp() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchTopics = async () => {
-            try {
-                const response = await axios.get('/topics');
-                dispatch(setTopics(response.data));
-            } catch (error) {
-                console.error('Errore durante il recupero dei topics:', error);
-            }
-        };
+        const storedTopics = sessionStorage.getItem('topics');
+        if (storedTopics) {
+            dispatch(setTopics(JSON.parse(storedTopics)));
+        } else {
+            const fetchTopics = async () => {
+                try {
+                    const response = await axios.get('/topics');
+                    dispatch(setTopics(response.data));
+                    sessionStorage.setItem('topics', JSON.stringify(response.data));
+                } catch (error) {
+                    console.error('Errore durante il recupero dei topics:', error);
+                }
+            };
 
-        fetchTopics();
+            fetchTopics();
+        }
     }, [dispatch]);
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await axios.get('/allPosts');
-                const sortedPosts = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                setPosts(sortedPosts);
-            } catch (error) {
-                console.error('Errore durante il recupero dei posts:', error);
-            }
-        };
+        const storedPosts = sessionStorage.getItem('allPosts');
+        if (storedPosts) {
+            setPosts(JSON.parse(storedPosts));
+        } else {
+            const fetchPosts = async () => {
+                try {
+                    const response = await axios.get('/allPosts');
+                    const sortedPosts = response.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                    setPosts(sortedPosts);
+                    sessionStorage.setItem('allPosts', JSON.stringify(response.data));
+                } catch (error) {
+                    console.error('Errore durante il recupero dei posts:', error);
+                }
+            };
 
-        fetchPosts();
+            fetchPosts();
+        }
     }, []);
 
     useEffect(() => {
@@ -52,7 +64,7 @@ export default function TopicsComp() {
         setVisiblePosts(prevVisiblePosts => prevVisiblePosts + 10);
     };
 
-    if (posts.length === 0) {
+    if (posts.length === 0 && topics.length === 0) {
         return (
             <Container fluid className='bg-primary-darker p-5'>
                 <div className='d-flex flex-column justify-content-center align-items-center'>

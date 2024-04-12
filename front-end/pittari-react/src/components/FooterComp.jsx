@@ -16,8 +16,9 @@ export default function FooterComp() {
                     <a href="#" className='text-light'><Twitter/></a>
                     <a href="#" className='text-light'><Youtube /></a>
                 </Container>
-                <h3 className='fw-semibold text-secondary'>Risorse API</h3>
+                <h3 className='fw-semibold text-secondary'>Risorse</h3>
                 <a href='https://app.kanjialive.com/api/docs' className='text-light text-decoration-none'>Kanji Alive</a>
+                <a href='https://lottiefiles.com/' className='text-light text-decoration-none'>Animazioni</a>
             </Col>
             <Col sm={12} md={4} className='d-flex flex-column mt-4 mt-md-0'>
                 <h3 className='fw-semibold text-secondary'>Informazioni</h3>

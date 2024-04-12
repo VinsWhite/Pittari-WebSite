@@ -53,11 +53,11 @@ h5 {
     }
     60% {
       opacity: 1;
-      color: red;
+      color: $primary;
     }
     100% {
       opacity: 0;
-      color: red;
+      color: $primary;
     }
   }
   

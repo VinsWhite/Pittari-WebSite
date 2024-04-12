@@ -2,43 +2,88 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setArticles } from '../../state/slice/articlesSlice';
 import axios from '../../api/axios';
-import { Search } from 'react-bootstrap-icons';
+import { ArrowClockwise, Search } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';  
 import stock from '../../assets/functions/stock';
 
 import defaultImage from '../../assets/img/defaultImage.jpg'; // Immagine di default in caso l'articolo non abbia un'immagine
 import caricamento from '../../assets/img/paperNews.jpg';
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 export default function ArticlesComp() {
   const articles = useSelector(state => state.articles);
   const [searchInput, setSearchInput] = useState(''); // stato locale per la ricerca
-  const [filteredArticles, setFilteredArticles] = useState([]); // stato locale per gli articoli che sono stati filtrati 
-  const [loading, setLoading] = useState(true); // stato locale per il caricamento
+  const [filteredArticles, setFilteredArticles] = useState(articles); // stato locale per gli articoli che sono stati filtrati 
+  const [loading, setLoading] = useState(!articles.length); // stato locale per il caricamento
   const [stockPhrase, setStockPhrase] = useState('');
   const dispatch = useDispatch();
   const userRole = localStorage.getItem('role');
 
   useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const response = await axios.get('/articles');
-        dispatch(setArticles(response.data)); // Aggiorna lo stato degli articoli con i dati ottenuti dalla chiamata
-        setFilteredArticles(response.data); // settiamo gli articoli filtrati
-        setLoading(false); 
-      } catch (error) {
-        /* console.error('Errore durante il recupero degli articoli:', error); */
-        setLoading(false); 
-      }
-    };
+    if (!articles.length) {
+      const fetchArticles = async () => {
+        try {
+          const response = await axios.get('/articles');
+          dispatch(setArticles(response.data)); 
+          setFilteredArticles(response.data);
+          setLoading(false); 
+          // salvo gli articoli nella sessionStorage
+          sessionStorage.setItem('articles', JSON.stringify(response.data));
+        } catch (error) {
+          /* console.error('Errore durante il recupero degli articoli:', error); */
+          setLoading(false); 
+        }
+      };
 
-    fetchArticles();
-  }, [dispatch]); 
+      fetchArticles();
+    } else {
+      setLoading(false);
+    }
+  }, [dispatch, articles.length]); 
 
   useEffect(() => {
     setStockPhrase(stock());
   }, []);
+
+  // funzione per tagliare la descrizione e aggiungere "..." se è troppo lunga
+  const truncateDescription = (description, maxLength) => {
+    if (description.length > maxLength) {
+      return description.substring(0, maxLength) + '...';
+    }
+    return description;
+  };
+
+  // ricerca degli articoli aggiornato (dopo aver implementato la pagina non andava)
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value.toLowerCase(); // tutto minuscolo
+    setSearchInput(searchTerm); 
+
+    // Filtraggio
+    const filtered = articles.filter(article =>
+      article.title.toLowerCase().includes(searchTerm) || // cerca sia per titolo che descrizione che topic
+      article.description.toLowerCase().includes(searchTerm) ||
+      article.topic.toLowerCase().includes(searchTerm) 
+    );
+
+    setFilteredArticles(filtered); 
+  };
+
+  // viene eseguita nuova la chiamata fetch per eseguire una sorta di refresh senza refreshare la pagina
+  const handleRefresh = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('/articles');
+      dispatch(setArticles(response.data)); 
+      setFilteredArticles(response.data);
+      setLoading(false);
+      sessionStorage.setItem('articles', JSON.stringify(response.data));
+    } catch (error) {
+      console.error('Errore durante il recupero degli articoli:', error);
+      setLoading(false); 
+    }
+  };
+  
 
   if (loading) {
     return (
@@ -62,29 +107,6 @@ export default function ArticlesComp() {
     );
   }
 
-  // Funzione per tagliare la descrizione e aggiungere "..." se è troppo lunga
-  const truncateDescription = (description, maxLength) => {
-    if (description.length > maxLength) {
-      return description.substring(0, maxLength) + '...';
-    }
-    return description;
-  };
-
-  // ricerca degli articoli 
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value.toLowerCase(); // tutto minuscolo
-    setSearchInput(searchTerm); 
-
-    // filtraggio
-    const filtered = articles.filter(article =>
-      article.title.toLowerCase().includes(searchTerm) || // Cerca sia per titolo che descrizione che topic
-      article.description.toLowerCase().includes(searchTerm) ||
-      article.topic.toLowerCase().includes(searchTerm) 
-    );
-
-    setFilteredArticles(filtered); 
-  };
-
   return (
     <div className='p-5 bg-primary-darker'>
       <Container>
@@ -104,6 +126,7 @@ export default function ArticlesComp() {
               onChange={handleSearch} // evento onChange per gestire la ricerca
             />
         </div>
+        <Button className='shadow text-center' variant='light' onClick={handleRefresh}><ArrowClockwise /></Button>
         <Row className="text-light">
           {filteredArticles.map(article => (
             <Col key={article.id} md={4}>

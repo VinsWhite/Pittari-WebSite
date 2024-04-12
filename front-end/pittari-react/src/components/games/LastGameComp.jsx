@@ -16,7 +16,7 @@ export default function LastGameComp() {
        <NavLink to={lastGame && lastGame.name ? `/learn/${lastGame.name}` : '/learn'} className='text-decoration-none text-light'>
 
         <Container>
-          <div className='lastGame bg-primary-emphasis p-4 rounded-4 shadow'>
+          <div className='lastGame bg-primary p-4 rounded-4 shadow'>
             <h5 className='opacity-75'>Cosa stai studiando</h5>
 
             <Row>

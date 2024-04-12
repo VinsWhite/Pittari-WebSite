@@ -3,7 +3,6 @@ import { Container, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { useState } from 'react';
 /* import DividerComp from '../../../components/articles/DividerComp'; */
 import HeadingArtComp from '../../../components/articles/HeadingArtComp';
-import { ArrowLeft } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../../api/axios';
 
@@ -36,7 +35,7 @@ export default function CreateArticles() {
           await axios.get("/sanctum/csrf-cookie");
           const response = await axios.post("/articles", formData);
           console.log(response.data); 
-          navigate('/'); 
+          navigate('/articles'); 
       } catch (error) {
           setError(error.response.data.message);
       }

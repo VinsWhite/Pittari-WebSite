@@ -3,6 +3,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { NavLink } from 'react-router-dom';
 import articleHomepage from '../../assets/img/articleHomepage.jpg'
+import readingAnimation from '../../assets/animations/readingAnimation.json'
+import Lottie from 'lottie-react'
 import { Paperclip } from 'react-bootstrap-icons';
 
 export default function Section2Comp() {
@@ -12,7 +14,7 @@ export default function Section2Comp() {
             <h2 className='text-secondary fw-semibold text-center text-uppercase lh-base'>Leggi articoli <span className='fw-bold border bg-white rounded-5 text-primary p-1'>interessanti</span> 😲</h2>
             <Row className='mt-3 text-light'>
                 <Col className='d-flex justify-content-center align-items-center flex-column' sm={12} lg={6}>
-                <img className="welcome" src={articleHomepage} alt="immagine di una ragazza che legge il giornale" />
+                <Lottie className='welcome bg-primary shadow' animationData={readingAnimation} />
                 </Col>
                 <Col className='d-flex flex-column justify-content-center position-relative jump' sm={12} lg={6}>
                     <Paperclip className='fs-1 position-absolute bottom-50 end-100'/>

@@ -6,7 +6,8 @@
 }
 
 .navbar {
-    border-bottom: 0.1em solid rgb(255, 57, 7);
+    border-bottom: 0.1em solid $primary-darker;
+    z-index: 100;
 }
 
 .nav-link {
@@ -29,7 +30,7 @@
 // pulsante impara 
 .impara {
     &:hover {
-        background-color: rgb(233, 231, 231);
+        background-color: $secondary;
         color: black !important;
         font-weight: 600;
     }
