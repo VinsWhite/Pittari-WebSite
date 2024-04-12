@@ -3,6 +3,7 @@ import { Container, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import axios from '../../../api/axios';
 import stock from '../../../assets/functions/stock';
+import scrollToTop from '../../../assets/functions/scrollToTop'
 
 export default function KuizuGeemu() {
     const navigate = useNavigate();
@@ -18,6 +19,11 @@ export default function KuizuGeemu() {
     const [answerSelected, setAnswerSelected] = useState(false);
     const [howManyCorrected, setHowManyCorrected] = useState(0); // stato per memorizzare tutte le risposte corrette
     const [loading, setLoading] = useState(true);
+
+
+    useEffect(() => {
+        scrollToTop();
+    });
 
     useEffect(() => {
         fetchData();

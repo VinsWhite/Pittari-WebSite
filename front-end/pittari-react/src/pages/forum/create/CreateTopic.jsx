@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, Button, Col, Form, Row } from 'react-bootstrap';
 import { ArrowLeft } from 'react-bootstrap-icons';
-import { NavLink, useParams } from 'react-router-dom';  
-import HeadingTopComp from '../../../components/forum/HeadingTopComp';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';  
 import axios from '../../../api/axios';
+import HeadingTopComp from '../../../components/forum/HeadingTopComp';
 
 export default function CreateTopic() {
-  const [validated, setValidated] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => { 
     event.preventDefault();
@@ -30,8 +30,10 @@ export default function CreateTopic() {
           'X-XSRF-TOKEN': getCookieValue('XSRF-TOKEN')
         }
       });
-
-      window.location.href = `/forum/topics/${id}`;
+      sessionStorage.removeItem("topics");
+      sessionStorage.removeItem("allPosts");
+      // Reindirizza l'utente alla pagina DetailTopic con il parametro del nuovo post nell'URL
+      navigate(`/forum/topics/${id}?newPost=${response.data.id}`);
     } catch (error) {
       console.error('Errore durante la creazione dell\'argomento:', error);
       if (error.response) {
@@ -50,10 +52,9 @@ export default function CreateTopic() {
       <HeadingTopComp />
       <Container fluid className='py-5 bg-primary shadow'>
         <div className='container my-5 bg-secondary p-5 rounded-4 shadow'>
-
           <NavLink to={`/forum/topics/${id}`}  className="text-primary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
 
-          <Form noValidate validated={validated} onSubmit={(event) => handleSubmit(event)}>
+          <Form noValidate onSubmit={(event) => handleSubmit(event)}>
             <Row className="mb-3">
               <Form.Group as={Col} md="4" controlId="validationCustom01">
                 <Form.Label>Titolo <span className='text-primary'>*</span></Form.Label>
@@ -74,5 +75,5 @@ export default function CreateTopic() {
         </div>
       </Container>
     </>
-  )
+  );
 }

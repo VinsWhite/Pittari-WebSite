@@ -88,9 +88,14 @@ export default function DetailPost() {
                 }
               });
               
-                window.location.href = `/forum/topics/${topicId}/${postId}`;
+                const userFromStorage = JSON.parse(localStorage.getItem('name'));
+        
+                setPost(prevPost => ({
+                    ...prevPost,
+                    post_replies: [...prevPost.post_replies, { ...response.data, user: userFromStorage }]
+                }));
 
-                form.reset();
+                setNewReply(''); 
                 setLoading(false);
 
             } catch (error) {
@@ -126,7 +131,7 @@ export default function DetailPost() {
                                 </div>
                                 
                                 <Form noValidate validated={validated} onSubmit={(event) => handleSubmit(event)}>
-                                    <div className='d-flex align-items-center mt-2'>
+                                    <div className='d-sm-flex d-block align-items-center mt-2'>
                                         <textarea className='rounded-3' placeholder='Rispondi...' name='context' value={newReply} onChange={handleReplyChange}/>
                                         <Button variant='primary' type='submit' className='ms-3 rounded-5'>
                                             {loading ? <Spinner animation="border" variant="light" size="sm" /> : 'Pubblica'}

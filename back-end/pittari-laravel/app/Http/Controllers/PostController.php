@@ -48,12 +48,14 @@ class PostController extends Controller
     public function show(Post $post)
     {
         // qui carichiamo i post con lo user del post
-        $postUser = $post->load('user');
+        $postWithUser = $post->load('user');
 
-        // ma non dobbiamo dimenticare di caricare anche gli utenti che hanno risposto
-        $postAndUserReplies = $postUser->load('postReplies.user');
+        // carichiamo le risposte ordinate dalla più recente alla meno recente
+        $postAndReplies = $postWithUser->load(['postReplies' => function ($query) {
+            $query->orderByDesc('created_at');
+        }, 'postReplies.user']);
 
-        return response()->json($postAndUserReplies);
+        return response()->json($postAndReplies);
     }
 
     /**

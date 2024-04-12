@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from '../../api/axios';
 import { setTopics } from '../../state/slice/topicsSlice';
 import { NavLink } from 'react-router-dom';
-import { Person, ChatLeft } from 'react-bootstrap-icons';
+import { Person, ChatLeft, ArrowClockwise } from 'react-bootstrap-icons';
 import formatDate from '../../assets/functions/formatDate';
 import stock from '../../assets/functions/stock';
 
@@ -16,6 +16,20 @@ export default function TopicsComp() {
     const [visiblePosts, setVisiblePosts] = useState(10); // Numero di post visibili inizialmente
     const [stockPhrase, setStockPhrase] = useState('');
     const dispatch = useDispatch();
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
+
+    const automaticRefresh = () => {
+        sessionStorage.removeItem('topics');
+        sessionStorage.removeItem('allPosts');
+    }
+
+    useEffect(() => {
+        const intervalId = setInterval(automaticRefresh, 60000);
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, []);
 
     useEffect(() => {
         const storedTopics = sessionStorage.getItem('topics');
@@ -64,7 +78,32 @@ export default function TopicsComp() {
         setVisiblePosts(prevVisiblePosts => prevVisiblePosts + 10);
     };
 
-    if (posts.length === 0 && topics.length === 0) {
+
+    // refresh "simulato"
+    const handleRefresh = async () => {
+        setLoadingSpinner(true);
+        try {
+            const topicsResponse = await axios.get('/topics');
+            dispatch(setTopics(topicsResponse.data));
+            sessionStorage.setItem('topics', JSON.stringify(topicsResponse.data));
+        } catch (error) {
+            console.error('Errore durante il recupero dei topics:', error);
+        }
+    
+        try {
+            const postsResponse = await axios.get('/allPosts');
+            const sortedPosts = postsResponse.data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+            setPosts(sortedPosts);
+            sessionStorage.setItem('allPosts', JSON.stringify(postsResponse.data));
+        } catch (error) {
+            console.error('Errore durante il recupero dei posts:', error);
+        }
+
+        setLoadingSpinner(false);
+    }
+    
+
+    if (!posts.length && !topics.length) {
         return (
             <Container fluid className='bg-primary-darker p-5'>
                 <div className='d-flex flex-column justify-content-center align-items-center'>
@@ -78,6 +117,14 @@ export default function TopicsComp() {
     return (
         <Container fluid className='bg-primary-darker'>
             <div className='py-5 text-light container'>
+                <div className='d-flex align-items-center'>
+                    <Button className='shadow text-center' variant='light' onClick={handleRefresh}><ArrowClockwise /></Button>
+                        {loadingSpinner && (
+                            <Spinner className='ms-4' animation="border" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                        )}
+                </div>
                 <Row>
                     <Col xs={12} lg={8} className='text-center mx-2 d-flex flex-column justify-content-around'>
                         <h2 className='fw-bold'>Post recenti</h2>

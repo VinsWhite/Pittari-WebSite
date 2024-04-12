@@ -50,7 +50,7 @@ export default function Section1Comp() {
               </div>
             </div>
           </Col>
-          <Col className='d-flex justify-content-center align-items-center' sm={12} lg={6}>
+          <Col className='d-flex justify-content-center align-items-center mt-5 mt-sm-4 mt-md-0' sm={12} lg={6}>
             <img src={speak} alt="immagine di due persone che parlano" className={`welcome ${isVisible ? 'animationFromBottom' : 'opacity-0'}`} />
           </Col>
         </Row>

@@ -42,10 +42,10 @@ export default function TangoKaado() {
   };
 
   return (
-    <div className="container-fluid py-5 bg-primary-emphasis">
+    <div className="container-fluid py-5 bg-primary">
       <h1 className='text-light'>{loading ? 'Caricamento...' : 'Argomento: frutta'}</h1>
       <div className="card mb-3">
-        <div className="card-body bg-primary-emphasis flashcard d-flex flex-column align-items-center text-light">
+        <div className="card-body bg-primary flashcard d-flex flex-column align-items-center text-light">
           {!loading && (
             <>
                 <div className='bg-primary-darker rounded-3 p-4 flipCard' onClick={() => setFlip(!flip)}>

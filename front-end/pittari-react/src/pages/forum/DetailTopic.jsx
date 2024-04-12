@@ -87,7 +87,7 @@ export default function DetailTopic() {
                 <Container>
                     <button onClick={() => navigate(-1)} className="text-secondary fs-5 fw-semibold text-decoration-none bg-transparent border-0"><ArrowLeft /> Indietro</button>
                     {isAuthenticated && (
-                        <NavLink to={`/forum/topics/${topic.id}/create`} className="create_posts text-dark bg-secondary border-2 border border-primary fs-5 fw-semibold text-decoration-none position-fixed bottom-0 end-0 m-3 fs-3 p-2 d-flex align-items-center rounded-circle "><Plus /> </NavLink>
+                        <NavLink to={`/forum/topics/${topic.id}/create`} className="z-2 create_posts text-dark bg-secondary border-2 border border-primary fs-5 fw-semibold text-decoration-none position-fixed bottom-0 end-0 m-3 fs-3 p-2 d-flex align-items-center rounded-circle "><Plus /> </NavLink>
                     )}
                     <h2 className='text-center text-light fw-semibold text-decoration-underline'>Benvenuto in {topic.title}</h2>
                     <div className='d-flex align-items-center justify-content-center'>
