@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { kanjiApi } from '../api/kanji';
-import VisibilitySensor from 'react-visibility-sensor';
 
 export default function GeneralDividerComp() {
   const [randomKanji, setRandomKanji] = useState([]);
   const [error, setError] = useState(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,19 +52,13 @@ export default function GeneralDividerComp() {
     );
   }
 
-  const handleVisibilityChange = (isVisible) => {
-    setIsVisible(isVisible);
-  };
-
   return (
     <div className='bg-primary-emphasis p-5 text-light fs-3'>
       <div className='kanji-container'>
         {randomKanji.map((kanji, index) => (
-          <VisibilitySensor key={index} onChange={handleVisibilityChange}>
-            <div className={`${isVisible ? 'kanji-item' : ''}`}>
-              <p>{kanji.kanji.character}</p>
-            </div>
-          </VisibilitySensor>
+          <div key={index} className='kanji-item'>
+            <p>{kanji.kanji.character}</p>
+          </div>
         ))}
       </div>
     </div>

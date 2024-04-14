@@ -31,19 +31,22 @@ export default function NavbarComp() {
     return () => {
       axios.interceptors.response.eject(interceptor);
     };
-  }, []);
+  }, [isLoggedIn]);
 
   const handleLogout = async () => {
     try {
-      await axios.post("/logout"); 
-      localStorage.removeItem('token'); 
-      localStorage.removeItem('cookieAccepted');
-      dispatch(logoutUser()); 
-      navigate('/');
+      if (isLoggedIn) {
+        await axios.post("/logout"); 
+        localStorage.removeItem('token'); 
+        localStorage.removeItem('cookieAccepted');
+        dispatch(logoutUser()); 
+        navigate('/');
+      }
     } catch (error) {
       console.error("Errore durante il logout:", error);
     }
   };
+  
 
   return (
     <Navbar expand="lg" className="bg-primary position-sticky z-3 top-0 w-100">
