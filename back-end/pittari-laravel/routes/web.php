@@ -11,6 +11,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostReplyController;
 use App\Http\Controllers\PronounsController;
 use App\Http\Controllers\TopicController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +51,20 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 Route::get('/dashboard', function(){
     return 'ciao';
 });
+
+Route::get('/jishoApi/{keyword}', function ($keyword) {
+    $apiUrl = 'https://jisho.org/api/v1/search/words';
+
+    $response = Http::get($apiUrl, [
+        'keyword' => $keyword,
+    ]);
+
+    return $response->json();
+});
+
+
+
+
 
 
 require __DIR__.'/auth.php';

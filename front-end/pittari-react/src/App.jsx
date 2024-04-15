@@ -25,6 +25,7 @@ import ToTop from './pages/ToTop'
 import { Container } from 'react-bootstrap'
 import CookieConsent from './pages/CookieConsent'
 import { useState } from 'react'
+import Search from './pages/Search'
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -56,6 +57,8 @@ function App() {
           <Route path="/articles" element={<HomepageA />}></Route>
           <Route path="/articles/create" element={<CreateArticles />}></Route>
           <Route path="/article/:id" element={<DetailArticle />}></Route>
+          {/* PRIVACY POLICY */ }
+          <Route path="/search" element={<Search />}></Route>
           {/* AUTH */}
           <Route path="/register" element={<Registration />}></Route>
           <Route path="/login" element={<Login />}></Route>

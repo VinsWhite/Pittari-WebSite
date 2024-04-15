@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../state/slice/usersSlice'; 
 import axios from '../api/axios';
 import logo from '../assets/img/logoP.jpg';
-import { Person } from 'react-bootstrap-icons';
+import { Person, Search } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 
 export default function NavbarComp() {
@@ -82,6 +82,7 @@ export default function NavbarComp() {
           </Nav>
 
           <Nav className="d-flex">
+            <NavLink to="/search" className="nav-link text-light ms-3" activeclassname="active"><Search /></NavLink>
             <NavLink to="/articles" className="nav-link text-light ms-3" activeclassname="active">Articoli</NavLink>
             <NavLink to="/forum" className="nav-link text-light ms-3" activeclassname="active">Forum</NavLink>
             <NavLink to="/contacts" className="nav-link text-light ms-3" activeclassname="active">Contatti</NavLink>
