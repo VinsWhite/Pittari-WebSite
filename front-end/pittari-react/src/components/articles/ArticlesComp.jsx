@@ -10,6 +10,7 @@ import defaultImage from '../../assets/img/defaultImage.jpg'; // Immagine di def
 import caricamento from '../../assets/img/paperNews.jpg';
 
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import scrollToTop from '../../assets/functions/scrollToTop';
 
 export default function ArticlesComp() {
   const articles = useSelector(state => state.articles);
@@ -71,6 +72,7 @@ export default function ArticlesComp() {
 
   // viene eseguita nuova la chiamata fetch per eseguire una sorta di refresh senza refreshare la pagina
   const handleRefresh = async () => {
+    scrollToTop();
     try {
       setLoading(true);
       const response = await axios.get('/articles');

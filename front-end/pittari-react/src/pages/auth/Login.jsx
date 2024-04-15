@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Form, Row, Col, InputGroup, Button } from 'react-bootstrap';
+import { Container, Form, Row, Col, InputGroup, Button, Spinner } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -12,11 +12,13 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setLoading(true);
     
         try {
             await axios.get("/sanctum/csrf-cookie");
@@ -29,26 +31,33 @@ export default function Login() {
 
             localStorage.setItem('token', authToken);
             dispatch(loginUserSuccess({ user: response.data.userData.name, token: authToken, role: response.data.userData.role }));
-            console.log(response.data); 
+            /* console.log(response.data); 
             console.log(response.data.userData.role)
-            console.log(response.data.userData.name)
+            console.log(response.data.userData.name) */
+            setLoading(false);
             navigate('/');
         } catch (error) {
             if (error.response && error.response.status === 422) {
+                setLoading(false);
                 setError("Email o password sbagliate");
             } else {
+                setLoading(false);
                 setError("Si è verificato un errore durante il login. Riprova più tardi.");
             }
-            console.error(error);
+            /* console.error(error); */
         }
     }
     
 
   return (
         <>
-            <div className='bg-primary-emphasis m-0 p-5'>
+            <div className='bg-primary-darker m-0 p-5'>
                 <Container className='my-5 bg-secondary p-5 rounded-4 shadow'>
-                    <h2>Accedi!</h2>
+                    <h2>Accedi! {loading && 
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    } </h2>
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
                         <Form.Group className="mb-3" controlId="validationCustomEmail">
                             <Form.Label>Email</Form.Label>

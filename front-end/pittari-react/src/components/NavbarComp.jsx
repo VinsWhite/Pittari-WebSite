@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function NavbarComp() {
   const isLoggedIn = useSelector(state => state.users.token !== null); 
+  const [loadingLogout, setLoadingLogout] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -34,6 +35,7 @@ export default function NavbarComp() {
   }, [isLoggedIn]);
 
   const handleLogout = async () => {
+    setLoadingLogout(true);
     try {
       if (isLoggedIn) {
         await axios.post("/logout"); 
@@ -41,15 +43,22 @@ export default function NavbarComp() {
         localStorage.removeItem('cookieAccepted');
         dispatch(logoutUser()); 
         navigate('/');
+        setLoadingLogout(false);
       }
     } catch (error) {
       console.error("Errore durante il logout:", error);
+      setLoadingLogout(false);
     }
   };
   
 
   return (
     <Navbar expand="lg" className="bg-primary position-sticky z-3 top-0 w-100">
+      {loadingLogout &&
+        <div className='position-fixed bottom-0 start-0 bg-primary text-light rounded-5 p-4 m-3 shadow'>
+          <p>Sto eseguendo il logout...</p>
+        </div>
+      }
       <Container fluid>
         <NavLink to="/" className="navbar-brand text-dark"><img src={logo} className='rounded-circle p-1' alt="logo pittari" /></NavLink>
         <Navbar.Toggle aria-controls="navbarScroll" />

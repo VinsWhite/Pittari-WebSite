@@ -5,17 +5,11 @@ import DividerComp from '../../components/articles/DividerComp'
 import { useEffect } from 'react'
 import CookieConsent from '../CookieConsent'
 import { useState } from 'react'
+import scrollToTop from '../../assets/functions/scrollToTop'
 
 export default function HomepageA() {
 
   const [showModal, setShowModal] = useState(false);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'instant' 
-    });
-  };
 
   useEffect(() => {
     scrollToTop();

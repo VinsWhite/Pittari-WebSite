@@ -26,6 +26,7 @@ export default function LastGameComp() {
               <Col sm={12} md={6} className='d-flex flex-column justify-content-center align-items-center pt-4 pt-md-0'>
                 <h2>{lastGame ? lastGame.name : 'Non hai ancora avviato nessun gioco'}</h2>
                 <p>{lastGame ? lastGame.typology : ''}</p>
+                <p className='opacity-75'>{lastGame ? '(' + lastGame.language + ' version)' : ''}</p>
               </Col>
             </Row>
 

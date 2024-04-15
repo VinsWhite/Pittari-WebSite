@@ -96,3 +96,15 @@
     }
     
 }
+
+
+// WaadoGeemu
+
+.dragReply {
+    user-select: none;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import axios from '../api/axios';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import HeadingSearchComp from '../components/Search/HeadingSearchComp';
+import scrollToTop from '../assets/functions/scrollToTop';
+import { useEffect } from 'react';
 
 export default function Search () {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [searchError, setSearchError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        scrollToTop();
+    });
 
     const handleSearch = async () => {
         setLoading(true);
@@ -37,9 +43,9 @@ export default function Search () {
                         placeholder="Enter search term"
                         className='mt-5'
                     />
-                    <button onClick={handleSearch}>Search</button>
+                    <Button className='ms-2' onClick={handleSearch}>Search</Button>
                     {loading &&
-                        <p>Caricamento...</p>
+                        <p>Loading...</p>
                     }
 
                     {searchError && <p className="text-danger">{searchError}</p>}
