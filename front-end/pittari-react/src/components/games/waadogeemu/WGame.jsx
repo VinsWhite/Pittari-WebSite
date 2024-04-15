@@ -3,7 +3,6 @@ import axios from '../../../api/axios';
 import { useDrag, useDrop } from 'react-dnd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import Skeleton from 'react-loading-skeleton';
 import stock from '../../../assets/functions/stock';
 import scrollToTop from '../../../assets/functions/scrollToTop';
 import { Button } from 'react-bootstrap';
