@@ -37,14 +37,12 @@ export default function NavbarComp() {
   const handleLogout = async () => {
     setLoadingLogout(true);
     try {
-      if (isLoggedIn) {
         await axios.post("/logout"); 
         localStorage.removeItem('token'); 
         localStorage.removeItem('cookieAccepted');
         dispatch(logoutUser()); 
         navigate('/');
         setLoadingLogout(false);
-      }
     } catch (error) {
       console.error("Errore durante il logout:", error);
       setLoadingLogout(false);

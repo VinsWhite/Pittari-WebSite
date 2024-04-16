@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { kanjiApi } from '../api/kanji';
+import { useNavigate } from 'react-router-dom';
 
 export default function GeneralDividerComp() {
   const [randomKanji, setRandomKanji] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +37,10 @@ export default function GeneralDividerComp() {
     return () => clearInterval(intervalId);
   }, []);
 
+  const handleClick = () => {
+    navigate('/search');
+  }
+
   // funzione per mescolare l'array
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -57,7 +63,7 @@ export default function GeneralDividerComp() {
       <div className='kanji-container'>
         {randomKanji.map((kanji, index) => (
           <div key={index} className='kanji-item'>
-            <p>{kanji.kanji.character}</p>
+            <p onClick={handleClick}>{kanji.kanji.character}</p>
           </div>
         ))}
       </div>

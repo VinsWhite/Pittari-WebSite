@@ -62,6 +62,19 @@ Route::get('/jishoApi/{keyword}', function ($keyword) {
     return $response->json();
 });
 
+Route::get('/tatoebaApi', function () {
+    $page = request('page', 1); 
+
+    $response = Http::get('https://tatoeba.org/it/api_v0/search', [
+        'from' => 'jpn',
+        'trans_filter' => 'limit',
+        'trans_to' => 'ita',
+        'to' => 'ita',
+        'page' => $page,
+    ]);
+
+    return response()->json($response->json());
+});
 
 
 

@@ -11,7 +11,7 @@ export default function AllGames() {
   const dispatch = useDispatch();
 
   const handleStartGame = (game) => {
-    console.log('Dati memorizzati:', game);
+   /*  console.log('Dati memorizzati:', game); */
     dispatch(setLastGame(game));
   };
 
@@ -22,7 +22,7 @@ export default function AllGames() {
         setGames(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching games:', error);
+        /* console.error('Error fetching games:', error); */
         setLoading(false);
       }
     };

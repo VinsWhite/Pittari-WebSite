@@ -13,7 +13,7 @@ export default function Search () {
 
     useEffect(() => {
         scrollToTop();
-    });
+    }, []);
 
     const handleSearch = async () => {
         setLoading(true);
