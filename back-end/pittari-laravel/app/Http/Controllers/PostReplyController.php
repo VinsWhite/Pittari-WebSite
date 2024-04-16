@@ -38,6 +38,8 @@ class PostReplyController extends Controller
         $reply->user()->associate($user);
 
         $reply->save();
+
+        return response()->json($reply, 201);
     }
 
     /**

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from '../../api/axios';
-import { Container } from 'react-bootstrap';
+import { Button, Container, Spinner } from 'react-bootstrap';
 import DividerComp from '../../components/forum/DividerComp';
-import { Person, Search, ArrowLeft, ChatLeft, Plus } from 'react-bootstrap-icons';
+import { Person, Search, ArrowLeft, ChatLeft, Plus, ArrowClockwise } from 'react-bootstrap-icons';
 import caricamento from '../../assets/img/fuji.jpg';
 import formatDate from '../../assets/functions/formatDate';
 import stock from '../../assets/functions/stock';
@@ -19,6 +19,7 @@ export default function DetailTopic() {
     const filteredPosts = topic ? topic.posts.filter(post => post.title.toLowerCase().includes(searchInput)) : [];
     const navigate = useNavigate();
     const [stockPhrase, setStockPhrase] = useState('');
+    const [loadingSpinner, setLoadingSpinner] = useState(false);
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -81,6 +82,24 @@ export default function DetailTopic() {
         );
     }
 
+    // refresh "simulato"
+    const handleRefresh = () => {
+        setLoadingSpinner(true)
+        const fetchTopic = async () => {
+            try {
+                const response = await axios.get(`/topics/${id}`);
+                const sortedPosts = response.data.posts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                setTopic({ ...response.data, posts: sortedPosts });
+                sessionStorage.setItem(`topic_${id}`, JSON.stringify({ ...response.data, posts: sortedPosts }));
+                setLoadingSpinner(false)
+            } catch (error) {
+                /* console.error('Errore durante il recupero del topic:', error); */
+                setLoadingSpinner(false)
+            }
+        };
+        fetchTopic();
+    }
+
     return (
         <>
             <Container fluid className='bg-primary-darker p-5'>
@@ -91,6 +110,7 @@ export default function DetailTopic() {
                     )}
                     <h2 className='text-center text-light fw-semibold text-decoration-underline'>Benvenuto in {topic.title}</h2>
                     <div className='d-flex align-items-center justify-content-center'>
+
                         <Search className='me-2 text-light fs-4' />
                         <input
                             className="form-control w-50 my-4"
@@ -102,6 +122,15 @@ export default function DetailTopic() {
                         />
                     </div>
                     <div>
+                        <div className='d-flex align-items-center'>
+                            <Button className='shadow text-center' variant='light' onClick={handleRefresh}><ArrowClockwise /></Button>
+                            {loadingSpinner && (
+                                <Spinner variant="light" className='ms-4' animation="border" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </Spinner>
+                            )}
+                        </div>
+                        
                         {currentPosts.length > 0 ? (
                             currentPosts.map(post => (
                                 <NavLink to={`/forum/topics/${topic.id}/${post.id}`} className="text-dark text-decoration-none caricamentoCorpo" key={post.id}>

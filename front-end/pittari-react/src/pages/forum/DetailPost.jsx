@@ -7,6 +7,7 @@ import { ArrowLeft, Person, ChatLeft, Share, PersonBadge } from 'react-bootstrap
 import caricamento from '../../assets/img/hashi.jpg'
 import formatDate from '../../assets/functions/formatDate';
 import stock from '../../assets/functions/stock';
+import {Spinner} from 'react-bootstrap';
 
 export default function DetailPost() {
     const { topicId, postId } = useParams();
@@ -71,6 +72,7 @@ export default function DetailPost() {
             event.preventDefault();
             const form = event.currentTarget;
         
+            setLoading(true);
             if (form.checkValidity() === false) {
               event.stopPropagation();
               return;
@@ -87,16 +89,20 @@ export default function DetailPost() {
                   'X-XSRF-TOKEN': getCookieValue('XSRF-TOKEN')
                 }
               });
-              
-                const userFromStorage = JSON.parse(localStorage.getItem('name'));
-        
-                setPost(prevPost => ({
-                    ...prevPost,
-                    post_replies: [...prevPost.post_replies, { ...response.data, user: userFromStorage }]
-                }));
 
                 setNewReply(''); 
                 setLoading(false);
+
+                const fetchPost = async () => {
+                    try {
+                        const response = await axios.get(`/post/${postId}`);
+                        setPost(response.data);
+                    } catch (error) {
+                        console.error('Errore durante il recupero del post:', error);
+                    }
+                };
+
+                fetchPost();
 
             } catch (error) {
               console.error('Errore durante la creazione dell\'argomento:', error);

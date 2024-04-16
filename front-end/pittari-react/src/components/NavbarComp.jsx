@@ -91,10 +91,16 @@ export default function NavbarComp() {
           <Nav className="d-flex">
             <NavLink to="/search" className="nav-link text-light ms-3" activeclassname="active"><Search /></NavLink>
             <NavLink to="/articles" className="nav-link text-light ms-3" activeclassname="active">Articoli</NavLink>
-            <NavLink to="/forum" className="nav-link text-light ms-3" activeclassname="active">Forum</NavLink>
-            <NavLink to="/contacts" className="nav-link text-light ms-3" activeclassname="active">Contatti</NavLink>
-            <NavLink to="/learn" className="nav-link text-yellow ms-3 border border-2 border-warning rounded-5 px-4 impara" activeclassname="active">Impara</NavLink>
             
+            {isLoggedIn && (
+            <NavLink to="/forum" className="nav-link text-light ms-3" activeclassname="active">Forum</NavLink>
+            )}
+            <NavLink to="/contacts" className="nav-link text-light ms-3" activeclassname="active">Contatti</NavLink>
+            
+            {isLoggedIn && (
+            <NavLink to="/learn" className="nav-link text-yellow ms-3 border border-2 border-warning rounded-5 px-4 impara" activeclassname="active">Impara</NavLink>
+            )}
+
           </Nav>
         </Navbar.Collapse>
       </Container>

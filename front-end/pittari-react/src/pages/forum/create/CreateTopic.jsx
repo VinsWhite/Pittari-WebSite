@@ -53,6 +53,7 @@ export default function CreateTopic() {
       <Container fluid className='py-5 bg-primary shadow'>
         <div className='container my-5 bg-secondary p-5 rounded-4 shadow'>
           <NavLink to={`/forum/topics/${id}`}  className="text-primary fs-5 fw-semibold text-decoration-none"><ArrowLeft /> Indietro</NavLink>
+          <button onClick={() => navigate(-1)} className="text-secondary fs-5 fw-semibold text-decoration-none bg-transparent border-0"><ArrowLeft /> Indietro</button>
 
           <Form noValidate onSubmit={(event) => handleSubmit(event)}>
             <Row className="mb-3">
