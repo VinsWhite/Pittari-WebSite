@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setArticles } from '../../state/slice/articlesSlice';
 import axios from '../../api/axios';
-import { ArrowClockwise, Search } from 'react-bootstrap-icons';
+import { ArrowClockwise, Search, Trash } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';  
 import stock from '../../assets/functions/stock';
 
@@ -86,6 +86,38 @@ export default function ArticlesComp() {
     }
   };
   
+  const handleDeleteArticle = async (articleId) => {
+    try {
+      const confirmation = window.confirm('Sei sicuro di voler eliminare questo articolo?');
+  
+      if (confirmation) {
+        const token = localStorage.getItem('token');
+        await axios.delete(`/deleteArticle/${articleId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        
+        setFilteredArticles(prevState => prevState.filter(article => article.id !== articleId));
+      }
+        scrollToTop();
+        try {
+          setLoading(true);
+          const response = await axios.get('/articles');
+          dispatch(setArticles(response.data)); 
+          setFilteredArticles(response.data);
+          setLoading(false);
+          sessionStorage.setItem('articles', JSON.stringify(response.data));
+        } catch (error) {
+          console.error('Errore durante il recupero degli articoli:', error);
+          setLoading(false); 
+        }
+    } catch (error) {
+      console.error('Errore durante l\'eliminazione dell\'articolo:', error);
+    }
+  };
+  
+
 
   if (loading) {
     return (
@@ -132,18 +164,23 @@ export default function ArticlesComp() {
         <Row className="text-light">
           {filteredArticles.map(article => (
             <Col key={article.id} md={4}>
-              <NavLink to={`/article/${article.id}`} className="nav-link-custom">
-                <div className="article d-flex flex-column align-items-center p-3 shadow rounded-3 mt-3">
-                  {article.image ? (
-                    <img src={`http://localhost:8000${article.image}`} alt="articolo immagine" />
-                  ) : (
-                    <img src={defaultImage} alt="Immagine predefinita" />
-                  )}
-                  <h2 className='mt-3'>{article.title}</h2>
-                  <p>{truncateDescription(article.description, 150)}</p> {/* Taglia la descrizione a 150 caratteri */}
-                  <p>{article.topic}</p>
-                </div>
-              </NavLink>
+              <div className='position-relative'>
+              {userRole === 'admin' && (
+                <Trash onClick={() => handleDeleteArticle(article.id)} className='position-absolute text-warning trashIcon top-0 end-0 m-1 fs-4 shadow' />
+              )}
+                <NavLink to={`/article/${article.id}`} className="nav-link-custom">
+                  <div className="article d-flex flex-column align-items-center p-3 shadow rounded-3 mt-3">
+                    {article.image ? (
+                      <img src={`http://localhost:8000${article.image}`} alt="articolo immagine" />
+                    ) : (
+                      <img src={defaultImage} alt="Immagine predefinita" />
+                    )}
+                    <h2 className='mt-3'>{article.title}</h2>
+                    <p>{truncateDescription(article.description, 150)}</p> {/* Taglia la descrizione a 150 caratteri */}
+                    <p>{article.topic}</p>
+                  </div>
+                </NavLink>
+              </div>
             </Col>
           ))}
         </Row>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AllArguments;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ExampleController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostReplyController;
 use App\Http\Controllers\PronounsController;
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +35,7 @@ Route::get('/', function () {
 Route::get('/articles', [ArticleController::class, 'index']);
 Route::get('/articles/{article}', [ArticleController::class, 'show']);
 Route::post('/articles', [ArticleController::class, 'store']);
+Route::delete('/deleteArticle/{article}', [ArticleController::class, 'destroy']);
 
 Route::get('/topics', [TopicController::class, 'index'])->middleware('auth');
 Route::get('/topics/{topic}', [TopicController::class, 'show'])->middleware('auth');
@@ -47,8 +50,10 @@ Route::get('/allArguments', [AllArguments::class, 'index'])->middleware('auth');
 Route::get('/examples', [ExampleController::class, 'index'])->middleware('auth');
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/changepassword', [NewPasswordController::class, 'store']);
 Route::post('/passwordReset', [PasswordResetLinkController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+Route::delete('/deleteUser', [UserController::class, 'destroy']);
 
 Route::get('/dashboard', function(){
     return 'ciao';

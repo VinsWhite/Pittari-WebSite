@@ -22,6 +22,17 @@
     }
 }
 
+.trashIcon {
+    user-select: none;
+    cursor: pointer;
+    transition: font-size 0.3s ease; 
+
+    &:hover {
+        font-size: 2rem !important; 
+    }
+}
+
+
 .textarea {
     resize: none;
 }

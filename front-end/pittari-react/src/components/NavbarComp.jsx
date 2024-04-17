@@ -23,7 +23,9 @@ export default function NavbarComp() {
       error => {
         if (error.response && error.response.status === 401 && isLoggedIn) {
           // quando si riceve questo errore, esegue il logout automaticamente 
-          handleLogout(); 
+          if (localStorage.getItem('token')) {
+            handleLogout(); 
+          }
         }
         return Promise.reject(error);
       }
@@ -44,8 +46,12 @@ export default function NavbarComp() {
         navigate('/');
         setLoadingLogout(false);
     } catch (error) {
-      console.error("Errore durante il logout:", error);
-      setLoadingLogout(false);
+       /*  console.error("Errore durante il logout:", error); */
+        localStorage.removeItem('token');
+        localStorage.removeItem('cookieAccepted');
+        dispatch(logoutUser()); 
+        navigate('/');
+        setLoadingLogout(false);
     }
   };
   
