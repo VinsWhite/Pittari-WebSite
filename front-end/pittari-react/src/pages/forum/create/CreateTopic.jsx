@@ -30,8 +30,12 @@ export default function CreateTopic() {
           'X-XSRF-TOKEN': getCookieValue('XSRF-TOKEN')
         }
       });
+
+      // eliminando dal sessionStorage le informazioni sui topics e sui posts, viene poi effettuata nuovamente la chiamata ajax, aggiornando i componenti con i nuovi post
       sessionStorage.removeItem("topics");
       sessionStorage.removeItem("allPosts");
+      sessionStorage.removeItem(`topic_${id}`)
+      
       // Reindirizza l'utente alla pagina DetailTopic con il parametro del nuovo post nell'URL
       navigate(`/forum/topics/${id}?newPost=${response.data.id}`);
     } catch (error) {

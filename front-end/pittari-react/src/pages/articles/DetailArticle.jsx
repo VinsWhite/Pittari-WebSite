@@ -8,19 +8,13 @@ import { NavLink } from 'react-router-dom';
 import { ArrowLeft } from 'react-bootstrap-icons';
 import axios from '../../api/axios';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import scrollToTop from '../../assets/functions/scrollToTop';
 
 export default function DetailArticle() {
     const { id } = useParams();
     const articles = useSelector(state => state.articles);
     const [article, setArticle] = useState(null);
 
-    const scrollToTop = () => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'instant' 
-        });
-      };
-    
       useEffect(() => {
         scrollToTop();
       });

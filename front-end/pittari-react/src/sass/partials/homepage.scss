@@ -130,3 +130,13 @@ h5 {
     animation: animationFromBottom 1.5s ease-in-out forwards;
   }
   
+
+.caricaKanji {
+
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(210, 208, 208) !important;
+  }
+}

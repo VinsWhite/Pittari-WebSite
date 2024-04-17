@@ -43,11 +43,13 @@ Route::get('/allPosts', [PostController::class, 'index'])->middleware('auth');
 Route::post('/post', [PostController::class, 'store'])->middleware('auth');
 Route::get('/post/{post}', [PostController::class, 'show'])->middleware('auth');
 Route::post('/reply', [PostReplyController::class, 'store'])->middleware('auth');
+
 Route::get('/allGames', [GameController::class, 'index'])->middleware('auth');
 Route::get('/fruits', [FruitController::class, 'index'])->middleware('auth');
 Route::get('/pronouns', [PronounsController::class, 'index'])->middleware('auth');
 Route::get('/allArguments', [AllArguments::class, 'index'])->middleware('auth');
 Route::get('/examples', [ExampleController::class, 'index'])->middleware('auth');
+
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/changepassword', [NewPasswordController::class, 'store']);

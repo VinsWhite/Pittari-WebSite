@@ -82,6 +82,14 @@ export default function TopicsComp() {
     // refresh "simulato"
     const handleRefresh = async () => {
         setLoadingSpinner(true);
+        for (let i = 0; i < sessionStorage.length; i++) {
+            const key = sessionStorage.key(i);
+            // Verifica se la chiave inizia con "topic_"
+            if (key.startsWith('topic_')) {
+                // Se sì, elimina l'elemento dal session storage
+                sessionStorage.removeItem(key);
+            }
+        }
         try {
             const topicsResponse = await axios.get('/topics');
             dispatch(setTopics(topicsResponse.data));

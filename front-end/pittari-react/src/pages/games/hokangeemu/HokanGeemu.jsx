@@ -3,6 +3,8 @@ import { Button, Container } from 'react-bootstrap';
 import axios from '../../../api/axios';
 import scrollToTop from '../../../assets/functions/scrollToTop';
 import stock from '../../../assets/functions/stock';
+import Lottie from 'lottie-react'
+import loadingBallAnimation from '../../../assets/animations/loadingBallAnimation.json'
 
 export default function HokanGeemu() {
     const [phrase, setPhrase] = useState(null);
@@ -74,19 +76,22 @@ export default function HokanGeemu() {
         <>
             <Container fluid className='bg-primary-darker p-5'>
                 <div className='m-5 p-4 bg-secondary rounded-4'>
-                    <h2 className='border-bottom border-dark pb-2'>Completa la frase!</h2>
                     {phrase ? (
-                        <div>
-                            {renderPhraseWithHiddenCharacter()}
-                            {translation && <p>{translation}</p>}
-                            {hiddenCharacter && 
-                                <>
-                                    <Button>{hiddenCharacter}</Button>
-                                </>
-                            }
-                        </div>
+                        <>
+                            <h2 className='border-bottom border-dark pb-2'>Completa la frase!</h2>
+                            <div>
+                                {renderPhraseWithHiddenCharacter()}
+                                {translation && <p>{translation}</p>}
+                                {hiddenCharacter && 
+                                    <>
+                                        <Button>{hiddenCharacter}</Button>
+                                    </>
+                                }
+                            </div>
+                        </>
                     ) : (
                         <div className='text-center'>
+                            <Lottie className='imageLoadingBall' animationData={loadingBallAnimation} />
                             <p>Caricamento...</p>
                             <p className='opacity-75'>{stock()}</p>
                         </div>

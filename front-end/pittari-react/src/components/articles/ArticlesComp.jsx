@@ -99,7 +99,6 @@ export default function ArticlesComp() {
         });
         
         setFilteredArticles(prevState => prevState.filter(article => article.id !== articleId));
-      }
         scrollToTop();
         try {
           setLoading(true);
@@ -112,9 +111,10 @@ export default function ArticlesComp() {
           console.error('Errore durante il recupero degli articoli:', error);
           setLoading(false); 
         }
-    } catch (error) {
-      console.error('Errore durante l\'eliminazione dell\'articolo:', error);
-    }
+      }
+      } catch (error) {
+        /* console.error('Errore durante l\'eliminazione dell\'articolo:', error); */
+      }
   };
   
 

@@ -8,6 +8,7 @@ import { Person, Search, ArrowLeft, ChatLeft, Plus, ArrowClockwise } from 'react
 import caricamento from '../../assets/img/fuji.jpg';
 import formatDate from '../../assets/functions/formatDate';
 import stock from '../../assets/functions/stock';
+import scrollToTop from '../../assets/functions/scrollToTop';
 
 export default function DetailTopic() {
     const { id } = useParams();
@@ -21,12 +22,6 @@ export default function DetailTopic() {
     const [stockPhrase, setStockPhrase] = useState('');
     const [loadingSpinner, setLoadingSpinner] = useState(false);
 
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'instant'
-        });
-    };
 
     useEffect(() => {
         const storedTopic = sessionStorage.getItem(`topic_${id}`);
@@ -40,7 +35,7 @@ export default function DetailTopic() {
                     setTopic({ ...response.data, posts: sortedPosts });
                     sessionStorage.setItem(`topic_${id}`, JSON.stringify({ ...response.data, posts: sortedPosts }));
                 } catch (error) {
-                    console.error('Errore durante il recupero del topic:', error);
+                    /* console.error('Errore durante il recupero del topic:', error); */
                 }
             };
             fetchTopic();

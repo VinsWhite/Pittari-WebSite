@@ -108,3 +108,34 @@
         text-decoration: underline;
     }
 }
+
+// BunKaado
+
+.flashcard-container.flipped .flashcard {
+    transform: rotateY(180deg);
+}
+
+.flashcard {
+    cursor: pointer;
+    transition: 0.5s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.question, .answer {
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+}
+
+.answer {
+    transform: rotateY(180deg);
+    background-color: rgb(232, 231, 231) !important;
+}
+
+.imageLoadingBall {
+    width: 40%;
+}

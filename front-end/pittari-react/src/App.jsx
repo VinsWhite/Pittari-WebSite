@@ -27,6 +27,7 @@ import CookieConsent from './pages/CookieConsent'
 import { useState } from 'react'
 import Search from './pages/Search'
 import HokanGeemu from './pages/games/hokangeemu/HokanGeemu'
+import BunKaado from './pages/games/bunkaado/BunKaado'
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -48,6 +49,7 @@ function App() {
           <Route path="/learn/クイズゲーム" element={<KuizuGeemu />}></Route>
           <Route path="/learn/クイズゲーム/answers" element={<AnswerPage />}></Route>
           <Route path="/learn/補完ゲーム" element={<HokanGeemu />}></Route>
+          <Route path="/learn/文カード" element={<BunKaado />}></Route>
           {/* PROFILE */}
           <Route path="/profile" element={<Profile />}></Route>
           {/* FORUM */}
