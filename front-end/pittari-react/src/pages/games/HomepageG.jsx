@@ -6,19 +6,13 @@ import { useEffect, useState } from 'react'
 import CookieConsent from '../CookieConsent'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import scrollToTop from '../../assets/functions/scrollToTop'
 
 export default function HomepageG() {
 
   const [showModal, setShowModal] = useState(false);
   const isLoggedIn = useSelector(state => state.users.token !== null); 
   const navigate = useNavigate();
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'instant' 
-    });
-  };
 
   useEffect(() => {
     if (!isLoggedIn) {

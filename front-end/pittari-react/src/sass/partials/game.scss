@@ -139,3 +139,19 @@
 .imageLoadingBall {
     width: 40%;
 }
+
+// pulsanti "lo so" e "non lo so"
+.btnLoSo {
+
+    &:hover {
+        background-color: $primary !important;
+    }
+}
+
+.btnNonLoSo {
+
+    &:hover {
+        background-color: $primary-emphasis !important;
+    }
+}
+

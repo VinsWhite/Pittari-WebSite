@@ -38,6 +38,7 @@ export default function NavbarComp() {
 
   const handleLogout = async () => {
     setLoadingLogout(true);
+    sessionStorage.clear();
     try {
         await axios.post("/logout"); 
         localStorage.removeItem('token'); 

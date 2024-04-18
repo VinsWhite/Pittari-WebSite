@@ -17,7 +17,7 @@ export default function DetailArticle() {
 
       useEffect(() => {
         scrollToTop();
-      });
+      }, []);
 
     useEffect(() => {
         axios.get(`/articles/${id}`).then(response => {

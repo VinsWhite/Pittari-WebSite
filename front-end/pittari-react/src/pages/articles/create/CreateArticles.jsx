@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { useState } from 'react';
 /* import DividerComp from '../../../components/articles/DividerComp'; */
 import HeadingArtComp from '../../../components/articles/HeadingArtComp';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../../api/axios';
+import scrollToTop from '../../../assets/functions/scrollToTop';
 
 export default function CreateArticles() {
   const [validated, setValidated] = useState(false);
@@ -15,9 +16,15 @@ export default function CreateArticles() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    scrollToTop();
+  }, [])
+  
+
   const handleSubmit = async (e) => {
       e.preventDefault();
       const form = e.currentTarget;
+      sessionStorage.removeItem('articles');
 
       if (form.checkValidity() === false) {
           e.stopPropagation();
@@ -34,7 +41,7 @@ export default function CreateArticles() {
       try {
           await axios.get("/sanctum/csrf-cookie");
           const response = await axios.post("/articles", formData);
-          console.log(response.data); 
+          /* console.log(response.data);  */
           navigate('/articles'); 
       } catch (error) {
           setError(error.response.data.message);
