@@ -9,11 +9,11 @@ export default function BunKaado() {
     const [isFlipped, setIsFlipped] = useState(false);
     const [cards, setCards] = useState([]);
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [backClicked, setBackClicked] = useState(false); // quelle che sono già state girate, rimangono girate
     const [audioKey, setAudioKey] = useState(0);
-    const [knowns, setKnowns] = useState(0);
-    const [unknowns, setUnknowns] = useState(0);
+    const [knowns, setKnowns] = useState(1);
+    const [unknowns, setUnknowns] = useState(1);
 
     const handleClick = () => {
         setIsFlipped(!isFlipped);
@@ -26,7 +26,7 @@ export default function BunKaado() {
             setIsFlipped(false);
             setAudioKey((prevKey) => prevKey + 1);
             /* console.log("Next card index:", currentCardIndex); */
-        }, 200);
+        }, 180);
     };
 
     /* const handlePrevCard = () => {
@@ -35,8 +35,7 @@ export default function BunKaado() {
         setCurrentCardIndex((prevIndex) => (prevIndex - 1 + cards.length) % cards.length);
     }; */
 
-    useEffect(() => {
-        setLoading(true);
+    useEffect(() => {;
         const fetchCards = async () => {
             try {
                 const response = await axios.get('/examples');
@@ -63,11 +62,15 @@ export default function BunKaado() {
     }, [backClicked]);
 
     const iknow = () => {
+        setKnowns(knowns + 1);
         handleNextCard();
+        console.log('ne sai: ' + knowns)
     }
     
     const idontknow = () => {
+        setUnknowns(unknowns + 1);
         handleNextCard();
+        console.log('non ne sai: ' + unknowns)
     }
 
     return (
@@ -80,10 +83,10 @@ export default function BunKaado() {
                         <p className='opacity-75'>{stock()}</p>
                     </div>
                 )}
-                {cards.length > 0 && (
+
+            {(cards.length > 0 && currentCardIndex <= 8 ) && (
                 <div className={`flashcard-container text-center ${isFlipped ? 'flipped' : ''}`} onClick={handleClick}>
                     <div className='flashcard'>
-                        {cards.length > 0 && (
                             <>
                                 <div className='bg-secondary p-5 m-5 shadow rounded-4 sentence'>
                                     <div className='content'>
@@ -96,39 +99,32 @@ export default function BunKaado() {
                                         </audio>
                                     </div>
                                 </div>
-
+    
                                 <div className='bg-secondary p-5 m-5 shadow rounded-4 answer'>
                                     <div className='content'>
                                         <p className='text-end'>{currentCardIndex + 1}</p>
                                         <h2>{cards[currentCardIndex].italian_translation}</h2>
                                         <div className="d-flex justify-content-between mt-5">
-                                            {/* <ArrowLeftCircle 
-                                                    onClick={handlePrevCard} 
-                                                    variant="light" 
-                                                    disabled={currentCardIndex === 0}
-                                                    className='fs-3'> 
-                                            </ArrowLeftCircle> */}
-
                                             <p onClick={iknow} className='bg-primary-darker text-light p-2 rounded-4 btnLoSo'>La so</p>
                                             <p onClick={idontknow} className='bg-danger text-light p-2 rounded-4 btnNonLoSo'>Non la so</p>
-
-                                            
-                                            {/* <ArrowRightCircle 
-                                                onClick={handleNextCard} 
-                                                variant="light" 
-                                                disabled={currentCardIndex === cards.length - 1}
-                                                className='fs-3'> 
-                                            </ArrowRightCircle> */}
-                                           
                                         </div>
                                     </div>
                                 </div>
                             </>
-                        )}
+                        
                     </div>
                 </div>
                 )}
+
+                {(!loading && currentCardIndex == 8) && ( 
+                    <div>
+                        <p>Ne sapevo {knowns} </p>
+                        <p>Non ne sapevo {unknowns} </p>
+                    </div>
+                )}
+    
             </Container>
         </>
     );
+    
 }
