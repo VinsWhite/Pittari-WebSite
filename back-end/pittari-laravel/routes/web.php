@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\FruitController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\GameScoreController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostReplyController;
 use App\Http\Controllers\PronounsController;
@@ -52,6 +53,8 @@ Route::get('/fruits', [FruitController::class, 'index'])->middleware('auth');
 Route::get('/pronouns', [PronounsController::class, 'index'])->middleware('auth');
 Route::get('/allArguments', [AllArguments::class, 'index'])->middleware('auth');
 Route::get('/examples', [ExampleController::class, 'index'])->middleware('auth');
+Route::get('/gameScores', [GameScoreController::class, 'index'])->middleware('auth');
+Route::get('/allScores', [GameScoreController::class, 'allScores'])->middleware('auth');
 
 /* OPERAZIONI DI AUTENTICAZIONE */
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');

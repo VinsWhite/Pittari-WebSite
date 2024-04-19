@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Game_score;
 use App\Http\Requests\StoreGame_scoreRequest;
 use App\Http\Requests\UpdateGame_scoreRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class GameScoreController extends Controller
 {
@@ -13,7 +15,23 @@ class GameScoreController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $game_scores = Game_score::with('game')->where('user_id', $user->id)->get();
+
+        return response()->json($game_scores);
+    }
+
+    public function allScores()
+    {
+        $user_role = Auth::user()->role;
+
+        if ($user_role === 'admin') {
+        $game_scores = Game_score::with(['game', 'user'])->get();
+        } else {
+            return response()->json(['message' => 'Non sei un admin! Non autorizzato'], 403);
+        }
+
+        return response()->json($game_scores);
     }
 
     /**

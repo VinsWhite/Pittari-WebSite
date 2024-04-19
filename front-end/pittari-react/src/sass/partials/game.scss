@@ -1,6 +1,6 @@
 @import './variables.scss';
 
-// Sezione LastGame
+// Sezione LastGame (+ punteggi)
 .lastGame {
 
     cursor: pointer;
@@ -21,6 +21,12 @@
         border-radius: 1em;
     }
 }
+
+.divPunteggi {
+    height: 14.5rem;
+    overflow-y: auto;
+}
+
 
 // Sezione tutti i giochi
 .allGames {

@@ -18,15 +18,24 @@ export default function AllGames() {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await axios.get('/allGames');
-        setGames(response.data);
-        setLoading(false);
+        // verifica se ci sono dati nel sessionStorage
+        const storedGames = sessionStorage.getItem('allGames');
+        if (storedGames) {
+          setGames(JSON.parse(storedGames));
+          setLoading(false);
+        } else {
+          // esegue la chiamata API solo se non ci sono dati nel sessionStorage
+          const response = await axios.get('/allGames');
+          setGames(response.data);
+          sessionStorage.setItem('allGames', JSON.stringify(response.data));
+          setLoading(false);
+        }
       } catch (error) {
         /* console.error('Error fetching games:', error); */
         setLoading(false);
       }
     };
-
+  
     fetchGames();
   }, []);
 

@@ -17,6 +17,7 @@ export default function DetailPost() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [stockPhrase, setStockPhrase] = useState('');
+    const userName = localStorage.getItem('name');
 
     const scrollToTop = () => {
         window.scrollTo({
@@ -126,7 +127,12 @@ export default function DetailPost() {
                         <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary my-4 caricamentoCorpo' key={post.id}>
                             <div>
                                 <div className='d-flex justify-content-between'>
-                                    <p className='fw-semibold'><Person /> {post.user.name} <span className='text-primary ms-3 border border-primary py-1 px-3 rounded-5'>autore</span></p>
+                                    <p className='fw-semibold'><Person /> {post.user.name} 
+                                        <span className='text-primary ms-3 border border-primary py-1 px-3 rounded-5'>autore</span>
+                                        {userName === post.user.name && (
+                                            <span className='ms-2'>MIO</span>
+                                        )}
+                                    </p>
                                     <p>{formatDate(post.created_at)}</p>
                                 </div>
                                 <h4>{post.title}</h4>
