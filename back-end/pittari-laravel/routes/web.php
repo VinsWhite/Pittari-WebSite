@@ -45,6 +45,7 @@ Route::get('/topics/{topic}', [TopicController::class, 'show'])->middleware('aut
 Route::get('/allPosts', [PostController::class, 'index'])->middleware('auth');
 Route::post('/post', [PostController::class, 'store'])->middleware('auth');
 Route::get('/post/{post}', [PostController::class, 'show'])->middleware('auth');
+Route::delete('/deletePost/{post}', [PostController::class, 'destroy'])->middleware('auth');
 Route::post('/reply', [PostReplyController::class, 'store'])->middleware('auth');
 
 /* SEZIONE IMPARA */

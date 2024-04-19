@@ -17,7 +17,7 @@ a, img {
 }
 
 .bg-primary-emphasis {
-    background-color: $primary-emphasis;
+    background-color: var(--primary-emphasis);
 }
 
 .bg-secondary-emphasis {
@@ -49,7 +49,7 @@ a, img {
     border: 0;
 
     &:hover {
-        background-color: $primary-emphasis !important;
+        background-color: var(--primary-emphasis) !important;
     }
 }
 
@@ -115,3 +115,11 @@ video {
         100% { transform: scale(1.02); }
     }
 }
+
+.dropdown-item.active {
+    background-color: $primary-darker !important;
+}
+
+.dropdown-link.active {
+    background-color: $primary-darker !important;
+} 

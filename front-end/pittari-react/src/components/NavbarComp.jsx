@@ -3,17 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Dropdown } from 'react-bootstrap';
+import { Button, Dropdown } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { logoutUser } from '../state/slice/usersSlice'; 
 import axios from '../api/axios';
 import logo from '../assets/img/logoP.jpg';
-import { Person, Search } from 'react-bootstrap-icons';
+import { Palette, Person, Search } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 
 export default function NavbarComp() {
   const isLoggedIn = useSelector(state => state.users.token !== null); 
   const [loadingLogout, setLoadingLogout] = useState(false);
+  const userName = localStorage.getItem('name');
+  const role = localStorage.getItem('role');
+  const [colorChanged, setColorChanged] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -55,7 +58,20 @@ export default function NavbarComp() {
         setLoadingLogout(false);
     }
   };
+
+  const changeColor = () => {
+    if (colorChanged) {
+      document.documentElement.style.setProperty('--primary-emphasis', 'rgb(246, 47, 36)');
+    } else {
+      document.documentElement.style.setProperty('--primary-emphasis', '#ea99b2');
+    }
+
+    setColorChanged(!colorChanged);
+  };
   
+  useEffect(() => {
+    document.documentElement.style.setProperty('--primary-emphasis', 'rgb(246, 47, 36)');
+  }, []);
 
   return (
     <Navbar expand="lg" className="bg-primary position-sticky z-3 top-0 w-100">
@@ -75,12 +91,18 @@ export default function NavbarComp() {
           >
             <div className='d-flex align-items-center'>
               <NavLink to="/" className="nav-link text-light" activeclassname="active">Home</NavLink>
-              {/* Mostra il pulsante di logout solo se l'utente è loggato */}
-              {isLoggedIn ? (
+              <Button className='ms-2' onClick={changeColor}> <Palette /> </Button>
+              <NavLink to="/search" className="nav-link text-light ms-3" activeclassname="active"><Search /></NavLink>
+            </div>
+          </Nav>
+
+          <Nav className="d-flex align-items-center">
+            {/* Mostra il pulsante di logout solo se l'utente è loggato */}
+            {isLoggedIn ? (
                 <>
                   <Dropdown className='nav-link'>
                     <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                      <Person />
+                    {role === 'admin' && ( <span className=' border-end pe-2'>ADMIN</span> )} {userName} <Person />
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu className='dropdown-menu'>
@@ -92,17 +114,15 @@ export default function NavbarComp() {
               ) : (
                 <NavLink to="/login" className="nav-link text-light ms-3" activeclassname="active">Login</NavLink>
               )}
-            </div>
-          </Nav>
 
-          <Nav className="d-flex">
-            <NavLink to="/search" className="nav-link text-light ms-3" activeclassname="active"><Search /></NavLink>
             <NavLink to="/articles" className="nav-link text-light ms-3" activeclassname="active">Articoli</NavLink>
             
             {isLoggedIn && (
             <NavLink to="/forum" className="nav-link text-light ms-3" activeclassname="active">Forum</NavLink>
             )}
+
             <NavLink to="/contacts" className="nav-link text-light ms-3" activeclassname="active">Contatti</NavLink>
+
             
             {isLoggedIn && (
             <NavLink to="/learn" className="nav-link text-yellow ms-3 border border-2 border-warning rounded-5 px-4 impara" activeclassname="active">Impara</NavLink>

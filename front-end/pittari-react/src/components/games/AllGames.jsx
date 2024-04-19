@@ -59,8 +59,8 @@ export default function AllGames() {
                               <p className='opacity-75'>{game.language} version</p>
                             }
                           </div>
-                          <div className='text-center bg-primary-darker p-2 rounded-4'>
-                            <p className='fw-semibold'>Typology</p>
+                          <div className='text-center d-none d-md-block bg-primary-darker p-2 rounded-4'>
+                            <p className='fw-semibold'>Typologia</p>
                             <p>{game.typology}</p>
                           </div>
                         </div>

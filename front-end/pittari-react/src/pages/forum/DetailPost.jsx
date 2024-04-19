@@ -3,11 +3,12 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { Button, Container, Form } from 'react-bootstrap';
 import DividerComp from '../../components/forum/DividerComp';
 import axios from '../../api/axios';
-import { ArrowLeft, Person, ChatLeft, Share, PersonBadge } from 'react-bootstrap-icons';
+import { ArrowLeft, Person, ChatLeft, Share, PersonBadge, Trash } from 'react-bootstrap-icons';
 import caricamento from '../../assets/img/hashi.jpg'
 import formatDate from '../../assets/functions/formatDate';
 import stock from '../../assets/functions/stock';
 import {Spinner} from 'react-bootstrap';
+import scrollToTop from '../../assets/functions/scrollToTop'
 
 export default function DetailPost() {
     const { topicId, postId } = useParams();
@@ -18,13 +19,7 @@ export default function DetailPost() {
     const navigate = useNavigate();
     const [stockPhrase, setStockPhrase] = useState('');
     const userName = localStorage.getItem('name');
-
-    const scrollToTop = () => {
-        window.scrollTo({
-          top: 0,
-          behavior: 'instant' 
-        });
-      };
+    const role = localStorage.getItem('role');
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -118,20 +113,41 @@ export default function DetailPost() {
             return cookie ? cookie.pop() : '';
           }
 
+
+            const handleDelete = async () => {
+                console.log('Pulsante premuto')
+                try {
+                    await axios.delete(`/deletePost/${postId}`);
+                    sessionStorage.removeItem("topics");
+                    sessionStorage.removeItem("allPosts");
+                    sessionStorage.removeItem(`topic_${topicId}`)
+                    navigate(-1);
+                } catch (error) {
+                    console.log('Errore durante l\'eliminazione del post:', error);
+                }
+            };
+        
+
     return (
         <>
             <Container fluid className='bg-primary-darker p-5'>
                 <Container>
                     <button onClick={() => navigate(-1)} className="text-secondary fs-5 fw-semibold text-decoration-none bg-transparent border-0"><ArrowLeft /> Indietro</button>
                     {post && (
-                        <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary my-4 caricamentoCorpo' key={post.id}>
+                        <div className='border border-secondary rounded-3 py-2 px-4 bg-secondary my-4 caricamentoCorpo position-relative' key={post.id}>
                             <div>
+                                {userName === post.user.name && (
+                                    <Button variant='danger' onClick={handleDelete} className='ms-2 position-absolute top-0 end-100'><Trash /></Button>
+                                )}
+
+                                {role === 'admin' && (
+                                    <Button variant='warning' onClick={handleDelete} className='ms-2 position-absolute top-0 end-100'><Trash /></Button>
+
+                                )}
+
                                 <div className='d-flex justify-content-between'>
                                     <p className='fw-semibold'><Person /> {post.user.name} 
                                         <span className='text-primary ms-3 border border-primary py-1 px-3 rounded-5'>autore</span>
-                                        {userName === post.user.name && (
-                                            <span className='ms-2'>MIO</span>
-                                        )}
                                     </p>
                                     <p>{formatDate(post.created_at)}</p>
                                 </div>

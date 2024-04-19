@@ -127,7 +127,7 @@ export default function ArticlesComp() {
               <Search className='me-2 text-light fs-4' />
               <input 
                 className="form-control w-50 my-4" 
-                type="search" 
+                type="text" 
                 placeholder="Cerca..." 
                 aria-label="Search"
               />

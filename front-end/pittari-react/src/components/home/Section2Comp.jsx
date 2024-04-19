@@ -26,13 +26,13 @@ export default function Section2Comp() {
 
   return (
     <>
-        <div className='bg-primary-emphasis p-5'>
+        <div className='bg-primary-darker p-5'>
             <h2 ref={ref} className={`text-secondary fw-semibold text-center text-uppercase lh-base ${isVisible ? 'animationFromBottom' : 'opacity-0'}`}>Leggi articoli <span className='fw-bold border bg-white rounded-5 text-primary p-1'>interessanti</span> 😲</h2>
             <Row className='mt-3 text-light'>
-                <Col className='d-flex justify-content-center align-items-center flex-column' sm={12} lg={6}>
+                <Col className='d-flex justify-content-center align-items-center flex-column mt-3' sm={12} lg={6}>
                 <Lottie className='welcome bg-primary shadow' animationData={readingAnimation} />
                 </Col>
-                <Col className='d-flex flex-column justify-content-center position-relative jump' sm={12} lg={6}>
+                <Col className='d-flex flex-column justify-content-center position-relative mt-3 jump' sm={12} lg={6}>
                     <Paperclip className='fs-1 position-absolute bottom-50 end-100'/>
                     <h4 className={`${isVisible ? 'animationFromBottom' : 'opacity-0'}`}>Articoli di ogni genere!</h4>
                     <p className={`${isVisible ? 'animationFromBottom' : 'opacity-0'}`}>Immergiti in viaggi culturali attraverso i nostri articoli che esplorano le diverse tradizioni del Giappone e offrono approfondimenti sulla lingua e sulla letteratura.</p>

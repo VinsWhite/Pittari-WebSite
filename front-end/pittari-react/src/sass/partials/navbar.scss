@@ -17,7 +17,7 @@
     padding: 0.3em 0.8em;
 
     &.active {
-        background-color: $primary-emphasis;
+        background-color: var(--primary-emphasis);
         border-radius: 2em;
         font-weight: 600;
     }

@@ -79,6 +79,15 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+
+        $user_role = Auth::user()->role;
+
+        if (Auth::id() !== $post->user_id && $user_role !== 'admin') {
+            // se l'utente non è l'autore del post e non è un amministratore, restituisce un errore
+            return response()->json(['message' => 'Non sei autorizzato a eliminare questo post.'], 403);
+        }
+
+        $post->delete();
+        return response()->json(['message' => 'Il post è stato eliminato con successo.']);
     }
 }
