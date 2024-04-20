@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { Crosshair2, Pass } from 'react-bootstrap-icons';
 import axios from '../../api/axios';
 import HeadingProfileComp from '../../components/profile/HeadingProfileComp';
+import scrollToTop from '../../assets/functions/scrollToTop';
 
 export default function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -10,6 +11,11 @@ export default function ChangePassword() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    scrollToTop();
+  }, [])
+  
 
   const handleChangePassword = async (e) => {
     e.preventDefault();

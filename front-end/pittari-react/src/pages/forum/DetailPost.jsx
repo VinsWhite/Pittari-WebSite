@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { Button, Container, Form } from 'react-bootstrap';
 import DividerComp from '../../components/forum/DividerComp';
@@ -9,6 +9,9 @@ import formatDate from '../../assets/functions/formatDate';
 import stock from '../../assets/functions/stock';
 import {Spinner} from 'react-bootstrap';
 import scrollToTop from '../../assets/functions/scrollToTop'
+import { ConfirmDialog } from 'primereact/confirmdialog'; // For <ConfirmDialog /> component
+import { confirmDialog } from 'primereact/confirmdialog'; // For confirmDialog method
+import { Toast } from 'primereact/toast';
 
 export default function DetailPost() {
     const { topicId, postId } = useParams();
@@ -20,6 +23,7 @@ export default function DetailPost() {
     const [stockPhrase, setStockPhrase] = useState('');
     const userName = localStorage.getItem('name');
     const role = localStorage.getItem('role');
+    const toast = useRef(null);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -114,23 +118,45 @@ export default function DetailPost() {
           }
 
 
+          const accept = async () => {
+            /* console.log('Pulsante premuto') */
+            try {
+                await axios.delete(`/deletePost/${postId}`);
+                sessionStorage.removeItem("topics");
+                sessionStorage.removeItem("allPosts");
+                sessionStorage.removeItem(`topic_${topicId}`)
+                toast.current.show({ severity: 'info', summary: 'Cancellato', detail: 'Hai cancellato il post con successo', life: 3000 });
+                navigate(-1);
+            } catch (error) {
+                /* console.log('Errore durante l\'eliminazione del post:', error); */
+                toast.current.show({ severity: 'warn', summary: 'Annullato', detail: 'Operazione rifiutata, riprova più tardi', life: 3000 });
+            }
+          }
+
+          const reject =  () => {
+            toast.current.show({ severity: 'warn', summary: 'Annullato', detail: 'Operazione annullata', life: 3000 });
+          }
+
             const handleDelete = async () => {
-                console.log('Pulsante premuto')
-                try {
-                    await axios.delete(`/deletePost/${postId}`);
-                    sessionStorage.removeItem("topics");
-                    sessionStorage.removeItem("allPosts");
-                    sessionStorage.removeItem(`topic_${topicId}`)
-                    navigate(-1);
-                } catch (error) {
-                    console.log('Errore durante l\'eliminazione del post:', error);
-                }
+                confirmDialog({
+                    message: 'Vuoi cancellare questo post?',
+                    header: 'Conferma eliminazione',
+                    icon: 'pi pi-info-circle',
+                    defaultFocus: 'reject',
+                    acceptClassName: 'p-button-danger',
+                    acceptLabel: "Elimina",
+                    rejectLabel: "Annulla",
+                    accept,
+                    reject
+                });
             };
         
 
     return (
         <>
             <Container fluid className='bg-primary-darker p-5'>
+                <Toast ref={toast} />
+                <ConfirmDialog />
                 <Container>
                     <button onClick={() => navigate(-1)} className="text-secondary fs-5 fw-semibold text-decoration-none bg-transparent border-0"><ArrowLeft /> Indietro</button>
                     {post && (

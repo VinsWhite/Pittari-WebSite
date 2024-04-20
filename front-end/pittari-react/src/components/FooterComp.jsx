@@ -28,8 +28,7 @@ export default function FooterComp() {
             <h3 className='fw-bold text-secondary mb-3'>Informazioni</h3>
             <ul className='list-unstyled mb-0'>
               <li><NavLink to='/privacy-policy' className='text-light text-decoration-none'>Privacy Policy</NavLink></li>
-              <li><a href='#' className='text-light text-decoration-none'>Placeholder</a></li>
-              <li><a href='#' className='text-light text-decoration-none'>Placeholder</a></li>
+              <li><NavLink to="/contacts" className="text-light text-decoration-none">Contatti</NavLink></li>
             </ul>
           </Col>
         </Row>
