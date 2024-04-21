@@ -6,6 +6,9 @@ import { NavLink } from 'react-router-dom';
 import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { loginUserSuccess } from '../../state/slice/usersSlice';
+import { useEffect } from 'react';
+import scrollToTop from '../../assets/functions/scrollToTop';
+import { useSelector } from 'react-redux';
 
 export default function Login() {
     const [validated, setValidated] = useState(false);
@@ -15,6 +18,18 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isLoggedIn = useSelector(state => state.users.token !== null); 
+
+    useEffect(() => {
+      scrollToTop();
+    }, [])
+    
+    useEffect(() => {
+        if (isLoggedIn) {
+          navigate('/');
+        }
+      }, [isLoggedIn, navigate]);
+    
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -89,7 +104,7 @@ export default function Login() {
                                 Per favore inserisci la tua password
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button variant='warning' type="submit">Accedi</Button>
+                        <Button variant='primary' type="submit">Accedi</Button>
                         {error && <div className="text-danger mt-2">{error}</div>}
                     </Form>
                     <div className='text-end d-flex flex-column mt-5'>

@@ -24,9 +24,9 @@ export default function LastSectionHomeComp() {
       const randomIndex = Math.floor(Math.random() * response.data.examples.length);
       const randomExample = response.data.examples[randomIndex];
       setRandomKanji(randomExample.japanese);
-      console.log(response.data);
+      /* console.log(response.data); */
     } catch (error) {
-      console.error('Errore durante il recupero delle informazioni del kanji:', error);
+      /* console.error('Errore durante il recupero delle informazioni del kanji:', error); */
     }
   };
 

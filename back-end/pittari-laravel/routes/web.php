@@ -63,7 +63,7 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 Route::post('/changepassword', [NewPasswordController::class, 'store']);
 Route::post('/passwordReset', [PasswordResetLinkController::class, 'store']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
-Route::delete('/deleteUser', [UserController::class, 'destroy']);
+Route::delete('/deleteUser', [UserController::class, 'destroy'])->middleware('auth');
 
 Route::get('/dashboard', function(){
     return 'ciao';

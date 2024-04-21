@@ -143,7 +143,7 @@ export default function DetailPost() {
                     header: 'Conferma eliminazione',
                     icon: 'pi pi-info-circle',
                     defaultFocus: 'reject',
-                    acceptClassName: 'p-button-danger',
+                    acceptClassName: 'p-button-danger mx-2',
                     acceptLabel: "Elimina",
                     rejectLabel: "Annulla",
                     accept,

@@ -5,10 +5,8 @@ import axios from '../../api/axios';
 import { ArrowClockwise, Search, Trash } from 'react-bootstrap-icons';
 import { NavLink } from 'react-router-dom';  
 import stock from '../../assets/functions/stock';
-
 import defaultImage from '../../assets/img/defaultImage.jpg'; // Immagine di default in caso l'articolo non abbia un'immagine
 import caricamento from '../../assets/img/paperNews.jpg';
-
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import scrollToTop from '../../assets/functions/scrollToTop';
 

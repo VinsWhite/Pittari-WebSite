@@ -8,6 +8,9 @@ import Col from 'react-bootstrap/Col';
 import axios from '../../api/axios';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import scrollToTop from '../../assets/functions/scrollToTop';
+import { useSelector } from 'react-redux';
 
 export default function Registration() {
     const [validated, setValidated] = useState(false);
@@ -18,6 +21,21 @@ export default function Registration() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const isLoggedIn = useSelector(state => state.users.token !== null); 
+
+    useEffect(() => {
+      scrollToTop();
+    }, [])
+    
+    useEffect(() => {
+        if (isLoggedIn) {
+          navigate('/');
+        }
+      }, [isLoggedIn, navigate]);
+    
+    if (isLoggedIn) {
+        return null; 
+    }
 
     const validateName = (value) => {
         if (value.length > 40) {
@@ -87,7 +105,7 @@ export default function Registration() {
 
     return (
         <>
-            <div className='bg-primary-emphasis m-0 p-5'>
+            <div className='bg-primary-darker m-0 p-5'>
                 <Container className='my-5 bg-secondary p-5 rounded-4 shadow'>
                     <h2>Registrati!</h2>
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -167,7 +185,7 @@ export default function Registration() {
                                 {validateConfirmPassword(confirmPassword)}
                             </Form.Control.Feedback>
                         </Form.Group>
-                        <Button variant='warning' type="submit">Registrati</Button>
+                        <Button variant='primary' type="submit">Registrati</Button>
                         {error && <div className="text-danger mt-2">{error}</div>}
                     </Form>
                     <div className='text-end'>
