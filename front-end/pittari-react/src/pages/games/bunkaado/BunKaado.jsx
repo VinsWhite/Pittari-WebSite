@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import axios from '../../../api/axios';
 import Lottie from 'lottie-react'
 import stock from '../../../assets/functions/stock';
@@ -18,7 +18,10 @@ export default function BunKaado() {
     const [knowns, setKnowns] = useState(0);
     const [unknowns, setUnknowns] = useState(0);
     const [showResults, setShowResults] = useState(false);
-    const [scores, setScores] = useState([]);
+    const [scores, setScores] = useState(0);
+    const location = useLocation();
+    const gameName = decodeURIComponent(location.pathname.split('/').pop());
+
 
     const handleClick = () => {
         setIsFlipped(!isFlipped);
@@ -31,7 +34,7 @@ export default function BunKaado() {
                 setCurrentCardIndex((prevIndex) => prevIndex + 1);
                 setIsFlipped(false);
                 setAudioKey((prevKey) => prevKey + 1);
-            }, 180);
+            }, 150);
         } else {
             setShowResults(true);
         }
@@ -76,14 +79,17 @@ export default function BunKaado() {
 
     const iknow = () => {
         setKnowns(knowns + 1);
+        if (knowns + 1 > 5) {
+            setScores(scores + 1);
+        }
         handleNextCard();
-        console.log('ne sai: ' + knowns)
+        /* console.log('ne sai: ' + knowns) */
     }
     
     const idontknow = () => {
         setUnknowns(unknowns + 1);
         handleNextCard();
-        console.log('non ne sai: ' + unknowns)
+        /* console.log('non ne sai: ' + unknowns) */
     }
 
     const handleRestart = () => {

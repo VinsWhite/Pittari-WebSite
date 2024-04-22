@@ -12,7 +12,7 @@ function CookieConsent({ showModal, setShowModal }) {
     } else {
       setShowModal(true);
     }
-  }, []);
+  }, []); // Aggiunto array vuoto per far sì che l'effetto venga eseguito solo una volta
 
   const acceptCookies = () => {
     localStorage.setItem('cookieAccepted', true);
@@ -20,9 +20,16 @@ function CookieConsent({ showModal, setShowModal }) {
     setShowModal(false);
   };
 
+  const handleClose = () => {
+    if (!accepted) {
+      // Solo se l'utente non ha accettato i cookie chiude il modal
+      setShowModal(false);
+    }
+  };
+
   return (
-    <Modal show={showModal} onHide={() => {}}>
-      <Modal.Header closeButton>
+    <Modal show={showModal} onHide={handleClose}>
+      <Modal.Header> 
         <Modal.Title>Cookie Policy</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -34,9 +41,11 @@ function CookieConsent({ showModal, setShowModal }) {
         </div>
         <p>Per ulteriori informazioni su come gestiamo i dati personali, consulta la nostra <a href="/privacy-policy" className="text-primary">politica sulla privacy</a>.</p>
       </Modal.Body>
-      <Modal.Footer>
-        <Button className='rounded-4 fw-semibold' onClick={acceptCookies}>Accetto</Button>
-      </Modal.Footer>
+      {!accepted && ( 
+        <Modal.Footer>
+          <Button className='rounded-4 fw-semibold' onClick={acceptCookies}>Accetto</Button>
+        </Modal.Footer>
+      )}
     </Modal>
   );
 }

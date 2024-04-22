@@ -56,6 +56,10 @@ Route::get('/allArguments', [AllArguments::class, 'index'])->middleware('auth');
 Route::get('/examples', [ExampleController::class, 'index'])->middleware('auth');
 Route::get('/gameScores', [GameScoreController::class, 'index'])->middleware('auth');
 Route::get('/allScores', [GameScoreController::class, 'allScores'])->middleware('auth');
+Route::prefix('game-scores')->middleware('auth')->group(function () {
+    Route::post('/', [GameScoreController::class, 'store']);
+    Route::put('/{id}', [GameScoreController::class, 'update']);
+});
 
 /* OPERAZIONI DI AUTENTICAZIONE */
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');

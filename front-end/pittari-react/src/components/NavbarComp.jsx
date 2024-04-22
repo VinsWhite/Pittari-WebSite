@@ -21,23 +21,14 @@ export default function NavbarComp() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const interceptor = axios.interceptors.response.use(
-      response => response,
-      error => {
-        if (error.response && error.response.status === 401 && isLoggedIn) {
-          // quando si riceve questo errore, esegue il logout automaticamente 
-          if (localStorage.getItem('token')) {
-            handleLogout(); 
-          }
-        }
-        return Promise.reject(error);
-      }
-    );
-  
-    return () => {
-      axios.interceptors.response.eject(interceptor);
-    };
-  }, [isLoggedIn]);
+    const storedColor = localStorage.getItem('color');
+    if (storedColor) {
+      document.documentElement.style.setProperty('--primary-emphasis', storedColor);
+    } else {
+      document.documentElement.style.setProperty('--primary-emphasis', 'rgb(246, 47, 36)');
+      localStorage.setItem('color', 'rgb(246, 47, 36)');
+    }
+  }, []);
 
   const handleLogout = async () => {
     setLoadingLogout(true);
@@ -60,19 +51,12 @@ export default function NavbarComp() {
   };
 
   const changeColor = () => {
-    if (colorChanged) {
-      document.documentElement.style.setProperty('--primary-emphasis', 'rgb(246, 47, 36)');
-    } else {
-      document.documentElement.style.setProperty('--primary-emphasis', '#ea99b2');
-    }
-
+    const newColor = colorChanged ? 'rgb(246, 47, 36)' : '#ea99b2';
+    document.documentElement.style.setProperty('--primary-emphasis', newColor);
+    localStorage.setItem('color', newColor);
     setColorChanged(!colorChanged);
   };
   
-  useEffect(() => {
-    document.documentElement.style.setProperty('--primary-emphasis', 'rgb(246, 47, 36)');
-  }, []);
-
   return (
     <Navbar expand="lg" className="bg-primary position-sticky z-3 top-0 w-100">
       {loadingLogout &&

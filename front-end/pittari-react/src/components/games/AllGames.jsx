@@ -51,7 +51,7 @@ export default function AllGames() {
                   games.map((game) => (
                     <Col key={game.id} xs={12} lg={6}>
                       <NavLink to={`/learn/${game.name}`} className="nav-link-custom" onClick={() => handleStartGame(game)}>
-                        <div className='oneGame bg-primary d-flex p-3 align-items-center justify-content-between shadow mt-4'>
+                        <div className='oneGame bg-primary d-flex p-3 align-items-center justify-content-between shadow mt-4 position-relative'>
                           <img className='rounded-2' src={`http://localhost:8000${game.image}`} alt={game.name} />
                           <div className='text-center'>
                             <h3>{game.name}</h3>
@@ -63,6 +63,11 @@ export default function AllGames() {
                             <p className='fw-semibold'>Typologia</p>
                             <p>{game.typology}</p>
                           </div>
+                          
+                          {game.available === 1 && (
+                            <p className='position-absolute bottom-0 start-0 bg-secondary text-danger rounded-4 ms-2 p-1'>In manutenzione...</p>
+                          )}
+
                         </div>
                       </NavLink>
                     </Col>

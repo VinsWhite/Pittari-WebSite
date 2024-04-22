@@ -33,7 +33,7 @@ export default function PasswordReset() {
 
   return (
         <>
-            <div className='bg-primary-emphasis m-0 p-5'>
+            <div className='bg-primary-darker m-0 p-5'>
                 <Container className='my-5 bg-secondary p-5 rounded-4 shadow'>
                     <h2>Resetta password!</h2>
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>

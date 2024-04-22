@@ -53,7 +53,7 @@ export default function Search () {
                     {searchResults.length > 0 && (
                         <ul className='pt-4'>
                             {searchResults.map((wordData, index) => ( 
-                                <li key={index}s> 
+                                <li key={index}> 
                                     <h3 className='text-primary fw-semibold'>{wordData.slug}</h3>
                                     <ul className='pt-2'>
                                         {wordData.japanese.map((japaneseItem, innerIndex) => ( 
