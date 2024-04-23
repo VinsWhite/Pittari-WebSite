@@ -200,7 +200,13 @@ export default function DetailPost() {
                                     {post.post_replies && post.user && post.post_replies.map((reply, index) => (
                                         <div key={index} className='ms-5 my-3 py-2 px-4 border border-2 border rounded-5 d-flex flex-column'>
                                             <div className='d-flex justify-content-between'>
-                                                <p><PersonBadge /> {reply.user.name}</p>
+                                                <div className='d-flex'>
+                                                    <p><PersonBadge /> {reply.user.name}</p>
+                                                    {userName === reply.user.name && (
+                                                        <p className='ms-3 text-danger'><Trash /></p>
+                                                    )}
+                                                </div>
+                                                
                                                 <p className='text-secondary-gray'>{formatDate(reply.created_at)}</p>
                                             </div>
                                             <p>{reply.context}</p>

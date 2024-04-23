@@ -53,24 +53,25 @@ export default function LastGameComp() {
 
   return (
     <div className='bg-primary-darker p-5'>
-      <NavLink to={lastGame && lastGame.name ? `/learn/${lastGame.name}` : '/learn'} className='text-decoration-none text-light'>
         <Row>
           <Col sm={12} md={9}>
-            <Container>
-              <div className='lastGame bg-primary p-4 rounded-4 shadow'>
-                <h5 className='opacity-75'>Cosa stai studiando</h5>
-                <Row>
-                  <Col sm={12} md={6} className='d-flex align-items-center justify-content-center d-md-block'>
-                    <img src={lastGame ? `http://localhost:8000${lastGame.image}` : placeholder} alt="Ultimo gioco" />
-                  </Col>
-                  <Col sm={12} md={6} className='d-flex flex-column justify-content-center align-items-center pt-4 pt-md-0'>
-                    <h2>{lastGame ? lastGame.name : 'Non hai ancora avviato nessun gioco'}</h2>
-                    <p>{lastGame ? lastGame.typology : ''}</p>
-                    <p className='opacity-75'>{lastGame ? `(${lastGame.language} version)` : ''}</p>
-                  </Col>
-                </Row>
-              </div>
-            </Container>
+            <NavLink to={lastGame && lastGame.name ? `/learn/${lastGame.name}` : '/learn'} className='text-decoration-none text-light'>
+              <Container>
+                <div className='lastGame bg-primary p-4 rounded-4 shadow'>
+                  <h5 className='opacity-75'>Cosa stai studiando</h5>
+                  <Row>
+                    <Col sm={12} md={6} className='d-flex align-items-center justify-content-center d-md-block'>
+                      <img src={lastGame ? `http://localhost:8000${lastGame.image}` : placeholder} alt="Ultimo gioco" />
+                    </Col>
+                    <Col sm={12} md={6} className='d-flex flex-column justify-content-center align-items-center pt-4 pt-md-0'>
+                      <h2>{lastGame ? lastGame.name : 'Non hai ancora avviato nessun gioco'}</h2>
+                      <p>{lastGame ? lastGame.typology : ''}</p>
+                      <p className='opacity-75'>{lastGame ? `(${lastGame.language} version)` : ''}</p>
+                    </Col>
+                  </Row>
+                </div>
+              </Container>
+            </NavLink>
           </Col>
 
           {/* contenitore punteggi */}
@@ -112,7 +113,6 @@ export default function LastGameComp() {
             </Container>
           </Col>
         </Row>
-      </NavLink>
     </div>
   );
 }
