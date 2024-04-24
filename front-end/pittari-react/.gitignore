@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 src/persist-encrypt
+src/react_app_key
 
 # Editor directories and files
 .vscode/*
