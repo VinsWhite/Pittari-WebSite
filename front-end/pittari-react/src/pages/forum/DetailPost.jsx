@@ -150,6 +150,38 @@ export default function DetailPost() {
                     reject
                 });
             };
+
+            const acceptreply = async () => {
+                /* console.log('Pulsante premuto') */
+                try {
+                    await axios.delete(`/deleteReply/${reply.id}`);
+                    toast.current.show({ severity: 'info', summary: 'Cancellato', detail: 'Hai cancellato il post con successo', life: 3000 });
+                    const updatedPost = { ...post };
+                    updatedPost.post_replies = updatedPost.post_replies.filter(reply => reply.id !== replyId);
+                    setPost(updatedPost);
+                } catch (error) {
+                    console.error(error);
+                    toast.current.show({ severity: 'warn', summary: 'Annullato', detail: 'Operazione rifiutata, riprova più tardi', life: 3000 });
+                }
+              }
+    
+              const rejectreply =  () => {
+                toast.current.show({ severity: 'warn', summary: 'Annullato', detail: 'Operazione annullata', life: 3000 });
+              }
+
+            const handleDeleteReply = async () => {
+                confirmDialog({
+                    message: 'Vuoi cancellare questa risposta',
+                    header: 'Conferma eliminazione',
+                    icon: 'pi pi-info-circle',
+                    defaultFocus: 'reject',
+                    acceptClassName: 'p-button-danger mx-2',
+                    acceptLabel: "Elimina",
+                    rejectLabel: "Annulla",
+                    accept: acceptreply,
+                    reject: rejectreply
+                });
+            }
         
 
     return (
@@ -203,7 +235,7 @@ export default function DetailPost() {
                                                 <div className='d-flex'>
                                                     <p><PersonBadge /> {reply.user.name}</p>
                                                     {userName === reply.user.name && (
-                                                        <p className='ms-3 text-danger'><Trash /></p>
+                                                        <p onClick={() => handleDeleteReply(reply.id)} className='ms-3 text-danger'><Trash /></p>
                                                     )}
                                                 </div>
                                                 

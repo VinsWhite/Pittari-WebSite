@@ -47,6 +47,7 @@ Route::post('/post', [PostController::class, 'store'])->middleware('auth');
 Route::get('/post/{post}', [PostController::class, 'show'])->middleware('auth');
 Route::delete('/deletePost/{post}', [PostController::class, 'destroy'])->middleware('auth');
 Route::post('/reply', [PostReplyController::class, 'store'])->middleware('auth');
+Route::delete('/deleteReply/{post_reply}', [PostReplyController::class, 'destroy'])->middleware('auth');
 
 /* SEZIONE IMPARA */
 Route::get('/allGames', [GameController::class, 'index'])->middleware('auth');

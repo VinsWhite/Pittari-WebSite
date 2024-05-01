@@ -71,6 +71,14 @@ class PostReplyController extends Controller
      */
     public function destroy(Post_reply $post_reply)
     {
-        //
+        $user_role = Auth::user()->role;
+
+        if (Auth::id() !== $post_reply->user_id && $user_role !== 'admin') {
+            // se l'utente non è l'autore della risposta del post e non è un amministratore, restituisce un errore
+            return response()->json(['message' => 'Non sei autorizzato a eliminare questo post.'], 403);
+        }
+
+        $post_reply->delete();
+        return response()->json(['message' => 'Il post è stato eliminato con successo.']);
     }
 }
